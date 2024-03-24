@@ -1,6 +1,13 @@
 package com.phroton.notes;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "notes")
 public class Note {
+    @PrimaryKey(autoGenerate = true)
+    public int id;
     public String mTitle;
     public String mContent;
     public Note(String title, String content){
