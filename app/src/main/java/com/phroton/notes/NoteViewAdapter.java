@@ -5,17 +5,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
-    private List<Note> mNotes;
+    private LiveData<List<Note>> mNotes;
     private Context mContext;
 
     private OnClickListener mClickListener;
 
-    public NoteViewAdapter(Context context, List<Note> notes){
+    public NoteViewAdapter(Context context, LiveData<List<Note>> notes){
         this.mContext = context;
         this.mNotes = notes;
     }
