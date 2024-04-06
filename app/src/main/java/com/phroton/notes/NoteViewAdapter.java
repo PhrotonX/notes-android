@@ -59,5 +59,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
         public void onClick(int position);
     }
 
-
+    public void setNotes(LiveData<List<Note>> notes){
+        mNotes = notes;
+    }
 }
