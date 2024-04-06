@@ -26,19 +26,19 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         /*HomeViewModel homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);*/
-        NoteViewModel noteViewModel =
+         /*NoteViewModel noteViewModel =
                 new ViewModelProvider(this).get(NoteViewModel.class);
 
         noteViewModel.insert(new Note("Sample Data 1", "Sample Content 1 The quick brown fox jumps over the lazy dog."));
         noteViewModel.insert(new Note("Sample Data 2", "Sample Content 2 The quick brown fox jumps over the lazy dog."));
-        noteViewModel.insert(new Note("Sample Data 3", "Sample Content 3 The quick brown fox jumps over the lazy dog."));
+        noteViewModel.insert(new Note("Sample Data 3", "Sample Content 3 The quick brown fox jumps over the lazy dog."));*/
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         RecyclerView notesView = binding.notesList;
         notesView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        noteViewAdapter = new NoteViewAdapter(requireContext(), noteViewModel.getNotes());
+        noteViewAdapter = new NoteViewAdapter(requireContext());
         notesView.setAdapter(noteViewAdapter);
 
         //binding.notesList;
