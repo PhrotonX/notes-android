@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.phroton.notes.Note;
 import com.phroton.notes.NoteViewAdapter;
@@ -34,7 +36,10 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        noteViewAdapter = new NoteViewAdapter(this.getContext(), noteViewModel.getNotes());
+        RecyclerView notesView = binding.notesList;
+        notesView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        noteViewAdapter = new NoteViewAdapter(requireContext(), noteViewModel.getNotes());
+        notesView.setAdapter(noteViewAdapter);
 
         //binding.notesList;
 
