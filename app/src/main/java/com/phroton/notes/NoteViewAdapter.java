@@ -9,7 +9,6 @@ import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-import java.util.Objects;
 
 public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
     private LiveData<List<Note>> mNotes;
@@ -39,7 +38,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
 
-        Note currentNote = Objects.requireNonNull(mNotes.getValue()).get(position);
+        Note currentNote = mNotes.getValue().get(position);
         holder.mTitle.setText(currentNote.getTitle());
         holder.mContent.setText(currentNote.getContent());
 
