@@ -1,8 +1,10 @@
 package com.phroton.notes;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import java.lang.NullPointerException;
 import java.util.List;
 
 public class NoteRepository {
@@ -13,6 +15,7 @@ public class NoteRepository {
         NoteRoomDatabase roomDatabase = NoteRoomDatabase.getDatabase(application);
         mNoteDao = roomDatabase.noteDao();
         mNotes = mNoteDao.getNotesByDescendingId();
+
     }
 
     public LiveData<List<Note>> getNotes(){
@@ -20,8 +23,14 @@ public class NoteRepository {
     }
 
     public void insert(Note note){
-        NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mNoteDao.insert(note);
-        });
+        try{
+            NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
+                mNoteDao.insert(note);
+            });
+        }catch(NullPointerException e){
+            Log.e("com.phroton.notes", "NoteDao is null!");
+            e.printStackTrace();
+        }
+
     }
 }

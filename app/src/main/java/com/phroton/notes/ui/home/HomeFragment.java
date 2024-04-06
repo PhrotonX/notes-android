@@ -29,9 +29,9 @@ public class HomeFragment extends Fragment {
          NoteViewModel noteViewModel =
                 new ViewModelProvider(this).get(NoteViewModel.class);
 
-        /*noteViewModel.insert(new Note("Sample Data 1", "Sample Content 1 The quick brown fox jumps over the lazy dog."));
+        noteViewModel.insert(new Note("Sample Data 1", "Sample Content 1 The quick brown fox jumps over the lazy dog."));
         noteViewModel.insert(new Note("Sample Data 2", "Sample Content 2 The quick brown fox jumps over the lazy dog."));
-        noteViewModel.insert(new Note("Sample Data 3", "Sample Content 3 The quick brown fox jumps over the lazy dog."));*/
+        noteViewModel.insert(new Note("Sample Data 3", "Sample Content 3 The quick brown fox jumps over the lazy dog."));
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
