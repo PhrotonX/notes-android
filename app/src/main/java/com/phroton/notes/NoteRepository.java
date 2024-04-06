@@ -14,8 +14,13 @@ public class NoteRepository {
     NoteRepository(Application application){
         NoteRoomDatabase roomDatabase = NoteRoomDatabase.getDatabase(application);
         mNoteDao = roomDatabase.noteDao();
-        mNotes = mNoteDao.getNotesByDescendingId();
 
+        try{
+            mNotes = mNoteDao.getNotesByDescendingId();
+        }catch(NullPointerException e){
+            Log.e("com.phroton.notes", "NoteDao is null!");
+            e.printStackTrace();
+        }
     }
 
     public LiveData<List<Note>> getNotes(){
