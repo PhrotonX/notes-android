@@ -9,22 +9,34 @@ import java.util.List;
 
 public class NoteRepository {
     private NoteDao mNoteDao;
-    private LiveData<List<Note>> mNotes;
 
     NoteRepository(Application application){
         NoteRoomDatabase roomDatabase = NoteRoomDatabase.getDatabase(application);
-        mNoteDao = roomDatabase.noteDao();
-
         try{
-            mNotes = mNoteDao.getNotesByDescendingId();
+            mNoteDao = roomDatabase.noteDao();
         }catch(NullPointerException e){
-            Log.e("com.phroton.notes", "NoteDao is null!");
+            Log.e("com.phroton.notes", "Error retreiving data from NoteDao!");
             e.printStackTrace();
         }
     }
 
     public LiveData<List<Note>> getNotes(){
-        return mNotes;
+        try {
+            /*NoteRoomDatabase.databaseWriteExecutor.execute(new Runnable() {
+                @Override
+                public void run(){
+
+                }
+            });*/
+
+            return mNoteDao.getNotesByDescendingId();
+
+        }catch(Exception e){
+            Log.d("com.phroton.notes", "Failed to retreive data from RoomDatabase");
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public void insert(Note note){
