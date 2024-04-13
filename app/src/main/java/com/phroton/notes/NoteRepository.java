@@ -10,6 +10,10 @@ import java.util.List;
 public class NoteRepository {
     private NoteDao mNoteDao;
 
+    interface RepositoryCallback<T>{
+        void onComplete(Result<T> result);
+    }
+
     NoteRepository(Application application){
         NoteRoomDatabase roomDatabase = NoteRoomDatabase.getDatabase(application);
         try{
@@ -20,23 +24,38 @@ public class NoteRepository {
         }
     }
 
-    public LiveData<List<Note>> getNotes(){
+    public void getNotes(final RepositoryCallback<LiveData<List<Note>>> callback){
         try {
-            /*NoteRoomDatabase.databaseWriteExecutor.execute(new Runnable() {
+            NoteRoomDatabase.databaseWriteExecutor.execute(new Runnable() {
                 @Override
                 public void run(){
-
+                    try{
+                        Result<LiveData<List<Note>>> result = getNotesFromDatabase();
+                        callback.onComplete(result);
+                    }catch(Exception e){
+                        e.printStackTrace();
+                        Result<LiveData<List<Note>>> errorResult = getNotesFromDatabase();
+                        callback.onComplete(errorResult);
+                    }
                 }
-            });*/
+            });
 
-            return mNoteDao.getNotesByDescendingId();
+            //return mNoteDao.getNotesByDescendingId();
 
         }catch(Exception e){
             Log.d("com.phroton.notes", "Failed to retreive data from RoomDatabase");
             e.printStackTrace();
         }
 
-        return null;
+    }
+
+    private Result<LiveData<List<Note>>> getNotesFromDatabase(){
+        try{
+            return new Result.Success<>(mNoteDao.getNotesByDescendingId());
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void insert(Note note){
@@ -50,4 +69,5 @@ public class NoteRepository {
         }
 
     }
+
 }
