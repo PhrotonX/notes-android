@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.phroton.notes.Note;
 import com.phroton.notes.NoteViewAdapter;
 import com.phroton.notes.NoteViewModel;
+import com.phroton.notes.R;
 import com.phroton.notes.databinding.FragmentHomeBinding;
 
 import java.util.List;
@@ -41,15 +44,22 @@ public class HomeFragment extends Fragment {
         NoteViewModel noteViewModel =
                 new ViewModelProvider(this).get(NoteViewModel.class);
 
-        noteViewModel.getNotes().observe(getViewLifecycleOwner(), new Observer<List<Note>>() {
-            @Override
-            public void onChanged(List<Note> notes) {
-                if(notes != null){
-                    noteViewAdapter.setNotes(notes);
-                    noteViewAdapter.notifyDataSetChanged();
+        LiveData<List<Note>> allNotes = noteViewModel.getNotes();
+
+        if(allNotes != null){
+            allNotes.observe(getViewLifecycleOwner(), new Observer<List<Note>>() {
+                @Override
+                public void onChanged(List<Note> notes) {
+                    if(notes != null){
+                        noteViewAdapter.setNotes(notes);
+                        noteViewAdapter.notifyDataSetChanged();
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(getContext(), R.string.database_read_error, Toast.LENGTH_SHORT).show();
+        }
+
         //binding.notesList;
 
         /*final TextView textView = binding.textHome;

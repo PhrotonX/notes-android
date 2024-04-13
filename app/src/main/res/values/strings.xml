@@ -12,4 +12,5 @@
     <string name="menu_slideshow">Slideshow</string>
 
     <string name="no_content">No Content</string>
+    <string name="database_read_error">Error retrieving data from database</string>
 </resources>
