@@ -51,10 +51,9 @@ public class NoteRepository {
 
     private Result<LiveData<List<Note>>> getNotesFromDatabase(){
         try{
-            return new Result.Success<>(mNoteDao.getNotesByDescendingId());
+            return new Result.Success<LiveData<List<Note>>>(mNoteDao.getNotesByDescendingId());
         }catch(Exception e){
-            e.printStackTrace();
-            return null;
+            return new Result.Error<LiveData<List<Note>>>(e);
         }
     }
 

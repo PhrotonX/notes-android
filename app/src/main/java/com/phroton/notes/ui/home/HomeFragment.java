@@ -46,6 +46,7 @@ public class HomeFragment extends Fragment {
             public void onChanged(List<Note> notes) {
                 if(notes != null){
                     noteViewAdapter.setNotes(notes);
+                    noteViewAdapter.notifyDataSetChanged();
                 }
             }
         });
