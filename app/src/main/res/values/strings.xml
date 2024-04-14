@@ -13,4 +13,7 @@
 
     <string name="no_content">No Content</string>
     <string name="database_read_error">Error retrieving data from database</string>
+    <string name="title_activity_editor">EditorActivity</string>
+    <string name="save">Save</string>
+    <string name="share">Share</string>
 </resources>
