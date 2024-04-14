@@ -10,7 +10,9 @@
         android:id="@+id/editorTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="@dimen/editorTextSize"
+        android:layout_marginBottom="8dp"
+        android:hint="@string/type_title_here"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/editorContent"
@@ -18,12 +20,12 @@
     <EditText
         android:id="@+id/editorContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:ems="10"
-        android:textSize="@dimen/ditorTextSize"
+        android:textSize="@dimen/editorTextSize"
+        android:hint="@string/type_note_here"
         app:layout_constraintTop_toTopOf="@+id/editorTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

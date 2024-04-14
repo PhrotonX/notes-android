@@ -16,4 +16,6 @@
     <string name="title_activity_editor">EditorActivity</string>
     <string name="save">Save</string>
     <string name="share">Share</string>
+    <string name="type_note_here">Type note here...</string>
+    <string name="type_title_here">type_title_here</string>
 </resources>
