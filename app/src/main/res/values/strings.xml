@@ -14,8 +14,9 @@
     <string name="no_content">No Content</string>
     <string name="database_read_error">Error retrieving data from database</string>
     <string name="title_activity_editor">EditorActivity</string>
-    <string name="save">Save</string>
-    <string name="share">Share</string>
+    <string name="menu_save">Save</string>
+    <string name="menu_share">Share</string>
     <string name="type_note_here">Type note here...</string>
     <string name="type_title_here">type_title_here</string>
+    <string name="menu_color">Color</string>
 </resources>

@@ -3,13 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_editor_save"
-        android:title="@string/save"
+        android:title="@string/menu_save"
         android:icon="@drawable/ic_save_dark"
         android:orderInCategory="10"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/menu_editor_share"
-        android:title="@string/share"
+        android:id="@+id/menu_editor_color"
+        android:title="@string/menu_color"
         android:orderInCategory="20"
+        android:icon="@drawable/ic_color_dark"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/menu_editor_share"
+        android:title="@string/menu_share"
+        android:orderInCategory="30"
         app:showAsAction="never"/>
 </menu>
