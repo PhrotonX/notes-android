@@ -3,6 +3,7 @@ package com.phroton.notes.ui.editor;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +16,9 @@ public class EditorActivity extends AppCompatActivity {
 
     private EditText mEditorTitle;
     private EditText mEditorContent;
+
+    public static final String EDITOR_TITLE_EXTRA = "EDITOR_TITLE_EXTRA";
+    public static final String EDITOR_CONTENT_EXTRA = "EDITOR_CONTENT_EXTRA";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,13 @@ public class EditorActivity extends AppCompatActivity {
 
         if(item.getItemId() == R.id.menu_editor_save){
             //TODO: Function for saving here...
+
+            Intent intent = new Intent();
+            intent.putExtra(EDITOR_TITLE_EXTRA, mEditorViewModel.getTitle());
+            intent.putExtra(EDITOR_CONTENT_EXTRA, mEditorViewModel.getContent());
+
+            setResult(RESULT_OK, intent);
+            finish();
         }else if(item.getItemId() == R.id.menu_editor_share){
             //TODO: Function for sharing here...
         }

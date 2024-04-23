@@ -12,7 +12,7 @@ android {
         minSdk = 24
         targetSdk = 34
         versionCode = 1
-        versionName = "v0.1.0.1 build 50"
+        versionName = "v0.1.0.1 build 51"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -51,7 +51,8 @@ android {
 }
 
 dependencies {
-
+    // https://mvnrepository.com/artifact/androidx.activity/activity
+    runtimeOnly("androidx.activity:activity:1.8.2")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")

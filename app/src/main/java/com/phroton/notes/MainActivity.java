@@ -1,6 +1,8 @@
 package com.phroton.notes;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -8,6 +10,12 @@ import android.view.Menu;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -19,13 +27,31 @@ import com.phroton.notes.databinding.ActivityMainBinding;
 import com.phroton.notes.ui.editor.EditorActivity;
 
 public class MainActivity extends AppCompatActivity {
-
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    public static final int CREATE_NOTE_REQUEST = 0;
 
+    protected Note mNote;
+
+    private ActivityResultLauncher<Intent> mGetContent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    Intent data = result.getData();
+                    mNote = new Note(data.getStringExtra(EditorActivity.EDITOR_TITLE_EXTRA),
+                            data.getStringExtra(EditorActivity.EDITOR_CONTENT_EXTRA));
+                }
+            });
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        NoteViewModel noteViewModel =
+                new ViewModelProvider(this).get(NoteViewModel.class);
+
+        if(mNote != null){
+            noteViewModel.insert(mNote);
+        }
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -35,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, EditorActivity.class);
-                startActivity(intent);
+                /*startActivityForResult(intent, CREATE_NOTE_REQUEST);*/
+                mGetContent.launch(intent);
             }
         });
         DrawerLayout drawer = binding.drawerLayout;
