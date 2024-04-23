@@ -36,24 +36,8 @@ public abstract class NoteRoomDatabase extends RoomDatabase{
         return INSTANCE;
     }
 
-    @Override
-    public void clearAllTables() {
-
-    }
-
-    @NonNull
-    @Override
-    protected InvalidationTracker createInvalidationTracker() {
-        return null;
-    }
-
-    @NonNull
-    @Override
-    protected SupportSQLiteOpenHelper createOpenHelper(@NonNull DatabaseConfiguration databaseConfiguration) {
-        return null;
-    }
-
     private static void InflateSampleData(final NoteDao noteDao){
+
         noteDao.insert(new Note("Sample Data 1", "The quick brown fox jumps over" +
                 " the lazy dog"));
         noteDao.insert(new Note("Sample Data 2", "Lorem ipsum dolor sit amet," +
