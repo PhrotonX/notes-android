@@ -10,7 +10,7 @@ import java.util.List;
 
 @Dao
 public interface NoteDao {
-    @Insert(onConflict = OnConflictStrategy.NONE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Note note);
 
     @Query("DELETE FROM notes")
