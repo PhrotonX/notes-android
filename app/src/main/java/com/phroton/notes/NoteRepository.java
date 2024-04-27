@@ -13,28 +13,24 @@ public class NoteRepository {
     private NoteDao mNoteDao;
     private LiveData<List<Note>> mNotes;
 
-    interface RepositoryCallback<T>{
+    /*interface RepositoryCallback<T>{
         void onComplete(Result<T> result);
-    }
+    }*/
 
     NoteRepository(Application application){
         NoteRoomDatabase roomDatabase = NoteRoomDatabase.getDatabase(application);
-        try{
-            mNoteDao = roomDatabase.noteDao();
-        }catch(NullPointerException e){
-            Log.e("com.phroton.notes", "Error retreiving data from NoteDao!");
-            e.printStackTrace();
-        }
+        mNoteDao = roomDatabase.noteDao();
+        mNotes = mNoteDao.getAllNotes();
     }
 
     public LiveData<List<Note>> getNotesCompat(){
-        NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
+        /*NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
             mNotes = mNoteDao.getAllNotes();
-        });
+        });*/
 
         return mNotes;
     }
-    public void getNotes(final RepositoryCallback<LiveData<List<Note>>> callback){
+    /*public void getNotes(final RepositoryCallback<LiveData<List<Note>>> callback){
         try {
             NoteRoomDatabase.databaseWriteExecutor.execute(new Runnable() {
                 @Override
@@ -57,26 +53,28 @@ public class NoteRepository {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
-    private Result<LiveData<List<Note>>> getNotesFromDatabase(){
+    /*private Result<LiveData<List<Note>>> getNotesFromDatabase(){
         try{
             return new Result.Success<LiveData<List<Note>>>(mNoteDao.getNotesByDescendingId());
         }catch(Exception e){
             return new Result.Error<LiveData<List<Note>>>(e);
         }
-    }
+    }*/
 
     public void insert(Note note){
-        try{
+        /*try{
             NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
                 mNoteDao.insert(note);
             });
         }catch(NullPointerException e){
             Log.e("com.phroton.notes", "NoteDao is null!");
             e.printStackTrace();
-        }
-
+        }*/
+        NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mNoteDao.insert(note);
+        });
     }
 
 }

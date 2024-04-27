@@ -11,14 +11,15 @@ import java.util.List;
 
 public class NoteViewModel extends AndroidViewModel {
     private NoteRepository mRepository;
-    private LiveData<List<Note>> mNotes = null;
+    private final LiveData<List<Note>> mNotes;
     public NoteViewModel(@NonNull Application application) {
         super(application);
 
         mRepository = new NoteRepository(application);
+        mNotes = mRepository.getNotesCompat();
     }
 
-    public LiveData<List<Note>> getNotes(){
+    /*public LiveData<List<Note>> getNotes(){
         mRepository.getNotes(new NoteRepository.RepositoryCallback<LiveData<List<Note>>>(){
             @Override
             public void onComplete(Result<LiveData<List<Note>>> result){
@@ -31,11 +32,11 @@ public class NoteViewModel extends AndroidViewModel {
         });
 
         return mNotes;
-    }
+    }*/
 
     public LiveData<List<Note>> getNotesCompat(){
 
-        return mRepository.getNotesCompat();
+        return mNotes;
 
     }
 
