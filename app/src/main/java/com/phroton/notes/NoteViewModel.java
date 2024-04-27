@@ -32,6 +32,10 @@ public class NoteViewModel extends AndroidViewModel {
         return mNotes;
     }
 
+    public LiveData<List<Note>> getNotesCompat(){
+        return mRepository.getNotesCompat();
+    }
+
     public void insert(Note note){
         mRepository.insert(note);
     }

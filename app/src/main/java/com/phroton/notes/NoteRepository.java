@@ -24,6 +24,9 @@ public class NoteRepository {
         }
     }
 
+    public LiveData<List<Note>> getNotesCompat(){
+        return mNoteDao.getNotesByDescendingId();
+    }
     public void getNotes(final RepositoryCallback<LiveData<List<Note>>> callback){
         try {
             NoteRoomDatabase.databaseWriteExecutor.execute(new Runnable() {

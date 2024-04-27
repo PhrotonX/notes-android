@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment {
         NoteViewModel noteViewModel =
                 new ViewModelProvider(getActivity()).get(NoteViewModel.class);
 
-        LiveData<List<Note>> allNotes = noteViewModel.getNotes();
+        LiveData<List<Note>> allNotes = noteViewModel.getNotesCompat();
 
         if(allNotes != null){
             allNotes.observe(getViewLifecycleOwner(), new Observer<List<Note>>() {
