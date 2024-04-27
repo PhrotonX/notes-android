@@ -14,7 +14,7 @@ import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Note.class}, version = 101, exportSchema = true)
+@Database(entities = {Note.class}, version = 102)
 public abstract class NoteRoomDatabase extends RoomDatabase{
 
     public abstract NoteDao noteDao();

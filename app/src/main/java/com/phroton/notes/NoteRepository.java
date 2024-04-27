@@ -24,8 +24,8 @@ public class NoteRepository {
         }
     }
 
-    public LiveData<List<Note>> getNotesCompat(){
-        return mNoteDao.getNotesByDescendingId();
+    public List<Note> getNotesCompat(){
+        return mNoteDao.getAllNotes();
     }
     public void getNotes(final RepositoryCallback<LiveData<List<Note>>> callback){
         try {
