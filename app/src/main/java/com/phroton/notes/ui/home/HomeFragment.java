@@ -42,7 +42,7 @@ public class HomeFragment extends Fragment {
         notesView.setAdapter(noteViewAdapter);
 
         NoteViewModel noteViewModel =
-                new ViewModelProvider(getActivity()).get(NoteViewModel.class);
+                new ViewModelProvider(this).get(NoteViewModel.class);
 
         LiveData<List<Note>> allNotes = noteViewModel.getNotesCompat();
 
