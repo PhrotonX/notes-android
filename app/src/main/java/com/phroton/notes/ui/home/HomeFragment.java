@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment {
         NoteViewModel noteViewModel =
                 new ViewModelProvider(getActivity()).get(NoteViewModel.class);
 
-        /*LiveData<List<Note>> allNotes = noteViewModel.getNotesCompat();
+        LiveData<List<Note>> allNotes = noteViewModel.getNotesCompat();
 
         if(allNotes != null){
             allNotes.observe(getViewLifecycleOwner(), new Observer<List<Note>>() {
@@ -58,13 +58,13 @@ public class HomeFragment extends Fragment {
             });
         }else{
             Toast.makeText(getContext(), R.string.database_read_error, Toast.LENGTH_SHORT).show();
-        }*/
+        }
 
-        List<Note> allNotes = noteViewModel.getNotesCompat();
+        /*List<Note> allNotes = noteViewModel.getNotesCompat();
         if(allNotes != null){
             noteViewAdapter.setNotes(allNotes);
             noteViewAdapter.notifyDataSetChanged();
-        }
+        }*/
 
         //binding.notesList;
 

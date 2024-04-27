@@ -4,11 +4,14 @@ import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+
 import java.lang.NullPointerException;
 import java.util.List;
 
 public class NoteRepository {
     private NoteDao mNoteDao;
+    private LiveData<List<Note>> mNotes;
 
     interface RepositoryCallback<T>{
         void onComplete(Result<T> result);
@@ -24,8 +27,12 @@ public class NoteRepository {
         }
     }
 
-    public List<Note> getNotesCompat(){
-        return mNoteDao.getAllNotes();
+    public LiveData<List<Note>> getNotesCompat(){
+        NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mNotes = mNoteDao.getAllNotes();
+        });
+
+        return mNotes;
     }
     public void getNotes(final RepositoryCallback<LiveData<List<Note>>> callback){
         try {

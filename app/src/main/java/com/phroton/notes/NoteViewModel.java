@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import java.util.List;
 
@@ -32,8 +33,10 @@ public class NoteViewModel extends AndroidViewModel {
         return mNotes;
     }
 
-    public List<Note> getNotesCompat(){
+    public LiveData<List<Note>> getNotesCompat(){
+
         return mRepository.getNotesCompat();
+
     }
 
     public void insert(Note note){
