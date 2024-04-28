@@ -27,7 +27,7 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    private NoteViewAdapter noteViewAdapter;
+    private NoteViewAdapter mNoteViewAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -37,10 +37,7 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        RecyclerView notesView = binding.notesList;
-        notesView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        noteViewAdapter = new NoteViewAdapter(requireContext());
-        notesView.setAdapter(noteViewAdapter);
+
 
         /*NoteViewModel noteViewModel =
                 new ViewModelProvider(this).get(NoteViewModel.class);
@@ -58,13 +55,17 @@ public class HomeFragment extends Fragment {
                 }
             });
         }else{*/
-            Toast.makeText(getContext(), R.string.database_read_error, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), R.string.database_read_error, Toast.LENGTH_SHORT).show();
             List<Note> sampleNote = new ArrayList<>();
             sampleNote.add(new Note("Error 1", "Error Note 1"));
             sampleNote.add(new Note("Error 2", "Error Note 2"));
             sampleNote.add(new Note("Error 3", "Error Note 3"));
-            noteViewAdapter.setNotes(sampleNote);
-            noteViewAdapter.notifyDataSetChanged();
+
+            RecyclerView notesView = binding.notesList;
+            notesView.setLayoutManager(new LinearLayoutManager(requireContext()));
+            mNoteViewAdapter = new NoteViewAdapter(requireContext(), sampleNote);
+            notesView.setAdapter(mNoteViewAdapter);
+            mNoteViewAdapter.notifyDataSetChanged();
         //}
 
         /*List<Note> allNotes = noteViewModel.getNotesCompat();
