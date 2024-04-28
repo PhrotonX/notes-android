@@ -63,6 +63,8 @@ public class HomeFragment extends Fragment {
             sampleNote.add(new Note("Error 1", "Error Note 1"));
             sampleNote.add(new Note("Error 2", "Error Note 2"));
             sampleNote.add(new Note("Error 3", "Error Note 3"));
+            noteViewAdapter.setNotes(sampleNote);
+            noteViewAdapter.notifyDataSetChanged();
         }
 
         /*List<Note> allNotes = noteViewModel.getNotesCompat();
