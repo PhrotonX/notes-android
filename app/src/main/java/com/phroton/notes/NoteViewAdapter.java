@@ -42,18 +42,20 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
             holder.mTitle.setText(currentNote.getTitle());
             holder.mContent.setText(currentNote.getContent());
 
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mClickListener.onClick(holder.getAdapterPosition());
-                }
-            });
+            if(mClickListener != null){
+                holder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mClickListener.onClick(holder.getAdapterPosition());
+                    }
+                });
+            }
         }
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mNotes != null ? mNotes.size() : 0;
     }
 
     public interface OnClickListener{
