@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -46,12 +47,16 @@ public class MainActivity extends AppCompatActivity {
                 public void onActivityResult(ActivityResult result) {
                     switch(result.getResultCode()){
                         case RESULT_OK:
+                            Toast.makeText(getApplicationContext(), "RESULT_OK",
+                                    Toast.LENGTH_SHORT).show();
                             Intent data = result.getData();
                             mNote = new Note(data.getStringExtra(EditorActivity.EDITOR_TITLE_EXTRA),
                                     data.getStringExtra(EditorActivity.EDITOR_CONTENT_EXTRA));
                             mNoteViewModel.insert(mNote);
                             break;
                         case RESULT_CANCELED:
+                            Toast.makeText(getApplicationContext(), "RESULT_CANCELLED",
+                                    Toast.LENGTH_SHORT).show();
                             break;
                         default:
                             break;
