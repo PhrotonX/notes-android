@@ -41,6 +41,7 @@ public class HomeFragment extends Fragment {
         notesView.setLayoutManager(new LinearLayoutManager(requireContext()));
         mNoteViewAdapter = new NoteViewAdapter(requireContext());
         notesView.setAdapter(mNoteViewAdapter);
+        mNoteViewAdapter.notifyDataSetChanged();
 
         NoteViewModel noteViewModel =
                 new ViewModelProvider(this).get(NoteViewModel.class);

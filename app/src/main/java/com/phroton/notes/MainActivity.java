@@ -44,10 +44,19 @@ public class MainActivity extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    Intent data = result.getData();
-                    mNote = new Note(data.getStringExtra(EditorActivity.EDITOR_TITLE_EXTRA),
-                            data.getStringExtra(EditorActivity.EDITOR_CONTENT_EXTRA));
-                    mNoteViewModel.insert(mNote);
+                    switch(result.getResultCode()){
+                        case RESULT_OK:
+                            Intent data = result.getData();
+                            mNote = new Note(data.getStringExtra(EditorActivity.EDITOR_TITLE_EXTRA),
+                                    data.getStringExtra(EditorActivity.EDITOR_CONTENT_EXTRA));
+                            mNoteViewModel.insert(mNote);
+                            break;
+                        case RESULT_CANCELED:
+                            break;
+                        default:
+                            break;
+                    }
+
                 }
         });
 
