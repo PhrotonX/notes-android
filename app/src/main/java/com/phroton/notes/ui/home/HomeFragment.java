@@ -21,6 +21,7 @@ import com.phroton.notes.NoteViewModel;
 import com.phroton.notes.R;
 import com.phroton.notes.databinding.FragmentHomeBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -58,6 +59,10 @@ public class HomeFragment extends Fragment {
             });
         }else{
             Toast.makeText(getContext(), R.string.database_read_error, Toast.LENGTH_SHORT).show();
+            List<Note> sampleNote = new ArrayList<>();
+            sampleNote.add(new Note("Error 1", "Error Note 1"));
+            sampleNote.add(new Note("Error 2", "Error Note 2"));
+            sampleNote.add(new Note("Error 3", "Error Note 3"));
         }
 
         /*List<Note> allNotes = noteViewModel.getNotesCompat();
