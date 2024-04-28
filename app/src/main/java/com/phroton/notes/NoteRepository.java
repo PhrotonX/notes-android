@@ -11,7 +11,7 @@ import java.util.List;
 
 public class NoteRepository {
     private NoteDao mNoteDao;
-    private LiveData<List<Note>> mNotes;
+    //private LiveData<List<Note>> mNotes;
 
     /*interface RepositoryCallback<T>{
         void onComplete(Result<T> result);
@@ -19,16 +19,15 @@ public class NoteRepository {
 
     NoteRepository(Application application){
         NoteRoomDatabase roomDatabase = NoteRoomDatabase.getDatabase(application);
-        mNoteDao = roomDatabase.noteDao();
-        mNotes = mNoteDao.getAllNotes();
+        //mNotes = mNoteDao.getAllNotes();
     }
 
     public LiveData<List<Note>> getNotesCompat(){
         /*NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
             mNotes = mNoteDao.getAllNotes();
         });*/
-
-        return mNotes;
+      //  mNotes = mNoteDao.getAllNotes();
+        return mNoteDao.getAllNotes();
     }
     /*public void getNotes(final RepositoryCallback<LiveData<List<Note>>> callback){
         try {
