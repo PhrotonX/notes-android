@@ -8,11 +8,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.phroton.notes.R;
 
 public class EditorActivity extends AppCompatActivity {
-    private EditorViewModel mEditorViewModel;
+    //private EditorViewModel mEditorViewModel;
 
     private EditText mEditorTitle;
     private EditText mEditorContent;
@@ -25,7 +26,9 @@ public class EditorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
 
-        mEditorViewModel = new ViewModelProvider(this).get(EditorViewModel.class);
+        mEditorTitle = (EditText) findViewById(R.id.editorTitle);
+        mEditorContent = (EditText) findViewById(R.id.editorContent);
+        //mEditorViewModel = new ViewModelProvider(this).get(EditorViewModel.class);
     }
 
     @Override
@@ -41,8 +44,11 @@ public class EditorActivity extends AppCompatActivity {
             //TODO: Function for saving here...
 
             Intent intent = new Intent();
-            intent.putExtra(EDITOR_TITLE_EXTRA, mEditorViewModel.getTitle());
-            intent.putExtra(EDITOR_CONTENT_EXTRA, mEditorViewModel.getContent());
+            /*intent.putExtra(EDITOR_TITLE_EXTRA, mEditorViewModel.getTitle());
+            intent.putExtra(EDITOR_CONTENT_EXTRA, mEditorViewModel.getContent());*/
+
+            intent.putExtra(EDITOR_TITLE_EXTRA, mEditorTitle.getText());
+            intent.putExtra(EDITOR_CONTENT_EXTRA, mEditorContent.getText());
 
             setResult(RESULT_OK, intent);
             finish();
