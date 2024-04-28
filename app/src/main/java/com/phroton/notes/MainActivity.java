@@ -30,28 +30,30 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     public static final int CREATE_NOTE_REQUEST = 0;
-
     protected Note mNote;
+    private NoteViewModel mNoteViewModel;
 
-    private ActivityResultLauncher<Intent> mGetContent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+    private ActivityResultLauncher<Intent> mGetContent;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
+
+        mGetContent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     Intent data = result.getData();
                     mNote = new Note(data.getStringExtra(EditorActivity.EDITOR_TITLE_EXTRA),
                             data.getStringExtra(EditorActivity.EDITOR_CONTENT_EXTRA));
+                    mNoteViewModel.insert(mNote);
                 }
-            });
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        });
 
-        NoteViewModel noteViewModel =
-                new ViewModelProvider(this).get(NoteViewModel.class);
-
-        if(mNote != null){
-            noteViewModel.insert(mNote);
-        }
+        /*if(mNote != null){
+            mNoteViewModel.insert(mNote);
+        }*/
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
