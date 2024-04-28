@@ -37,7 +37,10 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
+        RecyclerView notesView = binding.notesList;
+        notesView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        mNoteViewAdapter = new NoteViewAdapter(requireContext());
+        notesView.setAdapter(mNoteViewAdapter);
 
         /*NoteViewModel noteViewModel =
                 new ViewModelProvider(this).get(NoteViewModel.class);
@@ -61,11 +64,8 @@ public class HomeFragment extends Fragment {
             sampleNote.add(new Note("Sample 2", "Sample Note 2"));
             sampleNote.add(new Note("Sample 3", "Sample Note 3"));
 
-            RecyclerView notesView = binding.notesList;
-            notesView.setLayoutManager(new LinearLayoutManager(requireContext()));
-            mNoteViewAdapter = new NoteViewAdapter(requireContext(), sampleNote);
-            notesView.setAdapter(mNoteViewAdapter);
-            //mNoteViewAdapter.notifyDataSetChanged();
+            mNoteViewAdapter.setNotes(sampleNote);
+            mNoteViewAdapter.notifyDataSetChanged();
         //}
 
         /*List<Note> allNotes = noteViewModel.getNotesCompat();
