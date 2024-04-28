@@ -42,7 +42,7 @@ public class HomeFragment extends Fragment {
         noteViewAdapter = new NoteViewAdapter(requireContext());
         notesView.setAdapter(noteViewAdapter);
 
-        NoteViewModel noteViewModel =
+        /*NoteViewModel noteViewModel =
                 new ViewModelProvider(this).get(NoteViewModel.class);
 
         LiveData<List<Note>> allNotes = noteViewModel.getNotesCompat();
@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment {
                     }
                 }
             });
-        }else{
+        }else{*/
             Toast.makeText(getContext(), R.string.database_read_error, Toast.LENGTH_SHORT).show();
             List<Note> sampleNote = new ArrayList<>();
             sampleNote.add(new Note("Error 1", "Error Note 1"));
@@ -65,7 +65,7 @@ public class HomeFragment extends Fragment {
             sampleNote.add(new Note("Error 3", "Error Note 3"));
             noteViewAdapter.setNotes(sampleNote);
             noteViewAdapter.notifyDataSetChanged();
-        }
+        //}
 
         /*List<Note> allNotes = noteViewModel.getNotesCompat();
         if(allNotes != null){
