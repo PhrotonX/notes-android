@@ -57,15 +57,15 @@ public class HomeFragment extends Fragment {
         }else{*/
             //Toast.makeText(getContext(), R.string.database_read_error, Toast.LENGTH_SHORT).show();
             List<Note> sampleNote = new ArrayList<>();
-            sampleNote.add(new Note("Error 1", "Error Note 1"));
-            sampleNote.add(new Note("Error 2", "Error Note 2"));
-            sampleNote.add(new Note("Error 3", "Error Note 3"));
+            sampleNote.add(new Note("Sample 1", "Sample Note 1"));
+            sampleNote.add(new Note("Sample 2", "Sample Note 2"));
+            sampleNote.add(new Note("Sample 3", "Sample Note 3"));
 
             RecyclerView notesView = binding.notesList;
             notesView.setLayoutManager(new LinearLayoutManager(requireContext()));
             mNoteViewAdapter = new NoteViewAdapter(requireContext(), sampleNote);
             notesView.setAdapter(mNoteViewAdapter);
-            mNoteViewAdapter.notifyDataSetChanged();
+            //mNoteViewAdapter.notifyDataSetChanged();
         //}
 
         /*List<Note> allNotes = noteViewModel.getNotesCompat();
