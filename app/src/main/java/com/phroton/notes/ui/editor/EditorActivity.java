@@ -47,8 +47,8 @@ public class EditorActivity extends AppCompatActivity {
             /*intent.putExtra(EDITOR_TITLE_EXTRA, mEditorViewModel.getTitle());
             intent.putExtra(EDITOR_CONTENT_EXTRA, mEditorViewModel.getContent());*/
 
-            intent.putExtra(EDITOR_TITLE_EXTRA, mEditorTitle.getText());
-            intent.putExtra(EDITOR_CONTENT_EXTRA, mEditorContent.getText());
+            intent.putExtra(EDITOR_TITLE_EXTRA, mEditorTitle.getText().toString());
+            intent.putExtra(EDITOR_CONTENT_EXTRA, mEditorContent.getText().toString());
 
             setResult(RESULT_OK, intent);
             finish();
