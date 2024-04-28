@@ -20,14 +20,13 @@ public class NoteRepository {
     NoteRepository(Application application){
         NoteRoomDatabase roomDatabase = NoteRoomDatabase.getDatabase(application);
         mNoteDao = roomDatabase.noteDao();
-        mNotes = mNoteDao.getAllNotes();
+
+        NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mNotes = mNoteDao.getAllNotes();
+        });
     }
 
     public LiveData<List<Note>> getNotesCompat(){
-        /*NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mNotes = mNoteDao.getAllNotes();
-        });*/
-
         return mNotes;
     }
     /*public void getNotes(final RepositoryCallback<LiveData<List<Note>>> callback){
@@ -72,10 +71,9 @@ public class NoteRepository {
             Log.e("com.phroton.notes", "NoteDao is null!");
             e.printStackTrace();
         }*/
-        /*NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
+        NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
             mNoteDao.insert(note);
-        });*/
-        mNoteDao.insert(note);
+        });
     }
 
 }
