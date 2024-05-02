@@ -29,6 +29,7 @@ public abstract class NoteRoomDatabase extends RoomDatabase{
                 if(INSTANCE == null){
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     NoteRoomDatabase.class, "note_database")
+                            .fallbackToDestructiveMigration()
                             .addCallback(sRoomDatabaseCallback)
                             .build();
                 }
