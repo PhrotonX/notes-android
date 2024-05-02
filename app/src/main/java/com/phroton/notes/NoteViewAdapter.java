@@ -53,7 +53,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
                 shortenedText = currentNote.getContent().substring(0, 200) + "...";
                 holder.mContent.setText(shortenedText);
             }else{
-                holder.mTitle.setText(currentNote.getContent());
+                holder.mContent.setText(currentNote.getContent());
             }
 
             if(mClickListener != null){
