@@ -56,14 +56,14 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
                 holder.mContent.setText(currentNote.getContent());
             }
 
-            if(mClickListener != null){
+            //if(mClickListener != null){
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mClickListener.onClick(holder.getAdapterPosition());
                     }
                 });
-            }
+            //}
         }
     }
 
@@ -76,7 +76,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
         public void onClick(int position);
     }
 
-    public void setOnCLickListener(OnClickListener clickListener){
+    public void setOnClickListener(OnClickListener clickListener){
         mClickListener = clickListener;
     }
 
