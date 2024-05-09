@@ -46,6 +46,8 @@ public class HomeFragment extends Fragment {
                     case EditorActivity.RESULT_OK:
                         Toast.makeText(getContext(), "Sample activity result", Toast.LENGTH_SHORT).show();
                         break;
+                    default:
+                        break;
                 }
             }
         });
@@ -60,6 +62,13 @@ public class HomeFragment extends Fragment {
         notesView.setLayoutManager(new LinearLayoutManager(requireContext()));
         mNoteViewAdapter = new NoteViewAdapter(requireContext());
         notesView.setAdapter(mNoteViewAdapter);
+        mNoteViewAdapter.setOnClickListener(new NoteViewAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position) {
+                Intent intent = new Intent(getActivity(), EditorActivity.class);
+                mGetContent.launch(intent);
+            }
+        });
         mNoteViewAdapter.notifyDataSetChanged();
 
         NoteViewModel noteViewModel =
@@ -87,14 +96,6 @@ public class HomeFragment extends Fragment {
             mNoteViewAdapter.setNotes(sampleNote);
             mNoteViewAdapter.notifyDataSetChanged();
         }
-
-        mNoteViewAdapter.setOnClickListener(new NoteViewAdapter.OnClickListener() {
-            @Override
-            public void onClick(int position) {
-                Intent intent = new Intent(getActivity(), EditorActivity.class);
-                mGetContent.launch(intent);
-            }
-        });
 
         /*List<Note> allNotes = noteViewModel.getNotesCompat();
         if(allNotes != null){
