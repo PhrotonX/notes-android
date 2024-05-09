@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, EditorActivity.class);
-                /*startActivityForResult(intent, CREATE_NOTE_REQUEST);*/
+                //startActivityForResult(intent, CREATE_NOTE_REQUEST);
                 mGetContent.launch(intent);
             }
         });

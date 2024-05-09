@@ -1,5 +1,6 @@
 package com.phroton.notes.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
@@ -20,6 +25,7 @@ import com.phroton.notes.NoteViewAdapter;
 import com.phroton.notes.NoteViewModel;
 import com.phroton.notes.R;
 import com.phroton.notes.databinding.FragmentHomeBinding;
+import com.phroton.notes.ui.editor.EditorActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +35,21 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private NoteViewAdapter mNoteViewAdapter;
 
+    private ActivityResultLauncher<Intent> mGetContent;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        mGetContent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult o) {
+                switch(o.getResultCode()){
+                    case EditorActivity.RESULT_OK:
+                        Toast.makeText(getContext(), "Sample activity result", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
+
         /*HomeViewModel homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);*/
 
@@ -68,6 +87,14 @@ public class HomeFragment extends Fragment {
             mNoteViewAdapter.setNotes(sampleNote);
             mNoteViewAdapter.notifyDataSetChanged();
         }
+
+        mNoteViewAdapter.setOnCLickListener(new NoteViewAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position) {
+                Intent intent = new Intent(getActivity(), EditorActivity.class);
+
+            }
+        });
 
         /*List<Note> allNotes = noteViewModel.getNotesCompat();
         if(allNotes != null){
