@@ -92,7 +92,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(int position) {
                 Intent intent = new Intent(getActivity(), EditorActivity.class);
-
+                mGetContent.launch(intent);
             }
         });
 
