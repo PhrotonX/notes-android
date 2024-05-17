@@ -61,8 +61,14 @@ public class HomeFragment extends Fragment {
         RecyclerView notesView = binding.notesList;
         notesView.setLayoutManager(new LinearLayoutManager(requireContext()));
         mNoteViewAdapter = new NoteViewAdapter(requireContext());
+        mNoteViewAdapter.setOnClickListener(new NoteViewAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position) {
+                Intent intent = new Intent(getActivity(), EditorActivity.class);
+                mGetContent.launch(intent);
+            }
+        });
         notesView.setAdapter(mNoteViewAdapter);
-
         mNoteViewAdapter.notifyDataSetChanged();
 
         NoteViewModel noteViewModel =
@@ -101,14 +107,6 @@ public class HomeFragment extends Fragment {
 
         /*final TextView textView = binding.textHome;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);*/
-
-        mNoteViewAdapter.setOnClickListener(new NoteViewAdapter.OnClickListener() {
-            @Override
-            public void onClick(int position) {
-                Intent intent = new Intent(getActivity(), EditorActivity.class);
-                mGetContent.launch(intent);
-            }
-        });
         return root;
     }
 
