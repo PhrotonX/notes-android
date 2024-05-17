@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment {
         mNoteViewAdapter.setOnClickListener(new NoteViewAdapter.OnClickListener() {
             @Override
             public void onClick(int position) {
-                Intent intent = new Intent(getActivity(), EditorActivity.class);
+                Intent intent = new Intent(requireContext(), EditorActivity.class);
                 mGetContent.launch(intent);
             }
         });
