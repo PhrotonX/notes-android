@@ -69,8 +69,7 @@ public class HomeFragment extends Fragment {
                 mGetContent.launch(intent);
             }
         });
-        notesView.setAdapter(mNoteViewAdapter);
-        mNoteViewAdapter.notifyDataSetChanged();
+
 
         NoteViewModel noteViewModel =
                 new ViewModelProvider(this).get(NoteViewModel.class);
@@ -108,6 +107,8 @@ public class HomeFragment extends Fragment {
 
         /*final TextView textView = binding.textHome;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);*/
+        notesView.setAdapter(mNoteViewAdapter);
+        //mNoteViewAdapter.notifyDataSetChanged();
         return root;
     }
 
