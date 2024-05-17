@@ -14,9 +14,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.phroton.notes.Note;
 import com.phroton.notes.NoteViewAdapter;
 import com.phroton.notes.databinding.FragmentGalleryBinding;
 import com.phroton.notes.ui.editor.EditorActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GalleryFragment extends Fragment {
 
@@ -46,6 +50,12 @@ public class GalleryFragment extends Fragment {
             }
         });
         notesView.setAdapter(mNoteViewAdapter);
+        List<Note> sampleNote = new ArrayList<>();
+        sampleNote.add(new Note("Error 1", "Error Note 1"));
+        sampleNote.add(new Note("Error 2", "Error Note 2"));
+        sampleNote.add(new Note("Error 3", "Error Note 3"));
+
+        mNoteViewAdapter.setNotes(sampleNote);
         mNoteViewAdapter.notifyDataSetChanged();
         return root;
     }
