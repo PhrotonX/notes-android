@@ -64,6 +64,7 @@ public class HomeFragment extends Fragment {
         mNoteViewAdapter.setOnClickListener(new NoteViewAdapter.OnClickListener() {
             @Override
             public void onClick(int position) {
+                Toast.makeText(requireContext(), "Sample Click Message", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(requireContext(), EditorActivity.class);
                 mGetContent.launch(intent);
             }
