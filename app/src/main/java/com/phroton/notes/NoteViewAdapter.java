@@ -61,7 +61,9 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewAdapter.NoteVi
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mClickListener.onClick(holder.getAdapterPosition());
+                        if(mClickListener != null){
+                            mClickListener.onClick(position);
+                        }
                     }
                 });
             //}
@@ -90,12 +92,13 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewAdapter.NoteVi
         return mNotes != null ? mNotes.size() : 0;
     }
 
-    public interface OnClickListener {
-        abstract void onClick(int position);
+    public void setOnClickListener(OnClickListener clickListener){
+        this.mClickListener = clickListener;
     }
 
-    public void setOnClickListener(OnClickListener clickListener){
-        mClickListener = clickListener;
+
+    public interface OnClickListener {
+        void onClick(int position);
     }
 
     public void setNotes(List<Note> notes){
