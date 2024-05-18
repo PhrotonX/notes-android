@@ -4,13 +4,14 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
+public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewAdapter.NoteViewHolder>{
     private List<Note> mNotes;
     private Context mContext;
 
@@ -66,6 +67,23 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
             //}
         }
     }
+
+    static class NoteViewHolder extends RecyclerView.ViewHolder{
+        public TextView mTitle;
+        public TextView mContent;
+
+        public View mView;
+
+        public NoteViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            mTitle = (TextView)itemView.findViewById(R.id.noteTitle);
+            mContent = (TextView)itemView.findViewById(R.id.noteContent);
+            mView = itemView;
+        }
+
+    }
+
 
     @Override
     public int getItemCount() {
