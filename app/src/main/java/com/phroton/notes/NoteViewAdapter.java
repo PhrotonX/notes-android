@@ -90,8 +90,8 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewAdapter.NoteVi
         return mNotes != null ? mNotes.size() : 0;
     }
 
-    public interface OnClickListener{
-        public void onClick(int position);
+    public interface OnClickListener {
+        void onClick(int position);
     }
 
     public void setOnClickListener(OnClickListener clickListener){
