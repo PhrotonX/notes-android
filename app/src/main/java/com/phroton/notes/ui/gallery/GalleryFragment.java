@@ -43,12 +43,7 @@ public class GalleryFragment extends Fragment {
         RecyclerView notesView = binding.galleryList;
         notesView.setLayoutManager(new LinearLayoutManager(requireContext()));
         mNoteViewAdapter = new NoteViewAdapter(requireContext());
-        mNoteViewAdapter.setOnClickListener(new NoteViewAdapter.OnClickListener() {
-            @Override
-            public void onClick(int position) {
-                Toast.makeText(requireContext(), "Sample Click Message", Toast.LENGTH_SHORT).show();
-            }
-        });
+
         notesView.setAdapter(mNoteViewAdapter);
         List<Note> sampleNote = new ArrayList<>();
         sampleNote.add(new Note("Error 1", "Error Note 1"));
@@ -56,6 +51,14 @@ public class GalleryFragment extends Fragment {
         sampleNote.add(new Note("Error 3", "Error Note 3"));
 
         mNoteViewAdapter.setNotes(sampleNote);
+
+        mNoteViewAdapter.setOnClickListener(new NoteViewAdapter.OnClickListener() {
+            @Override
+            public void onClick(int position) {
+                Toast.makeText(requireContext(), "Sample Click Message", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         mNoteViewAdapter.notifyDataSetChanged();
         return root;
     }
