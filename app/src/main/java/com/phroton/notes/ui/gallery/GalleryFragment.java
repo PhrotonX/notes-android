@@ -51,6 +51,7 @@ public class GalleryFragment extends Fragment {
         sampleNote.add(new Note("Error 3", "Error Note 3"));
 
         mNoteViewAdapter.setNotes(sampleNote);
+        mNoteViewAdapter.notifyDataSetChanged();
 
         mNoteViewAdapter.setOnClickListener(new NoteViewAdapter.OnClickListener() {
             @Override
@@ -59,7 +60,7 @@ public class GalleryFragment extends Fragment {
             }
         });
 
-        mNoteViewAdapter.notifyDataSetChanged();
+
         return root;
     }
 
