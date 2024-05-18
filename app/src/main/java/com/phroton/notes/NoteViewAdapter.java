@@ -91,7 +91,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewAdapter.NoteVi
     }
 
     public interface OnClickListener {
-        void onClick(int position);
+        abstract void onClick(int position);
     }
 
     public void setOnClickListener(OnClickListener clickListener){
