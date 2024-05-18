@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewAdapter.NoteViewHolder>{
+public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
     private List<Note> mNotes;
     private Context mContext;
 
@@ -70,21 +70,6 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewAdapter.NoteVi
         }
     }
 
-    static class NoteViewHolder extends RecyclerView.ViewHolder{
-        public TextView mTitle;
-        public TextView mContent;
-
-        public View mView;
-
-        public NoteViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            mTitle = (TextView)itemView.findViewById(R.id.noteTitle);
-            mContent = (TextView)itemView.findViewById(R.id.noteContent);
-            mView = itemView;
-        }
-
-    }
 
 
     @Override
