@@ -10,11 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
     private List<Note> mNotes;
-    private int[] mNoteId;
+    private List<Integer> mNoteId = new ArrayList<Integer>();
     private Context mContext;
 
     private OnClickListener mClickListener;
@@ -43,7 +44,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
         if(mNotes != null) {
             Note currentNote = mNotes.get(position);
 
-            mNoteId[position] = currentNote.getId();
+            mNoteId.add(currentNote.getId());
 
             String shortenedText;
 
@@ -75,7 +76,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
     }
 
     public int getNoteId(int position){
-        return mNoteId[position];
+        return mNoteId.get(position);
     }
 
     @Override
