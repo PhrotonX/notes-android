@@ -54,20 +54,20 @@ public class EditorActivity extends AppCompatActivity {
                 case REQUEST_CODE_CREATE_NOTE:
                     break;
                 case REQUEST_CODE_EDIT_NOTE:
-                    int noteId = intent.getIntExtra(Note.NOTE_ID_EXTRA, -1);
+                    int position = intent.getIntExtra(Note.NOTE_ID_EXTRA, -1);
 
-                    if(noteId != -1){
+                    if(position != -1){
                         mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
                         mNoteViewModel.getNotesCompat().observe(this, new Observer<List<Note>>() {
                             @Override
                             public void onChanged(List<Note> notes) {
-                                Note note = notes.get(noteId);
+                                Note note = notes.get(position);
                                 mEditorTitle.setText(note.getTitle());
                                 mEditorContent.setText(note.getContent());
                             }
                         });
                     }else{
-                        Toast.makeText(this, "noteId: " + noteId, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "position: " + position, Toast.LENGTH_SHORT).show();
                     }
 
                     break;
