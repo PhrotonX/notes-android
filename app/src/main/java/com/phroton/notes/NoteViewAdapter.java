@@ -44,7 +44,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
         if(mNotes != null) {
             Note currentNote = mNotes.get(position);
 
-            mNoteId.add(currentNote.getId());
+            mNoteId.add(position);
 
             String shortenedText;
 
