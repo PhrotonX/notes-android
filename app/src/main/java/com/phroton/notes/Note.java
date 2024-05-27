@@ -1,11 +1,18 @@
 package com.phroton.notes;
 
+import android.os.Build;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "notes")
 public class Note {
+
+    @Ignore
+    public static final String NOTE_ID_EXTRA = Build.ID + ".NOTE_ID_EXTRA";
+
     @PrimaryKey(autoGenerate = true)
     public int id;
 
@@ -18,6 +25,8 @@ public class Note {
         this.mTitle = title;
         this.mContent = content;
     }
+
+    public int getId(){ return id; }
 
     public String getTitle()
     {

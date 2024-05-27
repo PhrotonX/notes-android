@@ -19,6 +19,8 @@ public class NoteViewModel extends AndroidViewModel {
         mNotes = mRepository.getNotesCompat();
     }
 
+    //@TODO: Create getNote(int noteId) method here...
+
     public LiveData<List<Note>> getNotesCompat(){
 
         return mNotes;

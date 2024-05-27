@@ -1,22 +1,32 @@
 package com.phroton.notes.ui.editor;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.phroton.notes.Note;
+import com.phroton.notes.NoteViewModel;
 import com.phroton.notes.R;
+import com.phroton.notes.RequestCode;
+
+import java.util.List;
 
 public class EditorActivity extends AppCompatActivity {
     //private EditorViewModel mEditorViewModel;
 
     private EditText mEditorTitle;
     private EditText mEditorContent;
+
+    private NoteViewModel mNoteViewModel = null;
 
     public static final String EDITOR_TITLE_EXTRA = "EDITOR_TITLE_EXTRA";
     public static final String EDITOR_CONTENT_EXTRA = "EDITOR_CONTENT_EXTRA";
@@ -29,6 +39,47 @@ public class EditorActivity extends AppCompatActivity {
         mEditorTitle = (EditText) findViewById(R.id.editorTitle);
         mEditorContent = (EditText) findViewById(R.id.editorContent);
         //mEditorViewModel = new ViewModelProvider(this).get(EditorViewModel.class);
+
+        Intent intent = getIntent();
+        RequestCode requestCode;
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            requestCode = intent.getSerializableExtra(RequestCode.REQUEST_CODE, RequestCode.class);
+        }else{
+            requestCode = (RequestCode) intent.getSerializableExtra(RequestCode.REQUEST_CODE);
+        }
+
+        if(requestCode != null){
+            switch(requestCode){
+                case REQUEST_CODE_CREATE_NOTE:
+                    break;
+                case REQUEST_CODE_EDIT_NOTE:
+                    int noteId = intent.getIntExtra(Note.NOTE_ID_EXTRA, -1);
+
+                    if(noteId != -1){
+                        mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
+                        mNoteViewModel.getNotesCompat().observe(this, new Observer<List<Note>>() {
+                            @Override
+                            public void onChanged(List<Note> notes) {
+                                Note note = notes.get(noteId);
+                                mEditorTitle.setText(note.getTitle());
+                                mEditorContent.setText(note.getContent());
+                            }
+                        });
+                    }else{
+                        Toast.makeText(this, "noteId: " + noteId, Toast.LENGTH_SHORT).show();
+                    }
+
+                    break;
+                case REQUEST_CODE_UNKNOWN:
+                    break;
+                default:
+                    break;
+            }
+        }else{
+            Toast.makeText(this, "requestCode is null", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override

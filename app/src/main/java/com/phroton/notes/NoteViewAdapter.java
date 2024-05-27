@@ -1,5 +1,6 @@
 package com.phroton.notes;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import java.util.List;
 
 public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
     private List<Note> mNotes;
+    private int[] mNoteId;
     private Context mContext;
 
     private OnClickListener mClickListener;
@@ -37,9 +39,11 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NoteViewHolder holder, @SuppressLint("RecyclerView") int position) {
         if(mNotes != null) {
             Note currentNote = mNotes.get(position);
+
+            mNoteId[position] = currentNote.getId();
 
             String shortenedText;
 
@@ -70,7 +74,9 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
         }
     }
 
-
+    public int getNoteId(int position){
+        return mNoteId[position];
+    }
 
     @Override
     public int getItemCount() {

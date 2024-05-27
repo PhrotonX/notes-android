@@ -24,6 +24,7 @@ import com.phroton.notes.Note;
 import com.phroton.notes.NoteViewAdapter;
 import com.phroton.notes.NoteViewModel;
 import com.phroton.notes.R;
+import com.phroton.notes.RequestCode;
 import com.phroton.notes.databinding.FragmentHomeBinding;
 import com.phroton.notes.ui.editor.EditorActivity;
 
@@ -66,6 +67,8 @@ public class HomeFragment extends Fragment {
             public void onClick(int position) {
                 Toast.makeText(requireContext(), "Sample Click Message", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(requireContext(), EditorActivity.class);
+                intent.putExtra(RequestCode.REQUEST_CODE, RequestCode.REQUEST_CODE_EDIT_NOTE);
+                intent.putExtra(Note.NOTE_ID_EXTRA, mNoteViewAdapter.getNoteId(position));
                 mGetContent.launch(intent);
             }
         });
