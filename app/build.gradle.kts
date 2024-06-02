@@ -12,12 +12,16 @@ android {
         minSdk = 24
         targetSdk = 34
         versionCode = 103
-        versionName = "v0.1.0.1 build 110"
+        versionName = "v0.1.0.1 build 111"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
+    }
+
+    buildFeatures{
+        compose = true;
     }
 
     buildTypes {
@@ -41,7 +45,7 @@ android {
         jvmTarget = "1.8"
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
     packaging {
         resources {
@@ -65,7 +69,9 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.9.0")
-    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    var composeBom = platform("androidx.compose:compose-bom:2024.05.00");
+    implementation(composeBom);
+    androidTestImplementation(composeBom);
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
