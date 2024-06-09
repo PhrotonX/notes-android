@@ -16,6 +16,8 @@ public class Note {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
+    public int mColor;
+
     @ColumnInfo(name = "title")
     public String mTitle;
 
@@ -24,8 +26,10 @@ public class Note {
     public Note(String title, String content){
         this.mTitle = title;
         this.mContent = content;
+        this.mColor = 0;
     }
 
+    public int getColor(){ return mColor; }
     public int getId(){ return id; }
 
     public String getTitle()
@@ -35,6 +39,10 @@ public class Note {
 
     public String getContent(){
         return mContent;
+    }
+
+    public void setColor(int val){
+        mColor = val;
     }
 
     public void setTitle(String val){
