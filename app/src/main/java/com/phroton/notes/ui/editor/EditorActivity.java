@@ -65,9 +65,9 @@ public class EditorActivity extends AppCompatActivity {
                     @Override
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                         int value = result.getInt(ColorDialogFragment.EXTRA_COLOR_ID);
-                        mColor = NoteColor.values()[value];
+                        //mColor = NoteColor.values()[value];
 
-                        Toast.makeText(EditorActivity.this, "Value: " + value, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditorActivity.this, "EditorActivity - Value: " + value, Toast.LENGTH_SHORT).show();
                     }
                 });
 
