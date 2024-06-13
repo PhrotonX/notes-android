@@ -85,7 +85,6 @@ public class EditorActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_editor, menu);
-        getMenuInflater().inflate(R.menu.menu_color, menu);
         return true;
     }
 
