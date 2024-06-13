@@ -1,19 +1,26 @@
 package com.phroton.notes.ui.editor;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.phroton.notes.Note;
+import com.phroton.notes.NoteColor;
 import com.phroton.notes.NoteViewModel;
 import com.phroton.notes.R;
 import com.phroton.notes.RequestCode;
@@ -23,10 +30,13 @@ import java.util.List;
 public class EditorActivity extends AppCompatActivity {
     //private EditorViewModel mEditorViewModel;
 
+    private NoteColor mColor;
     private EditText mEditorTitle;
     private EditText mEditorContent;
 
     private NoteViewModel mNoteViewModel = null;
+
+    private View mView;
 
     public static final String EDITOR_TITLE_EXTRA = "EDITOR_TITLE_EXTRA";
     public static final String EDITOR_CONTENT_EXTRA = "EDITOR_CONTENT_EXTRA";
@@ -36,6 +46,7 @@ public class EditorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
 
+        mView = findViewById(R.id.editActivity);
         mEditorTitle = (EditText) findViewById(R.id.editorTitle);
         mEditorContent = (EditText) findViewById(R.id.editorContent);
         //mEditorViewModel = new ViewModelProvider(this).get(EditorViewModel.class);
@@ -48,6 +59,17 @@ public class EditorActivity extends AppCompatActivity {
         }else{
             requestCode = (RequestCode) intent.getSerializableExtra(RequestCode.REQUEST_CODE);
         }
+
+        getSupportFragmentManager().setFragmentResultListener(ColorDialogFragment.REQUEST_COLOR_UPDATED,
+                this, new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        int value = result.getInt(ColorDialogFragment.EXTRA_COLOR_ID);
+                        mColor = NoteColor.values()[value];
+
+                        Toast.makeText(EditorActivity.this, "Value: " + value, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
         if(requestCode != null){
             switch(requestCode){
@@ -110,5 +132,10 @@ public class EditorActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

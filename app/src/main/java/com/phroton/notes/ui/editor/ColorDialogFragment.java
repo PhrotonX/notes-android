@@ -2,6 +2,7 @@ package com.phroton.notes.ui.editor;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.phroton.notes.R;
 
 public class ColorDialogFragment extends DialogFragment {
+    public static final String EXTRA_COLOR_ID = "ColorDialogFragment.EXTRA_COLOR_ID";
+    public static final String REQUEST_COLOR_UPDATED = "ColorDialogFragment.REQUEST_COLOR_UPDATED";
     /*@Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -31,6 +34,9 @@ public class ColorDialogFragment extends DialogFragment {
         view.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(EXTRA_COLOR_ID, checkedId);
+                getParentFragmentManager().setFragmentResult(REQUEST_COLOR_UPDATED, bundle);
                 dismiss();
             }
         });
