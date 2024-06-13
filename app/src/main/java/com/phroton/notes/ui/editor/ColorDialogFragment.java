@@ -16,17 +16,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.phroton.notes.R;
 
 public class ColorDialogFragment extends DialogFragment {
-    @Nullable
+    /*@Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.dialog_color, container);
-    }
+    }*/
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        return new AlertDialog.Builder(getContext())
+        LayoutInflater inflater = getLayoutInflater();
+
+        return new AlertDialog.Builder(getActivity())
                 .setTitle(getContext().getResources().getString(R.string.menu_color))
+                .setView(inflater.inflate(R.layout.dialog_color, null))
                 .setNegativeButton(getContext().getResources().getString(R.string.cancel), ((dialog, which) -> {}))
                 .create();
         //builder.setView();
