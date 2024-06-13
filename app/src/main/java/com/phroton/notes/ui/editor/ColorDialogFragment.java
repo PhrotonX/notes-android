@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,10 +27,17 @@ public class ColorDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         LayoutInflater inflater = getLayoutInflater();
+        RadioGroup view = (RadioGroup)inflater.inflate(R.layout.dialog_color, null);
+        view.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                dismiss();
+            }
+        });
 
         return new AlertDialog.Builder(getActivity())
                 .setTitle(getContext().getResources().getString(R.string.menu_color))
-                .setView(inflater.inflate(R.layout.dialog_color, null))
+                .setView(view)
                 .setNegativeButton(getContext().getResources().getString(R.string.cancel), ((dialog, which) -> {}))
                 .create();
         //builder.setView();
