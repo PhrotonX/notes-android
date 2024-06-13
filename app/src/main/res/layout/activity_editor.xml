@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin"
     android:orientation="vertical"
     tools:context=".ui.editor.EditorActivity">
     <EditText
@@ -13,6 +14,7 @@
         android:textSize="@dimen/editorTextSize"
         android:layout_marginBottom="8dp"
         android:hint="@string/type_title_here"
+        style="@style/TextAppearance.MaterialComponents.Headline5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/editorContent"

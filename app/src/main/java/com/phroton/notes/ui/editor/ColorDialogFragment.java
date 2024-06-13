@@ -1,0 +1,46 @@
+package com.phroton.notes.ui.editor;
+
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListAdapter;
+import android.widget.RadioGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.phroton.notes.R;
+
+public class ColorDialogFragment extends DialogFragment {
+    /*@Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.dialog_color, container);
+    }*/
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        LayoutInflater inflater = getLayoutInflater();
+        RadioGroup view = (RadioGroup)inflater.inflate(R.layout.dialog_color, null);
+        view.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                dismiss();
+            }
+        });
+
+        return new AlertDialog.Builder(getActivity())
+                .setTitle(getContext().getResources().getString(R.string.menu_color))
+                .setView(view)
+                .setNegativeButton(getContext().getResources().getString(R.string.cancel), ((dialog, which) -> {}))
+                .create();
+        //builder.setView();
+
+    }
+}

@@ -90,7 +90,6 @@ public class EditorActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-
         if(item.getItemId() == R.id.menu_editor_save){
             //TODO: Function for saving here...
 
@@ -105,6 +104,9 @@ public class EditorActivity extends AppCompatActivity {
             finish();
         }else if(item.getItemId() == R.id.menu_editor_share){
             //TODO: Function for sharing here...
+        }else if(item.getItemId() == R.id.menu_editor_color){
+            ColorDialogFragment dialog = new ColorDialogFragment();
+            dialog.show(getSupportFragmentManager(), "ColorDialogFragment");
         }
 
         return super.onOptionsItemSelected(item);
