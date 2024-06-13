@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/dialog_margin"
-    android:orientation="vertical">
+<!--<LinearLayout-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_margin="@dimen/dialog_margin"-->
+<!--    android:orientation="vertical">-->
     <RadioGroup
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/radio_color_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,7 +68,7 @@
             />
     </RadioGroup>
 
-</LinearLayout>
+<!--</LinearLayout>-->
 
 
 <!--    <androidx.recyclerview.widget.RecyclerView-->
