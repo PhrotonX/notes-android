@@ -1,6 +1,7 @@
 package com.phroton.notes;
 
 public enum NoteColor {
+    White,
     Yellow,
     Blue,
     Green,
@@ -8,6 +9,5 @@ public enum NoteColor {
     Orange,
     Purple,
     Pink,
-    Gray,
-    White
+    Gray
 }

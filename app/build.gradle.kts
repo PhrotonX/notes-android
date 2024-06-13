@@ -12,7 +12,7 @@ android {
         minSdk = 24
         targetSdk = 34
         versionCode = 104
-        versionName = "v0.1.0.1 build 114"
+        versionName = "v0.1.0.1 build 115"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -56,6 +56,7 @@ android {
 
 dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
     // https://mvnrepository.com/artifact/androidx.activity/activity
     runtimeOnly("androidx.activity:activity-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
