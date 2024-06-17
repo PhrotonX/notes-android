@@ -35,4 +35,14 @@ public class NoteRepository {
         }
     }
 
+    public void update(Note note){
+        try{
+            NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
+                mNoteDao.update(note);
+            });
+        }catch(NullPointerException e){
+            Log.e("com.phroton.notes", "NoteDao is null!");
+            e.printStackTrace();
+        }
+    }
 }

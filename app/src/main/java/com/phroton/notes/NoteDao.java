@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -21,4 +22,7 @@ public interface NoteDao {
 
     @Query("SELECT * FROM notes ORDER BY id DESC")
     LiveData<List<Note>> getNotesByDescendingId();
+
+    @Update
+    void update(Note note);
 }

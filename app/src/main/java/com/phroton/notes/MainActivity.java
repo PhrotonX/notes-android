@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -52,6 +53,13 @@ public class MainActivity extends AppCompatActivity {
                             Intent data = result.getData();
                             mNote = new Note(data.getStringExtra(EditorActivity.EDITOR_TITLE_EXTRA),
                                     data.getStringExtra(EditorActivity.EDITOR_CONTENT_EXTRA));
+                            mNote.setColor(data.getIntExtra(EditorActivity.EDITOR_COLOR_EXTRA,
+                                    R.color.background_white));
+
+                            if(mNote.getColor() == 0x0) {
+                                mNote.setColor(R.color.background_white);
+                            }
+
                             mNoteViewModel.insert(mNote);
                             break;
                         case RESULT_CANCELED:
@@ -91,6 +99,12 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        /*
+        TextView navSubtitle = (TextView)findViewById(R.id.textView);
+        String navSubtitleStr = navSubtitle.getText().toString();
+        navSubtitleStr += " " + BuildConfig.VERSION_NAME;
+        navSubtitle.setText(navSubtitleStr);*/
     }
 
     @Override

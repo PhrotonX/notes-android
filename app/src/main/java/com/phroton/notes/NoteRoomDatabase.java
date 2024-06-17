@@ -3,6 +3,7 @@ package com.phroton.notes;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.room.AutoMigration;
 import androidx.room.Database;
 import androidx.room.DatabaseConfiguration;
 import androidx.room.InvalidationTracker;
@@ -14,7 +15,11 @@ import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Note.class}, version = 104)
+@Database(entities = {Note.class}, version = 106,
+    autoMigrations = {
+        @AutoMigration(from = 105, to = 106)
+    }
+)
 public abstract class NoteRoomDatabase extends RoomDatabase{
 
     public abstract NoteDao noteDao();

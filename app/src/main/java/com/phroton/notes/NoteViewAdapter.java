@@ -41,22 +41,28 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, @SuppressLint("RecyclerView") int position) {
         if(mNotes != null) {
-            Note currentNote = mNotes.get(position);
+            Note currentData = mNotes.get(position);
 
             String shortenedText;
 
-            if(currentNote.getTitle().length() >= 100) {
-                shortenedText = currentNote.getTitle().substring(0, 100) + "...";
+            if(currentData.getTitle().length() >= 100) {
+                shortenedText = currentData.getTitle().substring(0, 100) + "...";
                 holder.mTitle.setText(shortenedText);
             }else{
-                holder.mTitle.setText(currentNote.getTitle());
+                holder.mTitle.setText(currentData.getTitle());
             }
 
-            if(currentNote.getContent().length() >= 200){
-                shortenedText = currentNote.getContent().substring(0, 200) + "...";
+            if(currentData.getContent().length() >= 200){
+                shortenedText = currentData.getContent().substring(0, 200) + "...";
                 holder.mContent.setText(shortenedText);
             }else{
-                holder.mContent.setText(currentNote.getContent());
+                holder.mContent.setText(currentData.getContent());
+            }
+
+            if(currentData.getColor() == 0x0){
+                holder.mCardView.setCardBackgroundColor(mContext.getColor(R.color.background_white));
+            }else{
+                holder.mCardView.setCardBackgroundColor(mContext.getColor(currentData.getColor()));
             }
 
             //if(mClickListener != null){
