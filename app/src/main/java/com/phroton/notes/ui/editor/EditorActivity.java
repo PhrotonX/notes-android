@@ -3,12 +3,10 @@ package com.phroton.notes.ui.editor;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.phroton.notes.Note;
@@ -102,7 +99,7 @@ public class EditorActivity extends AppCompatActivity {
                                 "EditorActivity - Value: "+ mColor.toString() + " - " +
                                         mColor.ordinal(), Toast.LENGTH_SHORT).show();
 
-                        ChangeColor();
+                        ChangeBackgroundColor();
                     }
                 });
 
@@ -121,6 +118,7 @@ public class EditorActivity extends AppCompatActivity {
                                 Note note = notes.get(position);
                                 mEditorTitle.setText(note.getTitle());
                                 mEditorContent.setText(note.getContent());
+
                             }
                         });
                     }else{
@@ -174,15 +172,38 @@ public class EditorActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void ChangeColor(){
+    private void ChangeBackgroundColor(){
         switch(mColor){
             case Yellow:
                 mView.setBackgroundResource(R.color.background_yellow);
                 break;
+            case Blue:
+                mView.setBackgroundResource(R.color.background_blue);
+                break;
+            case Green:
+                mView.setBackgroundResource(R.color.background_green);
+                break;
+            case Red:
+                mView.setBackgroundResource(R.color.background_red);
+                break;
+            case Orange:
+                mView.setBackgroundResource(R.color.background_orange);
+                break;
+            case Purple:
+                mView.setBackgroundResource(R.color.background_purple);
+                break;
+            case Pink:
+                mView.setBackgroundResource(R.color.background_pink);
+                break;
+            case Gray:
+                mView.setBackgroundResource(R.color.background_gray);
+
             case White:
             default:
                 mView.setBackgroundResource(R.color.background_white);
                 break;
         }
+
+
     }
 }
