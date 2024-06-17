@@ -1,46 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/editActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.editor.EditorActivity"
-    >
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/editActivity"
+    tools:context=".ui.editor.EditorActivity">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-    <EditText
-        android:id="@+id/editorTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/editorTextSize"
-        android:layout_margin="@dimen/editor_margin"
-        android:layout_marginBottom="8dp"
-        android:hint="@string/type_title_here"
-        android:autoSizeMinTextSize="@dimen/editor_title_size"
-        style="@style/TextAppearance.MaterialComponents.Headline3"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/editorContent"
-        />
-    <EditText
-        android:id="@+id/editorContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/editor_margin"
-        android:ems="10"
-        android:textSize="@dimen/editorTextSize"
-        android:hint="@string/type_note_here"
-        android:autoSizeMinTextSize="@dimen/editor_title_size"
-        style="@style/TextAppearance.MaterialComponents.Headline3"
-        app:layout_constraintTop_toTopOf="@+id/editorTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+        <EditText
+            android:id="@+id/editorTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/editor_margin"
+            android:layout_marginBottom="8dp"
+            android:autoSizeMinTextSize="@dimen/editor_title_size"
+            android:hint="@string/type_title_here"
+            android:textSize="@dimen/editorTextSize"/>
+
+        <ScrollView
+            android:id="@+id/editorScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <EditText
+                android:id="@+id/editorContent"
+                style="@style/TextAppearance.MaterialComponents.Headline3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/editor_margin"
+                android:autoSizeMinTextSize="@dimen/editor_title_size"
+                android:ems="10"
+                android:hint="@string/type_note_here"
+                android:textSize="@dimen/editorTextSize"
+                />
+        </ScrollView>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
