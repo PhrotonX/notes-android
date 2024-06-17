@@ -148,7 +148,7 @@ public class EditorActivity extends AppCompatActivity {
             intent.putExtra(EDITOR_CONTENT_EXTRA, mEditorViewModel.getContent());*/
 
                 if(mRequestCode == RequestCode.REQUEST_CODE_EDIT_NOTE){
-                    intent.putExtra(EDITOR_ID_EXTRA, mPosition);
+                    intent.putExtra(EDITOR_ID_EXTRA, mPosition + 1);
                 }
 
                 intent.putExtra(EDITOR_TITLE_EXTRA, mEditorTitle.getText().toString());
