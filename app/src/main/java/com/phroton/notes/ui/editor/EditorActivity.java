@@ -67,7 +67,40 @@ public class EditorActivity extends AppCompatActivity {
                         int value = result.getInt(ColorDialogFragment.EXTRA_COLOR_ID);
                         //mColor = NoteColor.values()[value];
 
-                        Toast.makeText(EditorActivity.this, "EditorActivity - Value: " + value, Toast.LENGTH_SHORT).show();
+                        switch(value){
+                            case R.id.radio_color_yellow:
+                                mColor = NoteColor.Yellow;
+                                break;
+                            case R.id.radio_color_blue:
+                                mColor = NoteColor.Blue;
+                                break;
+                            case R.id.radio_color_green:
+                                mColor = NoteColor.Green;
+                                break;
+                            case R.id.radio_color_red:
+                                mColor = NoteColor.Red;
+                                break;
+                            case R.id.radio_color_orange:
+                                mColor = NoteColor.Orange;
+                                break;
+                            case R.id.radio_color_purple:
+                                mColor = NoteColor.Purple;
+                                break;
+                            case R.id.radio_color_pink:
+                                mColor = NoteColor.Pink;
+                                break;
+                            case R.id.radio_color_gray:
+                                mColor = NoteColor.Gray;
+                                break;
+                            case R.id.radio_color_white:
+                            default:
+                                mColor = NoteColor.White;
+                                break;
+                        }
+
+                        Toast.makeText(EditorActivity.this,
+                                "EditorActivity - Value: "+ mColor.toString() + " - " +
+                                        mColor.ordinal(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
