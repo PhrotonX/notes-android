@@ -60,8 +60,35 @@ public class EditorActivity extends AppCompatActivity {
                 this, new FragmentResultListener() {
                     @Override
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                        mColor = result.getInt(ColorDialogFragment.EXTRA_COLOR_ID);
-                        ChangeBackgroundColor(mColor);
+                        int dialogResult = result.getInt(ColorDialogFragment.EXTRA_COLOR_ID);
+                        switch(dialogResult){
+                            case R.id.radio_color_yellow:
+                                ChangeBackgroundColor(R.color.background_yellow);
+                                break;
+                            case R.id.radio_color_blue:
+                                ChangeBackgroundColor(R.color.background_blue);
+                                break;
+                            case R.id.radio_color_green:
+                                ChangeBackgroundColor(R.color.background_green);
+                                break;
+                            case R.id.radio_color_red:
+                                ChangeBackgroundColor(R.color.background_red);
+                                break;
+                            case R.id.radio_color_purple:
+                                ChangeBackgroundColor(R.color.background_purple);
+                                break;
+                            case R.id.radio_color_pink:
+                                ChangeBackgroundColor(R.color.background_pink);
+                                break;
+                            case R.id.radio_color_gray:
+                                ChangeBackgroundColor(R.color.background_gray);
+                                break;
+                            case R.id.radio_color_white:
+                            default:
+                                ChangeBackgroundColor(R.color.background_white);
+                                break;
+                        }
+
                     }
                 });
 
