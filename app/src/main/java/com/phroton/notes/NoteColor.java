@@ -1,5 +1,6 @@
 package com.phroton.notes;
 
+@Deprecated
 public enum NoteColor {
     White,
     Yellow,
