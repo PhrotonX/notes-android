@@ -169,5 +169,6 @@ public class EditorActivity extends AppCompatActivity {
 
     private void ChangeBackgroundColor(int colorRes){
         mView.setBackgroundResource(colorRes);
+        mColor = colorRes;
     }
 }
