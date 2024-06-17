@@ -59,7 +59,11 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
                 holder.mContent.setText(currentData.getContent());
             }
 
-            holder.mCardView.setCardBackgroundColor(mContext.getColor(currentData.getColor()));
+            if(currentData.getColor() == 0x0){
+                holder.mCardView.setCardBackgroundColor(mContext.getColor(R.color.background_white));
+            }else{
+                holder.mCardView.setCardBackgroundColor(mContext.getColor(currentData.getColor()));
+            }
 
             //if(mClickListener != null){
                 holder.mView.setOnClickListener(new View.OnClickListener() {

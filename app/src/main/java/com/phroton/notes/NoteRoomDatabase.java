@@ -15,10 +15,10 @@ import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Note.class}, version = 105/*,
+@Database(entities = {Note.class}, version = 106,
     autoMigrations = {
-        @AutoMigration(from = 104, to = 105)
-    }*/
+        @AutoMigration(from = 105, to = 106)
+    }
 )
 public abstract class NoteRoomDatabase extends RoomDatabase{
 

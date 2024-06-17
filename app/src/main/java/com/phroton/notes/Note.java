@@ -19,6 +19,12 @@ public class Note {
     @ColumnInfo(name = "color")
     public int mColor;
 
+    @Ignore
+    private static final int mVersionCode = BuildConfig.VERSION_CODE;
+
+    @ColumnInfo(name = "version", defaultValue = mVersionCode + "")
+    public int mVersion;
+
     @ColumnInfo(name = "title")
     public String mTitle;
 
@@ -42,6 +48,7 @@ public class Note {
         return mContent;
     }
 
+    public int getVersion(){return mVersion; }
     public void setColor(int val){
         mColor = val;
     }
@@ -53,4 +60,6 @@ public class Note {
     public void setContent(String val){
         mContent = val;
     }
+
+    public void setVersion(int val) {mVersion = val;}
 }
