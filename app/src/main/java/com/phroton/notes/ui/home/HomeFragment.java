@@ -45,7 +45,7 @@ public class HomeFragment extends Fragment {
             public void onActivityResult(ActivityResult o) {
                 switch(o.getResultCode()){
                     case EditorActivity.RESULT_OK:
-                        Toast.makeText(getContext(), "Sample activity result", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), "Sample activity result", Toast.LENGTH_SHORT).show();
                         break;
                     default:
                         break;
@@ -65,7 +65,7 @@ public class HomeFragment extends Fragment {
         mNoteViewAdapter.setOnClickListener(new NoteViewAdapter.OnClickListener() {
             @Override
             public void onClick(int position) {
-                Toast.makeText(requireContext(), "Sample Click Message", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(requireContext(), "Sample Click Message", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(requireContext(), EditorActivity.class);
                 intent.putExtra(RequestCode.REQUEST_CODE, RequestCode.REQUEST_CODE_EDIT_NOTE);
                 intent.putExtra(Note.NOTE_ID_EXTRA, position);

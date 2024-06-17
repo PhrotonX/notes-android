@@ -16,6 +16,7 @@ public class Note {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
+    @ColumnInfo(name = "color")
     public int mColor;
 
     @ColumnInfo(name = "title")

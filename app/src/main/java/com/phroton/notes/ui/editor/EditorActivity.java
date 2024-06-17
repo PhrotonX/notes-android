@@ -75,6 +75,9 @@ public class EditorActivity extends AppCompatActivity {
                             case R.id.radio_color_red:
                                 ChangeBackgroundColor(R.color.background_red);
                                 break;
+                            case R.id.radio_color_orange:
+                                ChangeBackgroundColor(R.color.background_pink);
+                                break;
                             case R.id.radio_color_purple:
                                 ChangeBackgroundColor(R.color.background_purple);
                                 break;

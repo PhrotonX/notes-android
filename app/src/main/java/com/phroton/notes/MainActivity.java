@@ -54,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
                                     data.getStringExtra(EditorActivity.EDITOR_CONTENT_EXTRA));
                             mNote.setColor(data.getIntExtra(EditorActivity.EDITOR_COLOR_EXTRA,
                                     R.color.background_white));
+
+                            
+
                             mNoteViewModel.insert(mNote);
                             break;
                         case RESULT_CANCELED:
