@@ -25,7 +25,8 @@
             android:layout_marginBottom="8dp"
             android:autoSizeMinTextSize="@dimen/editor_title_size"
             android:hint="@string/type_title_here"
-            android:textSize="@dimen/editorTextSize"/>
+            android:textSize="@dimen/editorTextSize"
+            android:maxLength="80"/>
 
         <ScrollView
             android:id="@+id/editorScrollView"

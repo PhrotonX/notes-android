@@ -36,6 +36,7 @@ public class EditorActivity extends AppCompatActivity {
 
     public static final String EDITOR_TITLE_EXTRA = "EDITOR_TITLE_EXTRA";
     public static final String EDITOR_CONTENT_EXTRA = "EDITOR_CONTENT_EXTRA";
+    public static final String EDITOR_COLOR_EXTRA = "EDITOR_COLOR_EXTRA";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +108,7 @@ public class EditorActivity extends AppCompatActivity {
                                 Note note = notes.get(position);
                                 mEditorTitle.setText(note.getTitle());
                                 mEditorContent.setText(note.getContent());
-                                //@TODO: Use note.getColor() here...
+                                mView.setBackgroundResource(note.getColor());
                             }
                         });
                     }else{
@@ -144,7 +145,7 @@ public class EditorActivity extends AppCompatActivity {
 
                 intent.putExtra(EDITOR_TITLE_EXTRA, mEditorTitle.getText().toString());
                 intent.putExtra(EDITOR_CONTENT_EXTRA, mEditorContent.getText().toString());
-                //@TODO: Function for setting color extra here...
+                intent.putExtra(EDITOR_COLOR_EXTRA, mColor);
 
                 setResult(RESULT_OK, intent);
                 finish();
