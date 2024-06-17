@@ -101,6 +101,8 @@ public class EditorActivity extends AppCompatActivity {
                         Toast.makeText(EditorActivity.this,
                                 "EditorActivity - Value: "+ mColor.toString() + " - " +
                                         mColor.ordinal(), Toast.LENGTH_SHORT).show();
+
+                        ChangeColor();
                     }
                 });
 
