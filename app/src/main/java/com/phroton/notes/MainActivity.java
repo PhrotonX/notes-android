@@ -100,11 +100,11 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-
+        /*
         TextView navSubtitle = (TextView)findViewById(R.id.textView);
         String navSubtitleStr = navSubtitle.getText().toString();
         navSubtitleStr += " " + BuildConfig.VERSION_NAME;
-        navSubtitle.setText(navSubtitleStr);
+        navSubtitle.setText(navSubtitleStr);*/
     }
 
     @Override
