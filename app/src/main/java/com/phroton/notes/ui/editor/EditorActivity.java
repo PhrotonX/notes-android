@@ -197,7 +197,7 @@ public class EditorActivity extends AppCompatActivity {
                 break;
             case Gray:
                 mView.setBackgroundResource(R.color.background_gray);
-
+                break;
             case White:
             default:
                 mView.setBackgroundResource(R.color.background_white);

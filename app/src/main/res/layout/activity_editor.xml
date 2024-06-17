@@ -8,6 +8,7 @@
     android:layout_margin="@dimen/margin"
     android:orientation="vertical"
     tools:context=".ui.editor.EditorActivity">
+
     <EditText
         android:id="@+id/editorTitle"
         android:layout_width="match_parent"
