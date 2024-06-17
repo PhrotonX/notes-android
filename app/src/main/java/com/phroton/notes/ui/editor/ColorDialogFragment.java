@@ -41,11 +41,11 @@ public class ColorDialogFragment extends DialogFragment {
                 bundle.putInt(EXTRA_COLOR_ID, checkedId);
                 m_value = checkedId;
                 getParentFragmentManager().setFragmentResult(REQUEST_COLOR_UPDATED, bundle);
-                //dismiss();
+                dismiss();
             }
         });
 
-        Toast.makeText(getContext(), "ColorDialogFragment -  Checked Value: " + m_value, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "ColorDialogFragment -  Checked Value: " + m_value, Toast.LENGTH_SHORT).show();
 
         return new AlertDialog.Builder(getActivity())
                 .setTitle(getContext().getResources().getString(R.string.menu_color))
