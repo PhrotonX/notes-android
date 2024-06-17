@@ -8,28 +8,34 @@
     android:layout_margin="@dimen/margin"
     android:orientation="vertical"
     tools:context=".ui.editor.EditorActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <EditText
+            android:id="@+id/editorTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/editorTextSize"
+            android:layout_marginBottom="8dp"
+            android:hint="@string/type_title_here"
+            style="@style/TextAppearance.MaterialComponents.Headline3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/editorContent"
+            />
+        <EditText
+            android:id="@+id/editorContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textSize="@dimen/editorTextSize"
+            android:hint="@string/type_note_here"
+            app:layout_constraintTop_toTopOf="@+id/editorTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+    </ScrollView>
 
-    <EditText
-        android:id="@+id/editorTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/editorTextSize"
-        android:layout_marginBottom="8dp"
-        android:hint="@string/type_title_here"
-        style="@style/TextAppearance.MaterialComponents.Headline5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/editorContent"
-        />
-    <EditText
-        android:id="@+id/editorContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:textSize="@dimen/editorTextSize"
-        android:hint="@string/type_note_here"
-        app:layout_constraintTop_toTopOf="@+id/editorTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
 </androidx.constraintlayout.widget.ConstraintLayout>

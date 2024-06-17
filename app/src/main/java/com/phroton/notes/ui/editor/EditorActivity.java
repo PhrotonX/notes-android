@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.phroton.notes.Note;
-import com.phroton.notes.NoteColor;
 import com.phroton.notes.NoteViewModel;
 import com.phroton.notes.R;
 import com.phroton.notes.RequestCode;
@@ -26,8 +25,8 @@ import java.util.List;
 
 public class EditorActivity extends AppCompatActivity {
     //private EditorViewModel mEditorViewModel;
+    private int mColor;
 
-    private NoteColor mColor;
     private EditText mEditorTitle;
     private EditText mEditorContent;
 
@@ -61,45 +60,8 @@ public class EditorActivity extends AppCompatActivity {
                 this, new FragmentResultListener() {
                     @Override
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                        int value = result.getInt(ColorDialogFragment.EXTRA_COLOR_ID);
-                        //mColor = NoteColor.values()[value];
-
-                        switch(value){
-                            case R.id.radio_color_yellow:
-                                mColor = NoteColor.Yellow;
-                                break;
-                            case R.id.radio_color_blue:
-                                mColor = NoteColor.Blue;
-                                break;
-                            case R.id.radio_color_green:
-                                mColor = NoteColor.Green;
-                                break;
-                            case R.id.radio_color_red:
-                                mColor = NoteColor.Red;
-                                break;
-                            case R.id.radio_color_orange:
-                                mColor = NoteColor.Orange;
-                                break;
-                            case R.id.radio_color_purple:
-                                mColor = NoteColor.Purple;
-                                break;
-                            case R.id.radio_color_pink:
-                                mColor = NoteColor.Pink;
-                                break;
-                            case R.id.radio_color_gray:
-                                mColor = NoteColor.Gray;
-                                break;
-                            case R.id.radio_color_white:
-                            default:
-                                mColor = NoteColor.White;
-                                break;
-                        }
-
-                        Toast.makeText(EditorActivity.this,
-                                "EditorActivity - Value: "+ mColor.toString() + " - " +
-                                        mColor.ordinal(), Toast.LENGTH_SHORT).show();
-
-                        ChangeBackgroundColor();
+                        mColor = result.getInt(ColorDialogFragment.EXTRA_COLOR_ID);
+                        ChangeBackgroundColor(mColor);
                     }
                 });
 
@@ -118,7 +80,7 @@ public class EditorActivity extends AppCompatActivity {
                                 Note note = notes.get(position);
                                 mEditorTitle.setText(note.getTitle());
                                 mEditorContent.setText(note.getContent());
-
+                                //@TODO: Use note.getColor() here...
                             }
                         });
                     }else{
@@ -145,23 +107,28 @@ public class EditorActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        if(item.getItemId() == R.id.menu_editor_save){
-            //TODO: Function for saving here...
+        switch (item.getItemId()) {
+            case R.id.menu_editor_save:
+                //TODO: Function for saving here...
 
-            Intent intent = new Intent();
+                Intent intent = new Intent();
             /*intent.putExtra(EDITOR_TITLE_EXTRA, mEditorViewModel.getTitle());
             intent.putExtra(EDITOR_CONTENT_EXTRA, mEditorViewModel.getContent());*/
 
-            intent.putExtra(EDITOR_TITLE_EXTRA, mEditorTitle.getText().toString());
-            intent.putExtra(EDITOR_CONTENT_EXTRA, mEditorContent.getText().toString());
+                intent.putExtra(EDITOR_TITLE_EXTRA, mEditorTitle.getText().toString());
+                intent.putExtra(EDITOR_CONTENT_EXTRA, mEditorContent.getText().toString());
+                //@TODO: Function for setting color extra here...
 
-            setResult(RESULT_OK, intent);
-            finish();
-        }else if(item.getItemId() == R.id.menu_editor_share){
-            //TODO: Function for sharing here...
-        }else if(item.getItemId() == R.id.menu_editor_color){
-            ColorDialogFragment dialog = new ColorDialogFragment();
-            dialog.show(getSupportFragmentManager(), "ColorDialogFragment");
+                setResult(RESULT_OK, intent);
+                finish();
+                break;
+            case R.id.menu_editor_share:
+                //TODO: Function for sharing here...
+                break;
+            case R.id.menu_editor_color:
+                ColorDialogFragment dialog = new ColorDialogFragment();
+                dialog.show(getSupportFragmentManager(), "ColorDialogFragment");
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -172,38 +139,7 @@ public class EditorActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void ChangeBackgroundColor(){
-        switch(mColor){
-            case Yellow:
-                mView.setBackgroundResource(R.color.background_yellow);
-                break;
-            case Blue:
-                mView.setBackgroundResource(R.color.background_blue);
-                break;
-            case Green:
-                mView.setBackgroundResource(R.color.background_green);
-                break;
-            case Red:
-                mView.setBackgroundResource(R.color.background_red);
-                break;
-            case Orange:
-                mView.setBackgroundResource(R.color.background_orange);
-                break;
-            case Purple:
-                mView.setBackgroundResource(R.color.background_purple);
-                break;
-            case Pink:
-                mView.setBackgroundResource(R.color.background_pink);
-                break;
-            case Gray:
-                mView.setBackgroundResource(R.color.background_gray);
-                break;
-            case White:
-            default:
-                mView.setBackgroundResource(R.color.background_white);
-                break;
-        }
-
-
+    private void ChangeBackgroundColor(int colorRes){
+        mView.setBackgroundResource(colorRes);
     }
 }
