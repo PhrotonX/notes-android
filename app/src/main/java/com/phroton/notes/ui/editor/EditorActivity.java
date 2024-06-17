@@ -171,4 +171,16 @@ public class EditorActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    private void ChangeColor(){
+        switch(mColor){
+            case Yellow:
+                mView.setBackgroundResource(R.color.background_yellow);
+                break;
+            case White:
+            default:
+                mView.setBackgroundResource(R.color.background_white);
+                break;
+        }
+    }
 }
