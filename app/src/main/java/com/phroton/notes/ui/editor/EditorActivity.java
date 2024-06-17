@@ -77,7 +77,7 @@ public class EditorActivity extends AppCompatActivity {
                                 ChangeBackgroundColor(R.color.background_red);
                                 break;
                             case R.id.radio_color_orange:
-                                ChangeBackgroundColor(R.color.background_pink);
+                                ChangeBackgroundColor(R.color.background_orange);
                                 break;
                             case R.id.radio_color_purple:
                                 ChangeBackgroundColor(R.color.background_purple);
@@ -112,7 +112,7 @@ public class EditorActivity extends AppCompatActivity {
                                 Note note = notes.get(mPosition);
                                 mEditorTitle.setText(note.getTitle());
                                 mEditorContent.setText(note.getContent());
-                                mView.setBackgroundResource(note.getColor());
+                                ChangeBackgroundColor(note.getColor());
                             }
                         });
                     }else{
