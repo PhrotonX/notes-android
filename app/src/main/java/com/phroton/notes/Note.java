@@ -53,6 +53,8 @@ public class Note {
         mColor = val;
     }
 
+    public void setId(int val){id = val;}
+
     public void setTitle(String val){
         mTitle = val;
     }

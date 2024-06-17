@@ -31,9 +31,11 @@ public class EditorActivity extends AppCompatActivity {
     private EditText mEditorContent;
 
     private NoteViewModel mNoteViewModel = null;
-
+    private int mPosition = 0;
+    private RequestCode mRequestCode;
     private View mView;
 
+    public static final String EDITOR_ID_EXTRA = "EDITOR_ID_EXTRA";
     public static final String EDITOR_TITLE_EXTRA = "EDITOR_TITLE_EXTRA";
     public static final String EDITOR_CONTENT_EXTRA = "EDITOR_CONTENT_EXTRA";
     public static final String EDITOR_COLOR_EXTRA = "EDITOR_COLOR_EXTRA";
@@ -49,12 +51,11 @@ public class EditorActivity extends AppCompatActivity {
         //mEditorViewModel = new ViewModelProvider(this).get(EditorViewModel.class);
 
         Intent intent = getIntent();
-        RequestCode requestCode;
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
-            requestCode = intent.getSerializableExtra(RequestCode.REQUEST_CODE, RequestCode.class);
+            mRequestCode = intent.getSerializableExtra(RequestCode.REQUEST_CODE, RequestCode.class);
         }else{
-            requestCode = (RequestCode) intent.getSerializableExtra(RequestCode.REQUEST_CODE);
+            mRequestCode = (RequestCode) intent.getSerializableExtra(RequestCode.REQUEST_CODE);
         }
 
         getSupportFragmentManager().setFragmentResultListener(ColorDialogFragment.REQUEST_COLOR_UPDATED,
@@ -96,26 +97,26 @@ public class EditorActivity extends AppCompatActivity {
                     }
                 });
 
-        if(requestCode != null){
-            switch(requestCode){
+        if(mRequestCode != null){
+            switch(mRequestCode){
                 case REQUEST_CODE_CREATE_NOTE:
                     break;
                 case REQUEST_CODE_EDIT_NOTE:
-                    int position = intent.getIntExtra(Note.NOTE_ID_EXTRA, -1);
+                    mPosition = intent.getIntExtra(Note.NOTE_ID_EXTRA, -1);
 
-                    if(position != -1){
+                    if(mPosition != -1){
                         mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
                         mNoteViewModel.getNotesCompat().observe(this, new Observer<List<Note>>() {
                             @Override
                             public void onChanged(List<Note> notes) {
-                                Note note = notes.get(position);
+                                Note note = notes.get(mPosition);
                                 mEditorTitle.setText(note.getTitle());
                                 mEditorContent.setText(note.getContent());
                                 mView.setBackgroundResource(note.getColor());
                             }
                         });
                     }else{
-                        Toast.makeText(this, "position: " + position, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "position: " + mPosition, Toast.LENGTH_SHORT).show();
                     }
 
                     break;
@@ -145,6 +146,10 @@ public class EditorActivity extends AppCompatActivity {
                 Intent intent = new Intent();
             /*intent.putExtra(EDITOR_TITLE_EXTRA, mEditorViewModel.getTitle());
             intent.putExtra(EDITOR_CONTENT_EXTRA, mEditorViewModel.getContent());*/
+
+                if(mRequestCode == RequestCode.REQUEST_CODE_EDIT_NOTE){
+                    intent.putExtra(EDITOR_ID_EXTRA, mPosition);
+                }
 
                 intent.putExtra(EDITOR_TITLE_EXTRA, mEditorTitle.getText().toString());
                 intent.putExtra(EDITOR_CONTENT_EXTRA, mEditorContent.getText().toString());

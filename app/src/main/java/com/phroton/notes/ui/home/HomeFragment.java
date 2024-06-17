@@ -40,18 +40,6 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        mGetContent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult o) {
-                switch(o.getResultCode()){
-                    case EditorActivity.RESULT_OK:
-                        //Toast.makeText(getContext(), "Sample activity result", Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
 
         /*HomeViewModel homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);*/
@@ -99,6 +87,37 @@ public class HomeFragment extends Fragment {
             mNoteViewAdapter.setNotes(sampleNote);
             mNoteViewAdapter.notifyDataSetChanged();
         }
+
+        //@NOTE: Handle request after editing a note.
+        mGetContent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult o) {
+                switch(o.getResultCode()){
+                    case EditorActivity.RESULT_OK:
+                        //Toast.makeText(getContext(), "Sample activity result", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "RESULT_OK",
+                                Toast.LENGTH_SHORT).show();
+                        Intent data = o.getData();
+                        Note note = new Note(data.getStringExtra(EditorActivity.EDITOR_TITLE_EXTRA),
+                                data.getStringExtra(EditorActivity.EDITOR_CONTENT_EXTRA));
+                        note.setColor(data.getIntExtra(EditorActivity.EDITOR_COLOR_EXTRA,
+                                R.color.background_white));
+                        note.setId(data.getIntExtra(EditorActivity.EDITOR_ID_EXTRA, -1));
+
+                        if(note.getColor() == 0x0) {
+                            note.setColor(R.color.background_white);
+                        }
+                        if(note.getId() == -1){
+                            Toast.makeText(getContext(), "Failed to update note", Toast.LENGTH_SHORT).show();
+                        }
+
+                        noteViewModel.update(note);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
 
         /*List<Note> allNotes = noteViewModel.getNotesCompat();
         if(allNotes != null){
