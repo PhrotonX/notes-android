@@ -31,6 +31,9 @@ public class EditorActivity extends AppCompatActivity {
     private EditText mEditorContent;
 
     private NoteViewModel mNoteViewModel = null;
+    /**
+     * \remarks Position value + 1 is always the same as the Note ID from the DB once RequestCode
+     * is equal to REQUEST_CODE_EDIT_NOTE. */
     private int mPosition = 0;
     private RequestCode mRequestCode;
     private View mView;
@@ -149,6 +152,11 @@ public class EditorActivity extends AppCompatActivity {
             case R.id.menu_editor_share:
                 //TODO: Function for sharing here...
                 break;
+            case R.id.menu_editor_delete:
+                Intent intent = new Intent();
+                intent.putExtra(Note.NOTE_ID_EXTRA, getNoteId());
+                setResult(RESULT_DELETE);
+                break;
             case R.id.menu_editor_color:
                 ColorDialogFragment dialog = new ColorDialogFragment();
                 dialog.show(getSupportFragmentManager(), "ColorDialogFragment");
@@ -172,11 +180,15 @@ public class EditorActivity extends AppCompatActivity {
         Note note = new Note(mEditorTitle.getText().toString(), mEditorContent.getText().toString());
 
         if(mRequestCode == RequestCode.REQUEST_CODE_EDIT_NOTE){
-            note.setId(mPosition + 1);
+            note.setId(getNoteId());
         }
 
         note.setColor(mColor);
 
         return note;
+    }
+
+    private int getNoteId(){
+        return mPosition + 1;
     }
 }

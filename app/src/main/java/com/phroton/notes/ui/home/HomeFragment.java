@@ -102,8 +102,8 @@ public class HomeFragment extends Fragment {
                         noteViewModel.update(note);
                         break;
                     case EditorActivity.RESULT_DELETE:
-                        note = Note.unpackCurrentNote(o.getData(), false);
-                        noteViewModel.markAsDeleted(note.getId(), true);
+                        int noteId = o.getData().getIntExtra(Note.NOTE_ID_EXTRA, -1);
+                        noteViewModel.markAsDeleted(noteId, true);
                         break;
                     default:
                         break;
