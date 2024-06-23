@@ -158,7 +158,7 @@ public class EditorActivity extends AppCompatActivity {
                 break;
             case R.id.menu_editor_delete:
                 Intent intent = new Intent();
-                intent.putExtra(Note.NOTE_ID_EXTRA, mPosition);
+                intent.putExtra(Note.NOTE_ID_EXTRA, mPosition + 1);
                 setResult(RESULT_DELETE, intent);
                 finish();
                 break;
