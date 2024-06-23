@@ -156,6 +156,7 @@ public class EditorActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.putExtra(Note.NOTE_ID_EXTRA, getNoteId());
                 setResult(RESULT_DELETE);
+                finish();
                 break;
             case R.id.menu_editor_color:
                 ColorDialogFragment dialog = new ColorDialogFragment();
