@@ -102,6 +102,7 @@ public class EditorActivity extends AppCompatActivity {
                     break;
                 case REQUEST_CODE_EDIT_NOTE:
                     mPosition = intent.getIntExtra(Note.NOTE_ID_EXTRA, -1);
+                    Toast.makeText(this, "EditorAcitvity.Position: " + mPosition, Toast.LENGTH_SHORT).show();
 
                     if(mPosition != -1){
                         mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
