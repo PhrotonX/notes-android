@@ -91,10 +91,10 @@ public class HomeFragment extends Fragment {
         mEditContent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult o) {
-                Note note = Note.unpackCurrentNote(o.getData(), true);
-
+                Note note;
                 switch(o.getResultCode()){
                     case EditorActivity.RESULT_OK:
+                        note = Note.unpackCurrentNote(o.getData(), false);
                         if(note.getId() == -1){
                             Toast.makeText(getContext(), "Failed to update note", Toast.LENGTH_SHORT).show();
                         }
@@ -102,6 +102,7 @@ public class HomeFragment extends Fragment {
                         noteViewModel.update(note);
                         break;
                     case EditorActivity.RESULT_DELETE:
+                        note = Note.unpackCurrentNote(o.getData(), false);
                         noteViewModel.markAsDeleted(note.getId(), true);
                         break;
                     default:

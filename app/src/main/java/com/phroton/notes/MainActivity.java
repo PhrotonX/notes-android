@@ -41,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    Note note = Note.unpackCurrentNote(result.getData(), false);
-
+                    Note note;
                     switch(result.getResultCode()){
                         case RESULT_OK:
+                            note = Note.unpackCurrentNote(result.getData(), false);
                             mNoteViewModel.insert(note);
                             break;
                         case RESULT_CANCELED:
