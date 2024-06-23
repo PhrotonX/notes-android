@@ -109,7 +109,7 @@ public class EditorActivity extends AppCompatActivity {
                         mNoteViewModel.getNotesCompat().observe(this, new Observer<List<Note>>() {
                             @Override
                             public void onChanged(List<Note> notes) {
-                                Note note = notes.get(mPosition);
+                                Note note = notes.get(mPosition - 1);
                                 mEditorTitle.setText(note.getTitle());
                                 mEditorContent.setText(note.getContent());
                                 ChangeBackgroundColor(note.getColor());

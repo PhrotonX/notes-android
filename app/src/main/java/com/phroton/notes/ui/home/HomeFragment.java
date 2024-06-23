@@ -50,8 +50,16 @@ public class HomeFragment extends Fragment {
         notesView.setLayoutManager(new LinearLayoutManager(requireContext()));
         mNoteViewAdapter = new NoteViewAdapter(requireContext());
 
-        //@NOTE: Original position of setting click listeners to NoteViewAdapter.
-
+        mNoteViewAdapter.setOnClickListener(new NoteViewAdapter.OnClickListener() {
+            @Override
+            public void onClick(int rvPosition, int dbPosition) {
+                //Toast.makeText(requireContext(), "Sample Click Message", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(requireContext(), EditorActivity.class);
+                intent.putExtra(RequestCode.REQUEST_CODE, RequestCode.REQUEST_CODE_EDIT_NOTE);
+                intent.putExtra(Note.NOTE_ID_EXTRA, dbPosition);
+                mEditContent.launch(intent);
+            }
+        });
 
         NoteViewModel noteViewModel =
                 new ViewModelProvider(this).get(NoteViewModel.class);
@@ -64,17 +72,6 @@ public class HomeFragment extends Fragment {
                 public void onChanged(List<Note> notes) {
                     if(notes != null){
                         mNoteViewAdapter.setNotes(notes);
-                        mNoteViewAdapter.setOnClickListener(new NoteViewAdapter.OnClickListener() {
-                            @Override
-                            public void onClick(int rvPosition, int dbPosition) {
-                                //Toast.makeText(requireContext(), "Sample Click Message", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(requireContext(), EditorActivity.class);
-                                intent.putExtra(RequestCode.REQUEST_CODE, RequestCode.REQUEST_CODE_EDIT_NOTE);
-                                intent.putExtra(Note.NOTE_ID_EXTRA, dbPosition);
-                                mEditContent.launch(intent);
-                            }
-                        });
-
                         mNoteViewAdapter.notifyDataSetChanged();
                     }
                 }
@@ -97,7 +94,8 @@ public class HomeFragment extends Fragment {
                 Note note;
                 switch(o.getResultCode()){
                     case EditorActivity.RESULT_OK:
-                        note = Note.unpackCurrentNote(o.getData(), false);
+                        note = Note.unpackCurrentNote(o.getData(), true);
+                        Toast.makeText(getContext(), "MainActivity noteId: " + note.getId(), Toast.LENGTH_SHORT).show();
                         if(note.getId() == -1){
                             Toast.makeText(getContext(), "Failed to update note", Toast.LENGTH_SHORT).show();
                         }
