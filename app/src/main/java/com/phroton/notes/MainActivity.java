@@ -1,20 +1,15 @@
 package com.phroton.notes;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.lifecycle.ViewModelProvider;
@@ -32,39 +27,27 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     public static final int CREATE_NOTE_REQUEST = 0;
-    protected Note mNote;
+
     private NoteViewModel mNoteViewModel;
 
-    private ActivityResultLauncher<Intent> mGetContent;
+    private ActivityResultLauncher<Intent> mInsertContent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
 
-        mGetContent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+        mInsertContent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
+                    Note note = Note.unpackCurrentNote(result.getData(), false);
+
                     switch(result.getResultCode()){
                         case RESULT_OK:
-                            Toast.makeText(getApplicationContext(), "RESULT_OK",
-                                    Toast.LENGTH_SHORT).show();
-                            Intent data = result.getData();
-                            mNote = new Note(data.getStringExtra(EditorActivity.EDITOR_TITLE_EXTRA),
-                                    data.getStringExtra(EditorActivity.EDITOR_CONTENT_EXTRA));
-                            mNote.setColor(data.getIntExtra(EditorActivity.EDITOR_COLOR_EXTRA,
-                                    R.color.background_white));
-
-                            if(mNote.getColor() == 0x0) {
-                                mNote.setColor(R.color.background_white);
-                            }
-
-                            mNoteViewModel.insert(mNote);
+                            mNoteViewModel.insert(note);
                             break;
                         case RESULT_CANCELED:
-                            Toast.makeText(getApplicationContext(), "RESULT_CANCELLED",
-                                    Toast.LENGTH_SHORT).show();
                             break;
                         default:
                             break;
@@ -86,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, EditorActivity.class);
                 //startActivityForResult(intent, CREATE_NOTE_REQUEST);
-                mGetContent.launch(intent);
+                mInsertContent.launch(intent);
             }
         });
         DrawerLayout drawer = binding.drawerLayout;

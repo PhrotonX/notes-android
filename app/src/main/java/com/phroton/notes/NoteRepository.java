@@ -45,4 +45,15 @@ public class NoteRepository {
             e.printStackTrace();
         }
     }
+
+    public void delete(Note note){
+        try{
+            NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
+                mNoteDao.delete(note);
+            });
+        }catch(NullPointerException e){
+            Log.e("com.phroton.notes", "NoteDao is null!");
+            e.printStackTrace();
+        }
+    }
 }

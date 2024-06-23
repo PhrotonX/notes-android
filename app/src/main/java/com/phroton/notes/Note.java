@@ -1,5 +1,6 @@
 package com.phroton.notes;
 
+import android.content.Intent;
 import android.os.Build;
 
 import androidx.room.ColumnInfo;
@@ -10,8 +11,10 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "notes")
 public class Note {
 
-    @Ignore
-    public static final String NOTE_ID_EXTRA = Build.ID + ".NOTE_ID_EXTRA";
+    @Ignore public static final String NOTE_ID_EXTRA = Build.ID + "NOTE_ID_EXTRA";
+    @Ignore public static final String NOTE_TITLE_EXTRA = "NOTE_TITLE_EXTRA";
+    @Ignore public static final String NOTE_CONTENT_EXTRA = "NOTE_CONTENT_EXTRA";
+    @Ignore public static final String NOTE_COLOR_EXTRA = "NOTE_COLOR_EXTRA";
 
     @PrimaryKey(autoGenerate = true)
     public int id;
@@ -49,6 +52,22 @@ public class Note {
     }
 
     public int getVersion(){return mVersion; }
+
+    @Ignore
+    public static Intent packCurrentNote(Note note, boolean withId){
+        Intent intent = new Intent();
+
+        if(withId){
+            intent.putExtra(NOTE_ID_EXTRA, note.getId());
+        }
+
+        intent.putExtra(NOTE_TITLE_EXTRA, note.getTitle());
+        intent.putExtra(NOTE_CONTENT_EXTRA, note.getContent());
+        intent.putExtra(NOTE_COLOR_EXTRA, note.getColor());
+
+        return intent;
+    }
+
     public void setColor(int val){
         mColor = val;
     }
@@ -64,4 +83,22 @@ public class Note {
     }
 
     public void setVersion(int val) {mVersion = val;}
+
+    @Ignore
+    public static Note unpackCurrentNote(Intent intent, boolean withId){
+        Note note = new Note(intent.getStringExtra(NOTE_TITLE_EXTRA),
+                intent.getStringExtra(NOTE_CONTENT_EXTRA));
+        note.setColor(intent.getIntExtra(NOTE_COLOR_EXTRA,
+                R.color.background_white));
+
+        if(withId){
+            note.setId(intent.getIntExtra(NOTE_ID_EXTRA, -1));
+        }
+
+        if(note.getColor() == 0x0) {
+            note.setColor(R.color.background_white);
+        }
+
+        return note;
+    }
 }
