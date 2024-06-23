@@ -48,8 +48,10 @@ public class MainActivity extends AppCompatActivity {
                             mNoteViewModel.insert(note);
                             break;
                         case RESULT_CANCELED:
+                            Toast.makeText(getApplicationContext(), "MainActivity: Canceled", Toast.LENGTH_SHORT).show();
                             break;
                         default:
+                            Toast.makeText(getApplicationContext(), "MainActivity: Error", Toast.LENGTH_SHORT).show();
                             break;
                     }
 

@@ -109,7 +109,7 @@ public class EditorActivity extends AppCompatActivity {
                         mNoteViewModel.getNotesCompat().observe(this, new Observer<List<Note>>() {
                             @Override
                             public void onChanged(List<Note> notes) {
-                                Note note = notes.get(mPosition - 1);
+                                Note note = notes.get(mPosition);
                                 mEditorTitle.setText(note.getTitle());
                                 mEditorContent.setText(note.getContent());
                                 ChangeBackgroundColor(note.getColor());
@@ -152,7 +152,7 @@ public class EditorActivity extends AppCompatActivity {
                 break;
             case R.id.menu_editor_delete:
                 Intent intent = new Intent();
-                intent.putExtra(Note.NOTE_ID_EXTRA, getNoteId());
+                intent.putExtra(Note.NOTE_ID_EXTRA, mPosition);
                 setResult(RESULT_DELETE, intent);
                 finish();
                 break;
@@ -179,15 +179,11 @@ public class EditorActivity extends AppCompatActivity {
         Note note = new Note(mEditorTitle.getText().toString(), mEditorContent.getText().toString());
 
         if(mRequestCode == RequestCode.REQUEST_CODE_EDIT_NOTE){
-            note.setId(getNoteId());
+            note.setId(mPosition);
         }
 
         note.setColor(mColor);
 
         return note;
-    }
-
-    private int getNoteId(){
-        return mPosition;
     }
 }

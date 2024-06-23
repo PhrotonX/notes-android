@@ -1,5 +1,6 @@
 package com.phroton.notes.ui.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -106,7 +107,11 @@ public class HomeFragment extends Fragment {
                         int noteId = o.getData().getIntExtra(Note.NOTE_ID_EXTRA, -1);
                         noteViewModel.markAsDeleted(noteId, true);
                         break;
+                    case EditorActivity.RESULT_CANCELED:
+                        Toast.makeText(getContext(), "EditorActivity: Canceled", Toast.LENGTH_SHORT).show();
+                        break;
                     default:
+                        Toast.makeText(getContext(), "EditorActivity: Error", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
