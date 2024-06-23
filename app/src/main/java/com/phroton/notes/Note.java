@@ -15,6 +15,7 @@ public class Note {
     @Ignore public static final String NOTE_TITLE_EXTRA = "NOTE_TITLE_EXTRA";
     @Ignore public static final String NOTE_CONTENT_EXTRA = "NOTE_CONTENT_EXTRA";
     @Ignore public static final String NOTE_COLOR_EXTRA = "NOTE_COLOR_EXTRA";
+    @Ignore public static final String NOTE_DELETE_EXTRA = "NOTE_DELETE_EXTRA";
 
     @PrimaryKey(autoGenerate = true)
     public int id;
@@ -31,16 +32,24 @@ public class Note {
     @ColumnInfo(name = "title")
     public String mTitle;
 
+    @ColumnInfo(name = "is_deleted", defaultValue = "0")
+    public boolean mIsDeleted = false;
+
     @ColumnInfo(name = "content")
     public String mContent;
     public Note(String title, String content){
         this.mTitle = title;
         this.mContent = content;
         this.mColor = 0;
+        this.mIsDeleted = false;
     }
 
     public int getColor(){ return mColor; }
     public int getId(){ return id; }
+
+    public boolean getIsDeleted(){
+        return mIsDeleted;
+    }
 
     public String getTitle()
     {
@@ -73,6 +82,10 @@ public class Note {
     }
 
     public void setId(int val){id = val;}
+
+    public void setIsDeleted(boolean val){
+        mIsDeleted = val;
+    }
 
     public void setTitle(String val){
         mTitle = val;

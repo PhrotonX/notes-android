@@ -27,6 +27,9 @@ public interface NoteDao {
     @Update
     void update(Note note);
 
+    @Query("UPDATE notes SET is_deleted =:isDeleted WHERE id=:id")
+    void markAsDeleted(int id, boolean isDeleted);
+
     @Delete
     void delete(Note note);
 }

@@ -35,6 +35,9 @@ public class NoteViewModel extends AndroidViewModel {
         mRepository.update(note);
     }
 
+    public void markAsDeleted(int id, boolean isDeleted){
+        mRepository.markAsDeleted(id, isDeleted);
+    }
     public void delete(Note note){
         mRepository.delete(note);
     }

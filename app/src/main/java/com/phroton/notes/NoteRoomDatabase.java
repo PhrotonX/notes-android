@@ -9,15 +9,16 @@ import androidx.room.DatabaseConfiguration;
 import androidx.room.InvalidationTracker;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Note.class}, version = 106,
+@Database(entities = {Note.class}, version = 107, exportSchema = true,
     autoMigrations = {
-        @AutoMigration(from = 105, to = 106)
+        @AutoMigration(from = 106, to = 107)
     }
 )
 public abstract class NoteRoomDatabase extends RoomDatabase{
@@ -35,6 +36,7 @@ public abstract class NoteRoomDatabase extends RoomDatabase{
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     NoteRoomDatabase.class, "note_database")
                             .fallbackToDestructiveMigration()
+                            .addMigrations(MIGRATION_106_107)
                             //.addCallback(sRoomDatabaseCallback)
                             .build();
                 }
@@ -63,6 +65,13 @@ public abstract class NoteRoomDatabase extends RoomDatabase{
                 noteDao.insert(new Note("Sample Data 3", "Take notes by tapping the + " +
                         "button."));
             });
+        }
+    };
+
+    public static Migration MIGRATION_106_107 = new Migration(106, 107){
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase supportSQLiteDatabase) {
+            supportSQLiteDatabase.execSQL("ALTER TABLE notes ADD COLUMN is_deleted INTEGER NOT NULL DEFAULT 0");
         }
     };
 }

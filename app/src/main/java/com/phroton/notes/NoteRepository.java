@@ -46,6 +46,15 @@ public class NoteRepository {
         }
     }
 
+    public void markAsDeleted(int id, boolean isDeleted){
+        try{
+            NoteRoomDatabase.databaseWriteExecutor.execute(() ->{
+                mNoteDao.markAsDeleted(id, isDeleted);
+            });
+        }catch(NullPointerException e){
+            e.printStackTrace();
+        }
+    }
     public void delete(Note note){
         try{
             NoteRoomDatabase.databaseWriteExecutor.execute(() -> {

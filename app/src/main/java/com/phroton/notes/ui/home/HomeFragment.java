@@ -102,7 +102,7 @@ public class HomeFragment extends Fragment {
                         noteViewModel.update(note);
                         break;
                     case EditorActivity.RESULT_DELETE:
-                        noteViewModel.delete(note);
+                        noteViewModel.markAsDeleted(note.getId(), true);
                         break;
                     default:
                         break;
