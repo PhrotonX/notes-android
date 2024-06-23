@@ -31,6 +31,11 @@ public class EditorActivity extends AppCompatActivity {
     private EditText mEditorContent;
 
     private NoteViewModel mNoteViewModel = null;
+    /*
+    * \details This position number is from RecyclerView or RV, which is zero-based or index 0. Lists are
+    * also zero-based.
+    * However, databases or DB are 1-based or index 1. Increment 1 value for accessing DB items.
+    * */
     private int mPosition = 0;
     private RequestCode mRequestCode;
     private View mView;
@@ -109,6 +114,7 @@ public class EditorActivity extends AppCompatActivity {
                         mNoteViewModel.getNotesCompat().observe(this, new Observer<List<Note>>() {
                             @Override
                             public void onChanged(List<Note> notes) {
+                                //RV is Index 0.
                                 Note note = notes.get(mPosition);
                                 mEditorTitle.setText(note.getTitle());
                                 mEditorContent.setText(note.getContent());
@@ -179,7 +185,8 @@ public class EditorActivity extends AppCompatActivity {
         Note note = new Note(mEditorTitle.getText().toString(), mEditorContent.getText().toString());
 
         if(mRequestCode == RequestCode.REQUEST_CODE_EDIT_NOTE){
-            note.setId(mPosition);
+            //DB is Index 1
+            note.setId(mPosition + 1);
         }
 
         note.setColor(mColor);
