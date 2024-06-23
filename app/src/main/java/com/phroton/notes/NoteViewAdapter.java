@@ -71,7 +71,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
                     @Override
                     public void onClick(View v) {
                         if(mClickListener != null){
-                            mClickListener.onClick(position);
+                            mClickListener.onClick(position, currentData.getId());
                         }
                     }
                 });
@@ -94,7 +94,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
 
 
     public interface OnClickListener {
-        void onClick(int position);
+        void onClick(int rvPosition, int dbPosition);
     }
 
     public void setNotes(List<Note> notes){

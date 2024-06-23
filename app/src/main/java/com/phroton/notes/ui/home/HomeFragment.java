@@ -66,11 +66,11 @@ public class HomeFragment extends Fragment {
                         mNoteViewAdapter.setNotes(notes);
                         mNoteViewAdapter.setOnClickListener(new NoteViewAdapter.OnClickListener() {
                             @Override
-                            public void onClick(int position) {
+                            public void onClick(int rvPosition, int dbPosition) {
                                 //Toast.makeText(requireContext(), "Sample Click Message", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(requireContext(), EditorActivity.class);
                                 intent.putExtra(RequestCode.REQUEST_CODE, RequestCode.REQUEST_CODE_EDIT_NOTE);
-                                intent.putExtra(Note.NOTE_ID_EXTRA, notes.get(position).getId());
+                                intent.putExtra(Note.NOTE_ID_EXTRA, dbPosition);
                                 mEditContent.launch(intent);
                             }
                         });
