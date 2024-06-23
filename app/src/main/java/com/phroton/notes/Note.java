@@ -23,12 +23,6 @@ public class Note {
     @ColumnInfo(name = "color")
     public int mColor;
 
-    @Ignore
-    private static final int mVersionCode = BuildConfig.VERSION_CODE;
-
-    @ColumnInfo(name = "version", defaultValue = mVersionCode + "")
-    public int mVersion;
-
     @ColumnInfo(name = "title")
     public String mTitle;
 
@@ -59,8 +53,6 @@ public class Note {
     public String getContent(){
         return mContent;
     }
-
-    public int getVersion(){return mVersion; }
 
     @Ignore
     public static Intent packCurrentNote(Note note, boolean withId){
@@ -94,8 +86,6 @@ public class Note {
     public void setContent(String val){
         mContent = val;
     }
-
-    public void setVersion(int val) {mVersion = val;}
 
     @Ignore
     public static Note unpackCurrentNote(Intent intent, boolean withId){
