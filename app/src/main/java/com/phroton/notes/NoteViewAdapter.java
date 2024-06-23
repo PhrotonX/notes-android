@@ -48,14 +48,14 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
 
                 if(currentData.getTitle().length() >= 100) {
                     shortenedText = currentData.getTitle().substring(0, 100) + "...";
-                    holder.mTitle.setText(shortenedText);
+                    holder.mTitle.setText("DB: " + currentData.getId() + " - " + shortenedText);
                 }else{
                     holder.mTitle.setText(currentData.getTitle());
                 }
 
                 if(currentData.getContent().length() >= 200){
                     shortenedText = currentData.getContent().substring(0, 200) + "...";
-                    holder.mContent.setText(shortenedText);
+                    holder.mContent.setText("RV: " + position + " - " + shortenedText);
                 }else{
                     holder.mContent.setText(currentData.getContent());
                 }
