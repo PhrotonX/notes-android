@@ -41,40 +41,45 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, @SuppressLint("RecyclerView") int position) {
         if(mNotes != null) {
+
             Note currentData = mNotes.get(position);
+            if(!currentData.getIsDeleted()){
+                String shortenedText;
 
-            String shortenedText;
+                if(currentData.getTitle().length() >= 100) {
+                    shortenedText = currentData.getTitle().substring(0, 100) + "...";
+                    holder.mTitle.setText("DB: " + currentData.getId() + " - " + shortenedText);
+                }else{
+                    holder.mTitle.setText("DB: " + currentData.getId() + " - " + currentData.getTitle());
+                }
 
-            if(currentData.getTitle().length() >= 100) {
-                shortenedText = currentData.getTitle().substring(0, 100) + "...";
-                holder.mTitle.setText(shortenedText);
-            }else{
-                holder.mTitle.setText(currentData.getTitle());
-            }
+                if(currentData.getContent().length() >= 200){
+                    shortenedText = currentData.getContent().substring(0, 200) + "...";
+                    holder.mContent.setText("RV: " + position + " - " + shortenedText);
+                }else{
+                    holder.mContent.setText("RV: " + position + " - " + currentData.getContent());
+                }
 
-            if(currentData.getContent().length() >= 200){
-                shortenedText = currentData.getContent().substring(0, 200) + "...";
-                holder.mContent.setText(shortenedText);
-            }else{
-                holder.mContent.setText(currentData.getContent());
-            }
+                if(currentData.getColor() == 0x0){
+                    holder.mCardView.setCardBackgroundColor(mContext.getColor(R.color.background_white));
+                }else{
+                    holder.mCardView.setCardBackgroundColor(mContext.getColor(currentData.getColor()));
+                }
 
-            if(currentData.getColor() == 0x0){
-                holder.mCardView.setCardBackgroundColor(mContext.getColor(R.color.background_white));
-            }else{
-                holder.mCardView.setCardBackgroundColor(mContext.getColor(currentData.getColor()));
-            }
-
-            //if(mClickListener != null){
+                //if(mClickListener != null){
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(mClickListener != null){
-                            mClickListener.onClick(position);
+                            mClickListener.onClick(position, currentData.getId());
                         }
                     }
                 });
-            //}
+                //}
+            }else{
+                holder.mCardView.setVisibility(View.GONE);
+            }
+
         }
     }
 
@@ -89,7 +94,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
 
 
     public interface OnClickListener {
-        void onClick(int position);
+        void onClick(int rvPosition, int dbPosition);
     }
 
     public void setNotes(List<Note> notes){

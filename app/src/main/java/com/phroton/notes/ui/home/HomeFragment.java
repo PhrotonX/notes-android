@@ -1,11 +1,11 @@
 package com.phroton.notes.ui.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -36,7 +36,7 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private NoteViewAdapter mNoteViewAdapter;
 
-    private ActivityResultLauncher<Intent> mGetContent;
+    private ActivityResultLauncher<Intent> mEditContent;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -50,17 +50,17 @@ public class HomeFragment extends Fragment {
         RecyclerView notesView = binding.notesList;
         notesView.setLayoutManager(new LinearLayoutManager(requireContext()));
         mNoteViewAdapter = new NoteViewAdapter(requireContext());
+
         mNoteViewAdapter.setOnClickListener(new NoteViewAdapter.OnClickListener() {
             @Override
-            public void onClick(int position) {
+            public void onClick(int rvPosition, int dbPosition) {
                 //Toast.makeText(requireContext(), "Sample Click Message", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(requireContext(), EditorActivity.class);
                 intent.putExtra(RequestCode.REQUEST_CODE, RequestCode.REQUEST_CODE_EDIT_NOTE);
-                intent.putExtra(Note.NOTE_ID_EXTRA, position);
-                mGetContent.launch(intent);
+                intent.putExtra(Note.NOTE_ID_EXTRA, rvPosition);
+                mEditContent.launch(intent);
             }
         });
-
 
         NoteViewModel noteViewModel =
                 new ViewModelProvider(this).get(NoteViewModel.class);
@@ -89,31 +89,29 @@ public class HomeFragment extends Fragment {
         }
 
         //@NOTE: Handle request after editing a note.
-        mGetContent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        mEditContent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult o) {
+                Note note;
                 switch(o.getResultCode()){
                     case EditorActivity.RESULT_OK:
-                        //Toast.makeText(getContext(), "Sample activity result", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(getContext(), "RESULT_OK",
-                                Toast.LENGTH_SHORT).show();
-                        Intent data = o.getData();
-                        Note note = new Note(data.getStringExtra(EditorActivity.EDITOR_TITLE_EXTRA),
-                                data.getStringExtra(EditorActivity.EDITOR_CONTENT_EXTRA));
-                        note.setColor(data.getIntExtra(EditorActivity.EDITOR_COLOR_EXTRA,
-                                R.color.background_white));
-                        note.setId(data.getIntExtra(EditorActivity.EDITOR_ID_EXTRA, -1));
-
-                        if(note.getColor() == 0x0) {
-                            note.setColor(R.color.background_white);
-                        }
+                        note = Note.unpackCurrentNote(o.getData(), true);
+                        Toast.makeText(getContext(), "MainActivity noteId: " + note.getId(), Toast.LENGTH_SHORT).show();
                         if(note.getId() == -1){
                             Toast.makeText(getContext(), "Failed to update note", Toast.LENGTH_SHORT).show();
                         }
 
                         noteViewModel.update(note);
                         break;
+                    case EditorActivity.RESULT_DELETE:
+                        int noteId = o.getData().getIntExtra(Note.NOTE_ID_EXTRA, -1);
+                        noteViewModel.markAsDeleted(noteId, true);
+                        break;
+                    case EditorActivity.RESULT_CANCELED:
+                        Toast.makeText(getContext(), "EditorActivity: Canceled", Toast.LENGTH_SHORT).show();
+                        break;
                     default:
+                        Toast.makeText(getContext(), "EditorActivity: Error", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
@@ -139,4 +137,6 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+
 }

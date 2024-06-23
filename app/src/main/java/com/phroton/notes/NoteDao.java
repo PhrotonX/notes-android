@@ -2,6 +2,7 @@ package com.phroton.notes;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -25,4 +26,10 @@ public interface NoteDao {
 
     @Update
     void update(Note note);
+
+    @Query("UPDATE notes SET is_deleted =:isDeleted WHERE id=:id")
+    void markAsDeleted(int id, boolean isDeleted);
+
+    @Delete
+    void delete(Note note);
 }

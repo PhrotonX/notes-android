@@ -31,14 +31,16 @@ public class EditorActivity extends AppCompatActivity {
     private EditText mEditorContent;
 
     private NoteViewModel mNoteViewModel = null;
+    /*
+    * \details This position number is from RecyclerView or RV, which is zero-based or index 0. Lists are
+    * also zero-based.
+    * However, databases or DB are 1-based or index 1. Increment 1 value for accessing DB items.
+    * */
     private int mPosition = 0;
     private RequestCode mRequestCode;
     private View mView;
 
-    public static final String EDITOR_ID_EXTRA = "EDITOR_ID_EXTRA";
-    public static final String EDITOR_TITLE_EXTRA = "EDITOR_TITLE_EXTRA";
-    public static final String EDITOR_CONTENT_EXTRA = "EDITOR_CONTENT_EXTRA";
-    public static final String EDITOR_COLOR_EXTRA = "EDITOR_COLOR_EXTRA";
+    public static final int RESULT_DELETE = 50000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,15 +102,19 @@ public class EditorActivity extends AppCompatActivity {
         if(mRequestCode != null){
             switch(mRequestCode){
                 case REQUEST_CODE_CREATE_NOTE:
+                    MenuItem deleteItem = (MenuItem)findViewById(R.id.menu_editor_delete);
+                    deleteItem.setEnabled(false);
                     break;
                 case REQUEST_CODE_EDIT_NOTE:
                     mPosition = intent.getIntExtra(Note.NOTE_ID_EXTRA, -1);
+                    Toast.makeText(this, "EditorAcitvity.Position: " + mPosition, Toast.LENGTH_SHORT).show();
 
                     if(mPosition != -1){
                         mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
                         mNoteViewModel.getNotesCompat().observe(this, new Observer<List<Note>>() {
                             @Override
                             public void onChanged(List<Note> notes) {
+                                //RV is Index 0.
                                 Note note = notes.get(mPosition);
                                 mEditorTitle.setText(note.getTitle());
                                 mEditorContent.setText(note.getContent());
@@ -143,23 +149,18 @@ public class EditorActivity extends AppCompatActivity {
             case R.id.menu_editor_save:
                 //TODO: Function for saving here...
 
-                Intent intent = new Intent();
-            /*intent.putExtra(EDITOR_TITLE_EXTRA, mEditorViewModel.getTitle());
-            intent.putExtra(EDITOR_CONTENT_EXTRA, mEditorViewModel.getContent());*/
-
-                if(mRequestCode == RequestCode.REQUEST_CODE_EDIT_NOTE){
-                    intent.putExtra(EDITOR_ID_EXTRA, mPosition + 1);
-                }
-
-                intent.putExtra(EDITOR_TITLE_EXTRA, mEditorTitle.getText().toString());
-                intent.putExtra(EDITOR_CONTENT_EXTRA, mEditorContent.getText().toString());
-                intent.putExtra(EDITOR_COLOR_EXTRA, mColor);
-
-                setResult(RESULT_OK, intent);
+                boolean isEditing = (mRequestCode == RequestCode.REQUEST_CODE_EDIT_NOTE) ? true : false;
+                setResult(RESULT_OK, Note.packCurrentNote(packCurrentNote(), isEditing));
                 finish();
                 break;
             case R.id.menu_editor_share:
                 //TODO: Function for sharing here...
+                break;
+            case R.id.menu_editor_delete:
+                Intent intent = new Intent();
+                intent.putExtra(Note.NOTE_ID_EXTRA, mPosition + 1);
+                setResult(RESULT_DELETE, intent);
+                finish();
                 break;
             case R.id.menu_editor_color:
                 ColorDialogFragment dialog = new ColorDialogFragment();
@@ -178,5 +179,18 @@ public class EditorActivity extends AppCompatActivity {
     private void ChangeBackgroundColor(int colorRes){
         mView.setBackgroundResource(colorRes);
         mColor = colorRes;
+    }
+
+    private Note packCurrentNote(){
+        Note note = new Note(mEditorTitle.getText().toString(), mEditorContent.getText().toString());
+
+        if(mRequestCode == RequestCode.REQUEST_CODE_EDIT_NOTE){
+            //DB is Index 1
+            note.setId(mPosition + 1);
+        }
+
+        note.setColor(mColor);
+
+        return note;
     }
 }
