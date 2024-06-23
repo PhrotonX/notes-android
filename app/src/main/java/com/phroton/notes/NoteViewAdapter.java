@@ -77,7 +77,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
                 });
                 //}
             }else{
-                holder.mView.setVisibility(View.GONE);
+                holder.mCardView.setVisibility(View.GONE);
             }
 
         }

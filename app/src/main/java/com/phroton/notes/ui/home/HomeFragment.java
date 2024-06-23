@@ -49,16 +49,8 @@ public class HomeFragment extends Fragment {
         RecyclerView notesView = binding.notesList;
         notesView.setLayoutManager(new LinearLayoutManager(requireContext()));
         mNoteViewAdapter = new NoteViewAdapter(requireContext());
-        mNoteViewAdapter.setOnClickListener(new NoteViewAdapter.OnClickListener() {
-            @Override
-            public void onClick(int position) {
-                //Toast.makeText(requireContext(), "Sample Click Message", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(requireContext(), EditorActivity.class);
-                intent.putExtra(RequestCode.REQUEST_CODE, RequestCode.REQUEST_CODE_EDIT_NOTE);
-                intent.putExtra(Note.NOTE_ID_EXTRA, position);
-                mEditContent.launch(intent);
-            }
-        });
+
+        //@NOTE: Original position of setting click listeners to NoteViewAdapter.
 
 
         NoteViewModel noteViewModel =
@@ -72,6 +64,17 @@ public class HomeFragment extends Fragment {
                 public void onChanged(List<Note> notes) {
                     if(notes != null){
                         mNoteViewAdapter.setNotes(notes);
+                        mNoteViewAdapter.setOnClickListener(new NoteViewAdapter.OnClickListener() {
+                            @Override
+                            public void onClick(int position) {
+                                //Toast.makeText(requireContext(), "Sample Click Message", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(requireContext(), EditorActivity.class);
+                                intent.putExtra(RequestCode.REQUEST_CODE, RequestCode.REQUEST_CODE_EDIT_NOTE);
+                                intent.putExtra(Note.NOTE_ID_EXTRA, notes.get(position).getId());
+                                mEditContent.launch(intent);
+                            }
+                        });
+
                         mNoteViewAdapter.notifyDataSetChanged();
                     }
                 }
