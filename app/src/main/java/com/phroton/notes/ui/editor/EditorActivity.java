@@ -31,9 +31,6 @@ public class EditorActivity extends AppCompatActivity {
     private EditText mEditorContent;
 
     private NoteViewModel mNoteViewModel = null;
-    /**
-     * \remarks Position value + 1 is always the same as the Note ID from the DB once RequestCode
-     * is equal to REQUEST_CODE_EDIT_NOTE. */
     private int mPosition = 0;
     private RequestCode mRequestCode;
     private View mView;
@@ -190,6 +187,6 @@ public class EditorActivity extends AppCompatActivity {
     }
 
     private int getNoteId(){
-        return mPosition + 1;
+        return mPosition;
     }
 }
