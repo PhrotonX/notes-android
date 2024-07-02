@@ -28,8 +28,8 @@ public class TrashFragment extends NoteFragment {
     }
 
     @Override
-    public void onActivityResult(ActivityResultLauncher<Intent> activityResult) {
-        super.onActivityResult(activityResult);
+    public ActivityResultLauncher<Intent> onActivityResult() {
+        return null;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class TrashFragment extends NoteFragment {
     }
 
     @Override
-    public void setOnClickListener(NoteViewAdapter.OnClickListener listener) {
-        super.setOnClickListener(listener);
+    public NoteViewAdapter.OnClickListener onItemClick() {
+        return null;
     }
 }

@@ -27,7 +27,7 @@ import com.phroton.notes.databinding.FragmentNotesBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NoteFragment extends Fragment {
+public abstract class NoteFragment extends Fragment {
     protected ActivityResultLauncher<Intent> mActivityResultContract;
     protected FragmentNotesBinding binding;
     protected NoteViewAdapter mNoteViewAdapter;
@@ -52,7 +52,7 @@ public class NoteFragment extends Fragment {
         notesView.setLayoutManager(new LinearLayoutManager(requireContext()));
         mNoteViewAdapter = new NoteViewAdapter(requireContext(), mFlags);
 
-        mNoteViewAdapter.setOnClickListener(mListener);
+        mNoteViewAdapter.setOnClickListener(onItemClick());
 
         //Original NoteVIewModel initialization code...
 
@@ -80,7 +80,7 @@ public class NoteFragment extends Fragment {
         }
 
         //@NOTE: Handle request after editing a note.
-        //mEditContent = mActivityResultContract;
+        mActivityResultContract = onActivityResult();
 
         notesView.setAdapter(mNoteViewAdapter);
 
@@ -93,15 +93,11 @@ public class NoteFragment extends Fragment {
         binding = null;
     }
 
-    public void onActivityResult(ActivityResultLauncher<Intent> activityResult){
-        mActivityResultContract = activityResult;
-    }
+    public abstract ActivityResultLauncher<Intent> onActivityResult();
 
     public void setFlags(int flags){
         mFlags = flags;
     }
 
-    public void setOnClickListener(NoteViewAdapter.OnClickListener listener){
-        mListener = listener;
-    }
+    public abstract NoteViewAdapter.OnClickListener onItemClick();
 }

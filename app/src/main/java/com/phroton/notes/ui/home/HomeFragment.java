@@ -38,8 +38,8 @@ public class HomeFragment extends NoteFragment {
     }
 
     @Override
-    public void setOnClickListener(NoteViewAdapter.OnClickListener listener) {
-        listener = new NoteViewAdapter.OnClickListener() {
+    public NoteViewAdapter.OnClickListener onItemClick() {
+        NoteViewAdapter.OnClickListener listener = new NoteViewAdapter.OnClickListener() {
             @Override
             public void onClick(int rvPosition, int dbPosition) {
                 //Toast.makeText(requireContext(), "Sample Click Message", Toast.LENGTH_SHORT).show();
@@ -50,12 +50,12 @@ public class HomeFragment extends NoteFragment {
             }
         };
 
-        super.setOnClickListener(listener);
+        return listener;
     }
 
     @Override
-    public void onActivityResult(ActivityResultLauncher<Intent> activityResult) {
-        activityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+    public ActivityResultLauncher<Intent> onActivityResult() {
+        ActivityResultLauncher<Intent> activityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult o) {
                 Note note;
@@ -83,6 +83,6 @@ public class HomeFragment extends NoteFragment {
             }
         });
 
-        super.onActivityResult(activityResult);
+        return activityResult;
     }
 }
