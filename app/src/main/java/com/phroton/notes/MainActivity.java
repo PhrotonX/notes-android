@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -22,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.phroton.notes.databinding.ActivityMainBinding;
 import com.phroton.notes.ui.editor.EditorActivity;
+import com.phroton.notes.ui.home.HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
@@ -90,6 +92,12 @@ public class MainActivity extends AppCompatActivity {
         String navSubtitleStr = navSubtitle.getText().toString();
         navSubtitleStr += " " + BuildConfig.VERSION_NAME;
         navSubtitle.setText(navSubtitleStr);*/
+
+        if(savedInstanceState == null){
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.notesList, new HomeFragment());
+            fragmentTransaction.commit();
+        }
     }
 
     @Override
