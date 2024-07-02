@@ -48,13 +48,13 @@ public abstract class NoteFragment extends Fragment {
         binding = FragmentNotesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        //RecyclerView notesView = binding.notesList;
-        //notesView.setLayoutManager(new LinearLayoutManager(mContext));
+        RecyclerView notesView = binding.notesList;
+        notesView.setLayoutManager(new LinearLayoutManager(mContext));
         mNoteViewAdapter = new NoteViewAdapter(mContext, mFlags);
 
-        //notesView.setAdapter(mNoteViewAdapter);
+        notesView.setAdapter(mNoteViewAdapter);
 
-        mNoteViewAdapter.setOnClickListener(onItemClick());
+        /*mNoteViewAdapter.setOnClickListener(onItemClick());
 
         //Original NoteVIewModel initialization code...
 
@@ -83,7 +83,7 @@ public abstract class NoteFragment extends Fragment {
 
         //@NOTE: Handle request after editing a note.
         mActivityResultContract = onActivityResult();
-
+        */
 
 
         return root;
