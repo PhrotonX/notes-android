@@ -52,6 +52,8 @@ public abstract class NoteFragment extends Fragment {
         notesView.setLayoutManager(new LinearLayoutManager(mContext));
         mNoteViewAdapter = new NoteViewAdapter(mContext, mFlags);
 
+        notesView.setAdapter(mNoteViewAdapter);
+
         mNoteViewAdapter.setOnClickListener(onItemClick());
 
         //Original NoteVIewModel initialization code...
@@ -82,7 +84,7 @@ public abstract class NoteFragment extends Fragment {
         //@NOTE: Handle request after editing a note.
         mActivityResultContract = onActivityResult();
 
-        notesView.setAdapter(mNoteViewAdapter);
+
 
         return root;
     }

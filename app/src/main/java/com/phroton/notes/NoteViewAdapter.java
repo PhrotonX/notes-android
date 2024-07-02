@@ -30,14 +30,14 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
     public NoteViewAdapter(Context context, int flags){
         this.mContext = context;
         this.mNotes = null;
-        mFlags |= flags;
+        this.mFlags = flags;
         Init();
     }
 
     public NoteViewAdapter(Context context, List<Note> notes, int flags){
         this.mContext = context;
         this.mNotes = notes;
-        mFlags = flags;
+        this.mFlags = flags;
         Init();
     }
 

@@ -29,9 +29,8 @@ public class HomeFragment extends NoteFragment {
         mLifecycleOwner = getViewLifecycleOwner();
 
         setFlags(NoteViewAdapter.DISPLAY_DEFAULT);
-        View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        return view;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
