@@ -26,9 +26,8 @@ public class HomeFragment extends NoteFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
 
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-
         setFlags(NoteViewAdapter.DISPLAY_DEFAULT);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
 
         return view;
     }
