@@ -60,7 +60,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
 
             Note currentData = mNotes.get(position);
 
-            if(~(mFlags & DISPLAY_DELETED) == DISPLAY_DELETED){
+            /*if(~(mFlags & DISPLAY_DELETED) == DISPLAY_DELETED){
                 if(currentData.getIsDeleted()){
                     return;
                 }
@@ -68,7 +68,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
                 if(!currentData.getIsDeleted()){
                     return;
                 }
-            }
+            }*/
 
             String shortenedText;
 
@@ -106,10 +106,6 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
             holder.mCardView.setVisibility(View.GONE);
         }
 
-
-    }
-
-    private void bindViewholder(@NonNull NoteViewHolder holder, @SuppressLint("RecyclerView") int position){
 
     }
 
