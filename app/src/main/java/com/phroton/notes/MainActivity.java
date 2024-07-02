@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         //setContentView(R.layout.activity_main);
 
         mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
@@ -66,8 +69,7 @@ public class MainActivity extends AppCompatActivity {
             mNoteViewModel.insert(mNote);
         }*/
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        //Original location of code to set layout content.
 
         setSupportActionBar(binding.appBarMain.toolbar);
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 mInsertContent.launch(intent);
             }
         });
+
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
@@ -97,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(savedInstanceState == null){
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.trash_fragment_root, new TrashFragment());
+            fragmentTransaction.add(R.id.fragment_container, new TrashFragment());
             fragmentTransaction.commit();
         }
     }
