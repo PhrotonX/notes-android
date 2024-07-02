@@ -24,7 +24,9 @@ import com.phroton.notes.ui.editor.EditorActivity;
 public class HomeFragment extends NoteFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mContext = getContext();
         mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
+        mLifecycleOwner = getViewLifecycleOwner();
 
         setFlags(NoteViewAdapter.DISPLAY_DEFAULT);
         View view = super.onCreateView(inflater, container, savedInstanceState);

@@ -1,5 +1,6 @@
 package com.phroton.notes.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -30,14 +32,12 @@ import java.util.List;
 public abstract class NoteFragment extends Fragment {
     protected ActivityResultLauncher<Intent> mActivityResultContract;
     protected FragmentNotesBinding binding;
+    protected Context mContext;
     protected NoteViewAdapter mNoteViewAdapter;
-
     //protected ActivityResultLauncher<Intent> mEditContent;
-
     protected int mFlags;
-
+    protected LifecycleOwner mLifecycleOwner;
     private NoteViewAdapter.OnClickListener mListener;
-
     protected NoteViewModel mNoteViewModel;
             //= new ViewModelProvider(this).get(NoteViewModel.class);
 
@@ -49,8 +49,8 @@ public abstract class NoteFragment extends Fragment {
         View root = binding.getRoot();
 
         RecyclerView notesView = binding.notesList;
-        notesView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        mNoteViewAdapter = new NoteViewAdapter(requireContext(), mFlags);
+        notesView.setLayoutManager(new LinearLayoutManager(mContext));
+        mNoteViewAdapter = new NoteViewAdapter(mContext, mFlags);
 
         mNoteViewAdapter.setOnClickListener(onItemClick());
 
@@ -59,7 +59,7 @@ public abstract class NoteFragment extends Fragment {
         LiveData<List<Note>> allNotes = mNoteViewModel.getNotesCompat();
 
         if(allNotes != null){
-            allNotes.observe(getViewLifecycleOwner(), new Observer<List<Note>>() {
+            allNotes.observe(mLifecycleOwner, new Observer<List<Note>>() {
                 @Override
                 public void onChanged(List<Note> notes) {
                     if(notes != null){
@@ -69,7 +69,7 @@ public abstract class NoteFragment extends Fragment {
                 }
             });
         }else{
-            Toast.makeText(getContext(), R.string.database_read_error, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, R.string.database_read_error, Toast.LENGTH_SHORT).show();
             List<Note> sampleNote = new ArrayList<>();
             sampleNote.add(new Note("Error 1", "Error Note 1"));
             sampleNote.add(new Note("Error 2", "Error Note 2"));
