@@ -24,6 +24,7 @@ public class NoteViewHolder extends RecyclerView.ViewHolder{
         mContent = (TextView)itemView.findViewById(R.id.noteContent);
         mView = itemView;
         mCardView = (CardView)itemView.findViewById(R.id.noteCard);
+        mContext = context;
     }
 
     public void bind(Note note, int position){
