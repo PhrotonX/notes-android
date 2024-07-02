@@ -12,9 +12,11 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.phroton.notes.Note;
 import com.phroton.notes.NoteViewAdapter;
+import com.phroton.notes.NoteViewModel;
 import com.phroton.notes.RequestCode;
 import com.phroton.notes.ui.NoteFragment;
 import com.phroton.notes.ui.editor.EditorActivity;
@@ -22,6 +24,8 @@ import com.phroton.notes.ui.editor.EditorActivity;
 public class HomeFragment extends NoteFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
+
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         setFlags(NoteViewAdapter.DISPLAY_DEFAULT);

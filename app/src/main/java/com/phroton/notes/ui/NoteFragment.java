@@ -38,8 +38,8 @@ public class NoteFragment extends Fragment {
 
     private NoteViewAdapter.OnClickListener mListener;
 
-    protected NoteViewModel mNoteViewModel =
-            new ViewModelProvider(this).get(NoteViewModel.class);
+    protected NoteViewModel mNoteViewModel;
+            //= new ViewModelProvider(this).get(NoteViewModel.class);
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
