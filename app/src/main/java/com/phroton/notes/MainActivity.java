@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(savedInstanceState == null){
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.trash_fragment_root, new TrashFragment());
+            fragmentTransaction.replace(R.id.home_fragment_root, new HomeFragment());
             fragmentTransaction.commit();
         }
     }
