@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.phroton.notes.databinding.ActivityMainBinding;
 import com.phroton.notes.ui.editor.EditorActivity;
 import com.phroton.notes.ui.home.HomeFragment;
+import com.phroton.notes.ui.trash.TrashFragment;
 
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(savedInstanceState == null){
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.home_fragment_root, new HomeFragment());
+            fragmentTransaction.replace(R.id.trash_fragment_root, new TrashFragment());
             fragmentTransaction.commit();
         }
     }

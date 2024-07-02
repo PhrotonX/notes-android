@@ -24,14 +24,13 @@ import com.phroton.notes.Note;
 import com.phroton.notes.NoteViewAdapter;
 import com.phroton.notes.NoteViewModel;
 import com.phroton.notes.R;
-import com.phroton.notes.databinding.FragmentNotesBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class NoteFragment extends Fragment {
     protected ActivityResultLauncher<Intent> mActivityResultContract;
-    protected FragmentNotesBinding binding;
+    //protected FragmentNotesBinding binding;
     protected Context mContext;
     protected NoteViewAdapter mNoteViewAdapter;
     //protected ActivityResultLauncher<Intent> mEditContent;
@@ -45,8 +44,7 @@ public abstract class NoteFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentNotesBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        View root = onInitializeView(inflater, container, savedInstanceState);
 
         mContext = getContext();
         mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
@@ -95,8 +93,11 @@ public abstract class NoteFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
+        //binding = null;
     }
+
+    public abstract View onInitializeView(@NonNull LayoutInflater inflater,
+                                          ViewGroup container, Bundle savedInstanceState);
 
     public abstract ActivityResultLauncher<Intent> onActivityResult();
 

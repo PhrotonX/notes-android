@@ -9,5 +9,5 @@
         android:id="@+id/nav_home"
         android:name="com.phroton.notes.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_notes" />
+        tools:layout="@layout/fragment_trash" />
 </navigation>
