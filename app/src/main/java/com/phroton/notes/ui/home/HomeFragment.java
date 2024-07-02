@@ -22,8 +22,11 @@ import com.phroton.notes.ui.editor.EditorActivity;
 public class HomeFragment extends NoteFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+
         setFlags(NoteViewAdapter.DISPLAY_DEFAULT);
-        return super.onCreateView(inflater, container, savedInstanceState);
+
+        return view;
     }
 
     @Override
