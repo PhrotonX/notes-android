@@ -52,7 +52,7 @@ public abstract class NoteFragment extends Fragment {
         mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
         mLifecycleOwner = getViewLifecycleOwner();
 
-        RecyclerView notesView = binding.notesList;
+        RecyclerView notesView = (RecyclerView)root.findViewById(R.id.notesList);
         notesView.setLayoutManager(new LinearLayoutManager(mContext));
         mNoteViewAdapter = new NoteViewAdapter(mContext, mFlags);
 
