@@ -31,7 +31,7 @@ import java.util.List;
 
 public abstract class NoteFragment extends Fragment {
     protected ActivityResultLauncher<Intent> mActivityResultContract;
-    //protected FragmentNotesBinding binding;
+    protected FragmentNotesBinding binding;
     protected Context mContext;
     protected NoteViewAdapter mNoteViewAdapter;
     //protected ActivityResultLauncher<Intent> mEditContent;
@@ -42,18 +42,17 @@ public abstract class NoteFragment extends Fragment {
             //= new ViewModelProvider(this).get(NoteViewModel.class);
 
 
-    public abstract View provideFragment(@NonNull LayoutInflater inflater,
-                                         ViewGroup container, Bundle savedInstanceState);
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = provideFragment(inflater, container, savedInstanceState);
+        binding = FragmentNotesBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
-        //binding = FragmentNotesBinding.inflate(inflater, container, false);
-        //View root = binding.getRoot();
+        mContext = getContext();
+        mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
+        mLifecycleOwner = getViewLifecycleOwner();
 
-        RecyclerView notesView = (RecyclerView) root.findViewById(R.id.notesList);
+        RecyclerView notesView = binding.notesList;
         notesView.setLayoutManager(new LinearLayoutManager(mContext));
         mNoteViewAdapter = new NoteViewAdapter(mContext, mFlags);
 
@@ -96,7 +95,7 @@ public abstract class NoteFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        //binding = null;
+        binding = null;
     }
 
     public abstract ActivityResultLauncher<Intent> onActivityResult();

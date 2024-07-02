@@ -17,23 +17,16 @@ import androidx.lifecycle.ViewModelProvider;
 import com.phroton.notes.Note;
 import com.phroton.notes.NoteViewAdapter;
 import com.phroton.notes.NoteViewModel;
-import com.phroton.notes.R;
 import com.phroton.notes.RequestCode;
 import com.phroton.notes.ui.NoteFragment;
 import com.phroton.notes.ui.editor.EditorActivity;
 
 public class HomeFragment extends NoteFragment {
     @Override
-    public View provideFragment(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_notes, container, false);
-
-        mContext = getContext();
-        mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
-        mLifecycleOwner = getViewLifecycleOwner();
-
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setFlags(NoteViewAdapter.DISPLAY_DEFAULT);
 
-        return view;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
