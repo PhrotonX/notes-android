@@ -51,7 +51,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.note, parent, false);
 
-        return new NoteViewHolder(view);
+        return new NoteViewHolder(view, mContext);
     }
 
     @Override
@@ -63,54 +63,32 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
             if(currentData != null){
                 if(~(mFlags & DISPLAY_DELETED) == DISPLAY_DELETED){
                     if(currentData.getIsDeleted()){
+                        holder.hide();
                         return;
                     }
                 }else if((mFlags & DISPLAY_DELETED) == DISPLAY_DELETED){
                     if(!currentData.getIsDeleted()){
+                        holder.hide();
                         return;
                     }
                 }
 
-                //@TODO: Remove this later after adding TrashFragment.
-                if(!currentData.getIsDeleted()){
-                    String shortenedText;
+                holder.bind(currentData, position);
 
-                    if(currentData.getTitle().length() >= 100) {
-                        shortenedText = currentData.getTitle().substring(0, 100) + "...";
-                        holder.mTitle.setText("DB: " + currentData.getId() + " - " + shortenedText);
-                    }else{
-                        holder.mTitle.setText("DB: " + currentData.getId() + " - " + currentData.getTitle());
-                    }
-
-                    if(currentData.getContent().length() >= 200){
-                        shortenedText = currentData.getContent().substring(0, 200) + "...";
-                        holder.mContent.setText("RV: " + position + " - " + shortenedText);
-                    }else{
-                        holder.mContent.setText("RV: " + position + " - " + currentData.getContent());
-                    }
-
-                    if(currentData.getColor() == 0x0){
-                        holder.mCardView.setCardBackgroundColor(mContext.getColor(R.color.background_white));
-                    }else{
-                        holder.mCardView.setCardBackgroundColor(mContext.getColor(currentData.getColor()));
-                    }
-
-                    //if(mClickListener != null){
-                    holder.mView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if(mClickListener != null){
-                                mClickListener.onClick(position, currentData.getId());
-                            }
+                //if(mClickListener != null){
+                holder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(mClickListener != null){
+                            mClickListener.onClick(position, currentData.getId());
                         }
-                    });
-                    //}
-                }
+                    }
+                });
             }
 
 
         }else{
-            holder.mCardView.setVisibility(View.GONE);
+            holder.hide();
         }
 
     }

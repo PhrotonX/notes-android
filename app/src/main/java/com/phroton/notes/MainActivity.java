@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(savedInstanceState == null){
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.fragment_container, new TrashFragment());
+            fragmentTransaction.add(R.id.fragment_container, new HomeFragment());
             fragmentTransaction.commit();
         }
     }
