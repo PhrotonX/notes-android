@@ -18,8 +18,10 @@ import com.phroton.notes.ui.NoteFragment;
 
 public class TrashFragment extends NoteFragment {
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+    public View provideFragment(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_notes, container, false);
+
+        return view;
     }
 
     @Override

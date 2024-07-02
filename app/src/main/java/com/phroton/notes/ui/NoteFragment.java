@@ -31,7 +31,7 @@ import java.util.List;
 
 public abstract class NoteFragment extends Fragment {
     protected ActivityResultLauncher<Intent> mActivityResultContract;
-    protected FragmentNotesBinding binding;
+    //protected FragmentNotesBinding binding;
     protected Context mContext;
     protected NoteViewAdapter mNoteViewAdapter;
     //protected ActivityResultLauncher<Intent> mEditContent;
@@ -42,19 +42,24 @@ public abstract class NoteFragment extends Fragment {
             //= new ViewModelProvider(this).get(NoteViewModel.class);
 
 
+    public abstract View provideFragment(@NonNull LayoutInflater inflater,
+                                         ViewGroup container, Bundle savedInstanceState);
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentNotesBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        View root = provideFragment(inflater, container, savedInstanceState);
 
-        RecyclerView notesView = binding.notesList;
+        //binding = FragmentNotesBinding.inflate(inflater, container, false);
+        //View root = binding.getRoot();
+
+        RecyclerView notesView = (RecyclerView) root.findViewById(R.id.notesList);
         notesView.setLayoutManager(new LinearLayoutManager(mContext));
         mNoteViewAdapter = new NoteViewAdapter(mContext, mFlags);
 
         notesView.setAdapter(mNoteViewAdapter);
 
-        /*mNoteViewAdapter.setOnClickListener(onItemClick());
+        mNoteViewAdapter.setOnClickListener(onItemClick());
 
         //Original NoteVIewModel initialization code...
 
@@ -83,7 +88,6 @@ public abstract class NoteFragment extends Fragment {
 
         //@NOTE: Handle request after editing a note.
         mActivityResultContract = onActivityResult();
-        */
 
 
         return root;
@@ -92,7 +96,7 @@ public abstract class NoteFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
+        //binding = null;
     }
 
     public abstract ActivityResultLauncher<Intent> onActivityResult();
