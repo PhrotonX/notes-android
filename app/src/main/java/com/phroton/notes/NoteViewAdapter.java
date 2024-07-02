@@ -29,7 +29,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
 
     public NoteViewAdapter(Context context, int flags){
         this.mContext = context;
-        this.mNotes = null;
+        this.mNotes = new ArrayList<>();
         this.mFlags = flags;
         Init();
     }
@@ -112,11 +112,6 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
         }else{
             holder.mCardView.setVisibility(View.GONE);
         }
-
-
-    }
-
-    private void bindViewholder(@NonNull NoteViewHolder holder, @SuppressLint("RecyclerView") int position){
 
     }
 
