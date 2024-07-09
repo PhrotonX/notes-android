@@ -116,19 +116,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        switch(item.getItemId()){
-            case R.id.nav_menu_home:
-                fragmentTransaction.replace(R.id.fragment_container, new HomeFragment());
-                fragmentTransaction.commit();
-                break;
-            case R.id.nav_menu_trash:
-                fragmentTransaction.replace(R.id.fragment_container, new TrashFragment());
-                fragmentTransaction.commit();
-                break;
-            default:
-                break;
-        }
         return super.onOptionsItemSelected(item);
     }
 
