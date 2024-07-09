@@ -61,13 +61,13 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
             Note currentData = mNotes.get(position);
 
             if(currentData != null){
-                if(~(mFlags & DISPLAY_DELETED) == DISPLAY_DELETED){
-                    if(currentData.getIsDeleted()){
+                if((mFlags & DISPLAY_DELETED) == DISPLAY_DELETED){
+                    if(!currentData.getIsDeleted()){
                         holder.hide();
                         return;
                     }
-                }else if((mFlags & DISPLAY_DELETED) == DISPLAY_DELETED){
-                    if(!currentData.getIsDeleted()){
+                }else{
+                    if(currentData.getIsDeleted()){
                         holder.hide();
                         return;
                     }
