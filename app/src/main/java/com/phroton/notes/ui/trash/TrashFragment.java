@@ -94,9 +94,9 @@ public class TrashFragment extends NoteFragment {
 
                         mNoteViewModel.update(note);
                         break;
-                    case EditorActivity.RESULT_REMOVE:
-                        int noteId = o.getData().getIntExtra(Note.NOTE_ID_EXTRA, -1);
-                        mNoteViewModel.markAsDeleted(noteId, true);
+                    case EditorActivity.RESULT_DELETE:
+                        note = Note.unpackCurrentNote(o.getData(), true);
+                        mNoteViewModel.delete(note);
                         break;
                     case EditorActivity.RESULT_CANCELED:
                         Toast.makeText(getContext(), "EditorActivity: Canceled", Toast.LENGTH_SHORT).show();

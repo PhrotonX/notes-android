@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -40,7 +41,8 @@ public class EditorActivity extends AppCompatActivity {
     private RequestCode mRequestCode;
     private View mView;
 
-    public static final int RESULT_REMOVE = 50000;
+    public static final int RESULT_DELETE = 50000;
+    public static final int RESULT_REMOVE = 50001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,7 @@ public class EditorActivity extends AppCompatActivity {
 
         getSupportFragmentManager().setFragmentResultListener(ColorDialogFragment.REQUEST_COLOR_UPDATED,
                 this, new FragmentResultListener() {
+                    @SuppressLint("NonConstantResourceId")
                     @Override
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                         int dialogResult = result.getInt(ColorDialogFragment.EXTRA_COLOR_ID);
@@ -161,13 +164,16 @@ public class EditorActivity extends AppCompatActivity {
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()) {
+            case R.id.menu_editor_delete:
+                setResult(RESULT_DELETE, Note.packCurrentNote(packCurrentNote(), true));
+                finish();
+                break;
             case R.id.menu_editor_save:
-                //TODO: Function for saving here...
-
-                boolean isEditing = (mRequestCode == RequestCode.REQUEST_CODE_EDIT_NOTE) ? true : false;
+                boolean isEditing = mRequestCode == RequestCode.REQUEST_CODE_EDIT_NOTE;
                 setResult(RESULT_OK, Note.packCurrentNote(packCurrentNote(), isEditing));
                 finish();
                 break;
@@ -175,9 +181,7 @@ public class EditorActivity extends AppCompatActivity {
                 //TODO: Function for sharing here...
                 break;
             case R.id.menu_editor_remove:
-                Intent intent = new Intent();
-                intent.putExtra(Note.NOTE_ID_EXTRA, mPosition + 1);
-                setResult(RESULT_REMOVE, intent);
+                setResult(RESULT_REMOVE, packCurrentNotePosition());
                 finish();
                 break;
             case R.id.menu_editor_color:
@@ -210,5 +214,11 @@ public class EditorActivity extends AppCompatActivity {
         note.setColor(mColor);
 
         return note;
+    }
+
+    private Intent packCurrentNotePosition(){
+        Intent intent = new Intent();
+        intent.putExtra(Note.NOTE_ID_EXTRA, mPosition + 1);
+        return intent;
     }
 }
