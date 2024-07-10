@@ -70,7 +70,7 @@ public class TrashFragment extends NoteFragment {
                 //Toast.makeText(requireContext(), "Sample Click Message", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(requireContext(), EditorActivity.class);
                 intent.putExtra(RequestCode.REQUEST_CODE, RequestCode.REQUEST_CODE_EDIT_NOTE);
-                intent.putExtra(Note.NOTE_ID_EXTRA, dbPosition);
+                intent.putExtra(Note.NOTE_ID_EXTRA, rvPosition);
                 mActivityResultContract.launch(intent);
             }
         };
