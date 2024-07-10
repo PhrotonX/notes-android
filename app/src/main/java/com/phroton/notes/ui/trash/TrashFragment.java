@@ -8,8 +8,13 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -29,8 +34,23 @@ public class TrashFragment extends NoteFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setFlags(NoteViewAdapter.DISPLAY_DELETED);
 
+        MenuHost menuHost = getActivity();
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menuInflater.inflate(R.menu.main, menu);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                return false;
+            }
+        });
+
         return super.onCreateView(inflater, container, savedInstanceState);
     }
+
+
 
     @Override
     public void onDestroyView() {
@@ -75,8 +95,8 @@ public class TrashFragment extends NoteFragment {
                         mNoteViewModel.update(note);
                         break;
                     case EditorActivity.RESULT_DELETE:
-                        int noteId = o.getData().getIntExtra(Note.NOTE_ID_EXTRA, -1);
-                        mNoteViewModel.markAsDeleted(noteId, true);
+                        note = Note.unpackCurrentNote(o.getData(), true);
+                        mNoteViewModel.delete(note);
                         break;
                     case EditorActivity.RESULT_CANCELED:
                         Toast.makeText(getContext(), "EditorActivity: Canceled", Toast.LENGTH_SHORT).show();
