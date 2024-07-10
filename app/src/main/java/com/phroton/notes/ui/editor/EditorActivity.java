@@ -141,11 +141,11 @@ public class EditorActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         if(mNote != null){
             if(mNote.getIsDeleted()){
-                MenuItem moveToTrash = findViewById(R.id.menu_editor_remove);
+                MenuItem moveToTrash = menu.findItem(R.id.menu_editor_remove);
                 moveToTrash.setVisible(false);
             }else{
-                MenuItem delete = findViewById(R.id.menu_editor_delete);
-                MenuItem restore = findViewById(R.id.menu_editor_restore);
+                MenuItem delete = menu.findItem(R.id.menu_editor_delete);
+                MenuItem restore = menu.findItem(R.id.menu_editor_restore);
                 delete.setVisible(false);
                 restore.setVisible(false);
             }
