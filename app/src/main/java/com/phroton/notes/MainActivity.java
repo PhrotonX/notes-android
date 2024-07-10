@@ -119,7 +119,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        NavController controller = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        return NavigationUI.onNavDestinationSelected(item, controller)
+                || super.onOptionsItemSelected(item);
     }
 
     @Override
