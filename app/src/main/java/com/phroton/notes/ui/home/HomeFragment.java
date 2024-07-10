@@ -26,6 +26,7 @@ import com.phroton.notes.NoteViewModel;
 import com.phroton.notes.R;
 import com.phroton.notes.RequestCode;
 import com.phroton.notes.databinding.FragmentHomeBinding;
+//import com.phroton.notes.databinding.FragmentNotesBinding;
 import com.phroton.notes.ui.editor.EditorActivity;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+    //private FragmentHomeBinding binding;
     private NoteViewAdapter mNoteViewAdapter;
 
     private ActivityResultLauncher<Intent> mEditContent;
@@ -44,12 +45,14 @@ public class HomeFragment extends Fragment {
         /*HomeViewModel homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);*/
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        //binding = FragmentHomeBinding.inflate(inflater, container, false);
+        //View root = binding.getRoot();
 
-        RecyclerView notesView = binding.notesList;
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
+
+        RecyclerView notesView = (RecyclerView)root.findViewById(R.id.notesList);
         notesView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        mNoteViewAdapter = new NoteViewAdapter(requireContext());
+        mNoteViewAdapter = new NoteViewAdapter(requireContext(), NoteViewAdapter.DISPLAY_DEFAULT);
 
         mNoteViewAdapter.setOnClickListener(new NoteViewAdapter.OnClickListener() {
             @Override
@@ -135,7 +138,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
+        //binding = null;
     }
 
 
