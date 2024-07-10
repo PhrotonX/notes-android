@@ -138,14 +138,7 @@ public class EditorActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_editor, menu);
-        return true;
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
+    public boolean onPrepareOptionsMenu(Menu menu) {
         if(mNote != null){
             if(mNote.getIsDeleted()){
                 MenuItem moveToTrash = findViewById(R.id.menu_editor_remove);
@@ -156,7 +149,16 @@ public class EditorActivity extends AppCompatActivity {
                 delete.setVisible(false);
                 restore.setVisible(false);
             }
+        }else{
+            Toast.makeText(this, "mNote is null!", Toast.LENGTH_SHORT).show();
         }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_editor, menu);
+        return true;
     }
 
     @Override
