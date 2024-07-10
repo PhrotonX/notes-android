@@ -30,16 +30,20 @@ import java.util.List;
 
 public abstract class NoteFragment extends Fragment {
     protected ActivityResultLauncher<Intent> mActivityResultContract;
-    //protected FragmentNotesBinding binding;
     protected Context mContext;
     protected NoteViewAdapter mNoteViewAdapter;
-    //protected ActivityResultLauncher<Intent> mEditContent;
     protected int mFlags;
     protected LifecycleOwner mLifecycleOwner;
     private NoteViewAdapter.OnClickListener mListener;
     protected NoteViewModel mNoteViewModel;
-            //= new ViewModelProvider(this).get(NoteViewModel.class);
 
+    public ActivityResultLauncher<Intent> getActivityResultContract(){
+        return mActivityResultContract;
+    }
+
+    public NoteViewModel getNoteViewModel(){
+        return mNoteViewModel;
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -101,9 +105,9 @@ public abstract class NoteFragment extends Fragment {
 
     public abstract ActivityResultLauncher<Intent> onActivityResult();
 
+    public abstract NoteViewAdapter.OnClickListener onItemClick();
+
     public void setFlags(int flags){
         mFlags = flags;
     }
-
-    public abstract NoteViewAdapter.OnClickListener onItemClick();
 }

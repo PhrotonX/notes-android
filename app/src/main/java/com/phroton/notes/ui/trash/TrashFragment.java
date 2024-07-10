@@ -64,23 +64,21 @@ public class TrashFragment extends NoteFragment {
 
     @Override
     public NoteViewAdapter.OnClickListener onItemClick() {
-        NoteViewAdapter.OnClickListener listener = new NoteViewAdapter.OnClickListener() {
+        return new NoteViewAdapter.OnClickListener() {
             @Override
             public void onClick(int rvPosition, int dbPosition) {
                 //Toast.makeText(requireContext(), "Sample Click Message", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(requireContext(), EditorActivity.class);
                 intent.putExtra(RequestCode.REQUEST_CODE, RequestCode.REQUEST_CODE_EDIT_NOTE);
                 intent.putExtra(Note.NOTE_ID_EXTRA, rvPosition);
-                mActivityResultContract.launch(intent);
+                getActivityResultContract().launch(intent);
             }
         };
-
-        return listener;
     }
 
     @Override
     public ActivityResultLauncher<Intent> onActivityResult() {
-        ActivityResultLauncher<Intent> activityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        return registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult o) {
                 Note note;
@@ -92,11 +90,11 @@ public class TrashFragment extends NoteFragment {
                             Toast.makeText(getContext(), "Failed to update note", Toast.LENGTH_SHORT).show();
                         }
 
-                        mNoteViewModel.update(note);
+                        getNoteViewModel().update(note);
                         break;
                     case EditorActivity.RESULT_DELETE:
                         note = Note.unpackCurrentNote(o.getData(), true);
-                        mNoteViewModel.delete(note);
+                        getNoteViewModel().delete(note);
                         break;
                     case EditorActivity.RESULT_CANCELED:
                         Toast.makeText(getContext(), "EditorActivity: Canceled", Toast.LENGTH_SHORT).show();
@@ -107,7 +105,5 @@ public class TrashFragment extends NoteFragment {
                 }
             }
         });
-
-        return activityResult;
     }
 }
