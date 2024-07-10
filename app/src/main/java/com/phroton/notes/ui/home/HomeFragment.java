@@ -1,9 +1,11 @@
 package com.phroton.notes.ui.home;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -13,6 +15,8 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -25,7 +29,6 @@ import com.phroton.notes.NoteViewAdapter;
 import com.phroton.notes.NoteViewModel;
 import com.phroton.notes.R;
 import com.phroton.notes.RequestCode;
-import com.phroton.notes.databinding.FragmentHomeBinding;
 //import com.phroton.notes.databinding.FragmentNotesBinding;
 import com.phroton.notes.ui.editor.EditorActivity;
 
@@ -49,6 +52,19 @@ public class HomeFragment extends Fragment {
         //View root = binding.getRoot();
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+
+        MenuHost menuHost = getActivity();
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menuInflater.inflate(R.menu.main, menu);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                return false;
+            }
+        });
 
         RecyclerView notesView = (RecyclerView)root.findViewById(R.id.notesList);
         notesView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -106,7 +122,7 @@ public class HomeFragment extends Fragment {
 
                         noteViewModel.update(note);
                         break;
-                    case EditorActivity.RESULT_DELETE:
+                    case EditorActivity.RESULT_REMOVE:
                         int noteId = o.getData().getIntExtra(Note.NOTE_ID_EXTRA, -1);
                         noteViewModel.markAsDeleted(noteId, true);
                         break;
