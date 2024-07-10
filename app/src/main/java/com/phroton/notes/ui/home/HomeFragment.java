@@ -30,28 +30,16 @@ import com.phroton.notes.NoteViewModel;
 import com.phroton.notes.R;
 import com.phroton.notes.RequestCode;
 //import com.phroton.notes.databinding.FragmentNotesBinding;
+import com.phroton.notes.ui.NoteFragment;
 import com.phroton.notes.ui.editor.EditorActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
-
-    //private FragmentHomeBinding binding;
-    private NoteViewAdapter mNoteViewAdapter;
-
-    private ActivityResultLauncher<Intent> mEditContent;
-
+public class HomeFragment extends NoteFragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-        /*HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);*/
-
-        //binding = FragmentHomeBinding.inflate(inflater, container, false);
-        //View root = binding.getRoot();
-
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        setFlags(NoteViewAdapter.DISPLAY_DEFAULT);
 
         MenuHost menuHost = getActivity();
         menuHost.addMenuProvider(new MenuProvider() {
@@ -66,49 +54,22 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        RecyclerView notesView = (RecyclerView)root.findViewById(R.id.notesList);
-        notesView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        mNoteViewAdapter = new NoteViewAdapter(requireContext(), NoteViewAdapter.DISPLAY_DEFAULT);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
-        mNoteViewAdapter.setOnClickListener(new NoteViewAdapter.OnClickListener() {
-            @Override
-            public void onClick(int rvPosition, int dbPosition) {
-                //Toast.makeText(requireContext(), "Sample Click Message", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(requireContext(), EditorActivity.class);
-                intent.putExtra(RequestCode.REQUEST_CODE, RequestCode.REQUEST_CODE_EDIT_NOTE);
-                intent.putExtra(Note.NOTE_ID_EXTRA, rvPosition);
-                mEditContent.launch(intent);
-            }
-        });
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 
-        NoteViewModel noteViewModel =
-                new ViewModelProvider(this).get(NoteViewModel.class);
+    @Override
+    public View onInitializeView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_home, container, false);
+    }
 
-        LiveData<List<Note>> allNotes = noteViewModel.getNotesCompat();
-
-        if(allNotes != null){
-            allNotes.observe(getViewLifecycleOwner(), new Observer<List<Note>>() {
-                @Override
-                public void onChanged(List<Note> notes) {
-                    if(notes != null){
-                        mNoteViewAdapter.setNotes(notes);
-                        mNoteViewAdapter.notifyDataSetChanged();
-                    }
-                }
-            });
-        }else{
-            Toast.makeText(getContext(), R.string.database_read_error, Toast.LENGTH_SHORT).show();
-            List<Note> sampleNote = new ArrayList<>();
-            sampleNote.add(new Note("Error 1", "Error Note 1"));
-            sampleNote.add(new Note("Error 2", "Error Note 2"));
-            sampleNote.add(new Note("Error 3", "Error Note 3"));
-
-            mNoteViewAdapter.setNotes(sampleNote);
-            mNoteViewAdapter.notifyDataSetChanged();
-        }
-
-        //@NOTE: Handle request after editing a note.
-        mEditContent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+    @Override
+    public ActivityResultLauncher<Intent> onActivityResult() {
+        return registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult o) {
                 Note note;
@@ -120,11 +81,11 @@ public class HomeFragment extends Fragment {
                             Toast.makeText(getContext(), "Failed to update note", Toast.LENGTH_SHORT).show();
                         }
 
-                        noteViewModel.update(note);
+                        getNoteViewModel().update(note);
                         break;
                     case EditorActivity.RESULT_REMOVE:
                         int noteId = o.getData().getIntExtra(Note.NOTE_ID_EXTRA, -1);
-                        noteViewModel.markAsDeleted(noteId, true);
+                        getNoteViewModel().markAsDeleted(noteId, true);
                         break;
                     case EditorActivity.RESULT_CANCELED:
                         Toast.makeText(getContext(), "EditorActivity: Canceled", Toast.LENGTH_SHORT).show();
@@ -135,26 +96,19 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-
-        /*List<Note> allNotes = noteViewModel.getNotesCompat();
-        if(allNotes != null){
-            noteViewAdapter.setNotes(allNotes);
-            noteViewAdapter.notifyDataSetChanged();
-        }*/
-
-        //binding.notesList;
-
-        /*final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);*/
-        notesView.setAdapter(mNoteViewAdapter);
-        //mNoteViewAdapter.notifyDataSetChanged();
-        return root;
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        //binding = null;
+    public NoteViewAdapter.OnClickListener onItemClick() {
+        return new NoteViewAdapter.OnClickListener() {
+            @Override
+            public void onClick(int rvPosition, int dbPosition) {
+                Intent intent = new Intent(requireContext(), EditorActivity.class);
+                intent.putExtra(RequestCode.REQUEST_CODE, RequestCode.REQUEST_CODE_EDIT_NOTE);
+                intent.putExtra(Note.NOTE_ID_EXTRA, rvPosition);
+                getActivityResultContract().launch(intent);
+            }
+        };
     }
 
 
