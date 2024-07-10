@@ -141,15 +141,17 @@ public class EditorActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_editor, menu);
 
-        /*if(mNote.getIsDeleted()){
-            MenuItem moveToTrash = findViewById(R.id.menu_editor_remove);
-            moveToTrash.setVisible(false);
-        }else{
-            MenuItem delete = findViewById(R.id.menu_editor_delete);
-            MenuItem restore = findViewById(R.id.menu_editor_restore);
-            delete.setVisible(false);
-            restore.setVisible(false);
-        }*/
+        if(mNote != null){
+            if(mNote.getIsDeleted()){
+                MenuItem moveToTrash = findViewById(R.id.menu_editor_remove);
+                moveToTrash.setVisible(false);
+            }else{
+                MenuItem delete = findViewById(R.id.menu_editor_delete);
+                MenuItem restore = findViewById(R.id.menu_editor_restore);
+                delete.setVisible(false);
+                restore.setVisible(false);
+            }
+        }
 
         return true;
     }
