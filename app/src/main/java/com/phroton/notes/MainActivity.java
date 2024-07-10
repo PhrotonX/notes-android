@@ -17,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -27,7 +26,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.phroton.notes.databinding.ActivityMainBinding;
 import com.phroton.notes.ui.editor.EditorActivity;
 import com.phroton.notes.ui.home.HomeFragment;
-import com.phroton.notes.ui.trash.TrashFragment;
 
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
@@ -37,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private NoteViewModel mNoteViewModel;
 
     private ActivityResultLauncher<Intent> mInsertContent;
+    private NavController mNavController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,16 +89,16 @@ public class MainActivity extends AppCompatActivity {
 
         NavHostFragment fragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_main);
         assert fragment != null;
-        NavController navController = fragment.getNavController();
+        mNavController = fragment.getNavController();
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph())
+        mAppBarConfiguration = new AppBarConfiguration.Builder(mNavController.getGraph())
                 .setOpenableLayout(drawer)
                 .build();
 
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+        NavigationUI.setupActionBarWithNavController(this, mNavController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, mNavController);
 
         /*
         TextView navSubtitle = (TextView)findViewById(R.id.textView);
@@ -122,21 +122,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        NavHostFragment fragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_main);
-        assert fragment != null;
-        NavController navController = fragment.getNavController();
-
         //NavController controller = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.onNavDestinationSelected(item, navController)
+        return NavigationUI.onNavDestinationSelected(item, mNavController)
                 || super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavHostFragment fragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_main);
-        assert fragment != null;
-        NavController navController = fragment.getNavController();
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+        return NavigationUI.navigateUp(mNavController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
 }
