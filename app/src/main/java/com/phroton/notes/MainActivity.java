@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(savedInstanceState == null){
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.fragment_container, new HomeFragment());
+            fragmentTransaction.add(R.id.nav_host_fragment_content_main, new HomeFragment());
             fragmentTransaction.commit();
         }
     }
@@ -122,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        //NavController controller = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.onNavDestinationSelected(item, mNavController)
                 || super.onOptionsItemSelected(item);
     }
