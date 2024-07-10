@@ -27,7 +27,7 @@ import com.phroton.notes.ui.editor.EditorActivity;
 public class TrashFragment extends NoteFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        setFlags(NoteViewAdapter.DISPLAY_DEFAULT);
+        setFlags(NoteViewAdapter.DISPLAY_DELETED);
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
