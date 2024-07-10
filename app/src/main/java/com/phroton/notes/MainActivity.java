@@ -106,11 +106,11 @@ public class MainActivity extends AppCompatActivity {
         navSubtitleStr += " " + BuildConfig.VERSION_NAME;
         navSubtitle.setText(navSubtitleStr);*/
 
-        if(savedInstanceState == null){
+        //if(savedInstanceState == null){
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.add(R.id.nav_host_fragment_content_main, new HomeFragment());
             fragmentTransaction.commit();
-        }
+        //}
     }
 
     @Override
