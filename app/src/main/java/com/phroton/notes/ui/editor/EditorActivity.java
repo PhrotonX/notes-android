@@ -122,10 +122,16 @@ public class EditorActivity extends AppCompatActivity {
                             @Override
                             public void onChanged(List<Note> notes) {
                                 //RV is Index 0.
-                                mNote = notes.get(mRvPosition);
-                                mEditorTitle.setText(mNote.getTitle());
-                                mEditorContent.setText(mNote.getContent());
-                                ChangeBackgroundColor(mNote.getColor());
+                                int size = notes.size();
+
+                                //Check size to avoid IndexOutOfBoundsException.
+                                if(mRvPosition < size){
+                                    mNote = notes.get(mRvPosition);
+                                    mEditorTitle.setText(mNote.getTitle());
+                                    mEditorContent.setText(mNote.getContent());
+                                    ChangeBackgroundColor(mNote.getColor());
+                                }
+
                             }
                         });
                     }else{
