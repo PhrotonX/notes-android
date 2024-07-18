@@ -63,6 +63,10 @@ public abstract class NoteFragment extends Fragment {
         };
     }
 
+    public NoteViewAdapter getNoteViewAdapter(){
+        return mNoteViewAdapter;
+    }
+
     public NoteViewModel getNoteViewModel(){
         return mNoteViewModel;
     }
@@ -165,6 +169,7 @@ public abstract class NoteFragment extends Fragment {
 
     protected void onActivityResultDelete(ActivityResult result, Note note){
         getNoteViewModel().delete(note);
+        getNoteViewAdapter().notifyItemRemoved(note.getId());
     }
 
     protected void onActivityResultNull(ActivityResult result){
