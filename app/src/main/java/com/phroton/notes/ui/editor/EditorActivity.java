@@ -37,7 +37,8 @@ public class EditorActivity extends AppCompatActivity {
     * also zero-based.
     * However, databases or DB are 1-based or index 1. Increment 1 value for accessing DB items.
     * */
-    private int mPosition = 0;
+    private int mRvPosition = -1;
+    private int mDbPosition = 0;
     private RequestCode mRequestCode;
     private View mView;
 
@@ -109,23 +110,26 @@ public class EditorActivity extends AppCompatActivity {
                     deleteItem.setEnabled(false);
                     break;
                 case REQUEST_CODE_EDIT_NOTE:
-                    mPosition = intent.getIntExtra(Note.NOTE_ID_EXTRA, -1);
-                    Toast.makeText(this, "EditorAcitvity.Position: " + mPosition, Toast.LENGTH_SHORT).show();
+                    mDbPosition = intent.getIntExtra(Note.NOTE_ID_EXTRA, -1);
+                    mRvPosition = intent.getIntExtra(Note.NOTE_POSITION_EXTRA, -1);
+                    Toast.makeText(this, "EditorAcitvity DbPosition: " + mDbPosition, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "EditorAcitvity RvPosition: " + mRvPosition, Toast.LENGTH_SHORT).show();
 
-                    if(mPosition != -1){
+                    if(mDbPosition != -1){
                         mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
                         mNoteViewModel.getNotesCompat().observe(this, new Observer<List<Note>>() {
                             @Override
                             public void onChanged(List<Note> notes) {
                                 //RV is Index 0.
-                                mNote = notes.get(mPosition);
+                                mNote = notes.get(mRvPosition);
                                 mEditorTitle.setText(mNote.getTitle());
                                 mEditorContent.setText(mNote.getContent());
                                 ChangeBackgroundColor(mNote.getColor());
                             }
                         });
                     }else{
-                        Toast.makeText(this, "position: " + mPosition, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "dbPosition: " + mDbPosition, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "rvPosition: " + mRvPosition, Toast.LENGTH_SHORT).show();
                     }
 
                     break;
@@ -208,7 +212,7 @@ public class EditorActivity extends AppCompatActivity {
 
         if(mRequestCode == RequestCode.REQUEST_CODE_EDIT_NOTE){
             //DB is Index 1
-            note.setId(mPosition + 1);
+            note.setId(mDbPosition);
         }
 
         note.setColor(mColor);
@@ -218,7 +222,8 @@ public class EditorActivity extends AppCompatActivity {
 
     private Intent packCurrentNotePosition(){
         Intent intent = new Intent();
-        intent.putExtra(Note.NOTE_ID_EXTRA, mPosition + 1);
+        intent.putExtra(Note.NOTE_ID_EXTRA, mDbPosition);
+        intent.putExtra(Note.NOTE_POSITION_EXTRA, mRvPosition);
         return intent;
     }
 }

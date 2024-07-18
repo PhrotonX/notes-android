@@ -12,6 +12,7 @@ import androidx.room.PrimaryKey;
 public class Note {
 
     @Ignore public static final String NOTE_ID_EXTRA = Build.ID + "NOTE_ID_EXTRA";
+    @Ignore public static final String NOTE_POSITION_EXTRA = Build.ID + "NOTE_POSITION_EXTRA";
     @Ignore public static final String NOTE_TITLE_EXTRA = "NOTE_TITLE_EXTRA";
     @Ignore public static final String NOTE_CONTENT_EXTRA = "NOTE_CONTENT_EXTRA";
     @Ignore public static final String NOTE_COLOR_EXTRA = "NOTE_COLOR_EXTRA";

@@ -105,7 +105,8 @@ public class HomeFragment extends NoteFragment {
             public void onClick(int rvPosition, int dbPosition) {
                 Intent intent = new Intent(requireContext(), EditorActivity.class);
                 intent.putExtra(RequestCode.REQUEST_CODE, RequestCode.REQUEST_CODE_EDIT_NOTE);
-                intent.putExtra(Note.NOTE_ID_EXTRA, rvPosition);
+                intent.putExtra(Note.NOTE_ID_EXTRA, dbPosition);
+                intent.putExtra(Note.NOTE_POSITION_EXTRA, rvPosition);
                 getActivityResultContract().launch(intent);
             }
         };
