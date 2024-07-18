@@ -130,6 +130,7 @@ public abstract class NoteFragment extends Fragment {
             @Override
             public void onActivityResult(ActivityResult result) {
                 Note note;
+                int noteId;
                 switch(result.getResultCode()){
                     case EditorActivity.RESULT_OK:
                         note = Note.unpackCurrentNote(result.getData(), true);
@@ -140,8 +141,12 @@ public abstract class NoteFragment extends Fragment {
                         onActivityResultDelete(result, note);
                         break;
                     case EditorActivity.RESULT_REMOVE:
-                        int noteId = result.getData().getIntExtra(Note.NOTE_ID_EXTRA, -1);
+                        noteId = result.getData().getIntExtra(Note.NOTE_ID_EXTRA, -1);
                         onActivityResultRemove(result, noteId);
+                        break;
+                    case EditorActivity.RESULT_RESTORE:
+                        noteId = result.getData().getIntExtra(Note.NOTE_ID_EXTRA, -1);
+                        onActivityResultRestore(result, noteId);
                         break;
                     case EditorActivity.RESULT_CANCELED:
                         onActivityResultCancel(result);
@@ -177,6 +182,10 @@ public abstract class NoteFragment extends Fragment {
 
     protected void onActivityResultRemove(ActivityResult result, int noteId){
         getNoteViewModel().markAsDeleted(noteId, true);
+    }
+
+    protected void onActivityResultRestore(ActivityResult result, int noteId){
+        getNoteViewModel().markAsDeleted(noteId, false);
     }
 
     public NoteViewAdapter.OnClickListener onItemClick(){

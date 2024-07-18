@@ -20,8 +20,11 @@ public class HomeFragment extends NoteFragment {
         setFlags(NoteViewAdapter.DISPLAY_DEFAULT);
 
         MenuHost menuHost = getActivity();
+
         if (menuHost != null) {
             menuHost.invalidateMenu();
+            menuHost.removeMenuProvider(getDefaultMenuProvider());
+
 
             menuHost.addMenuProvider(getDefaultMenuProvider());
         }

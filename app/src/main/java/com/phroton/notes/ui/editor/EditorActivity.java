@@ -44,6 +44,7 @@ public class EditorActivity extends AppCompatActivity {
 
     public static final int RESULT_DELETE = 50000;
     public static final int RESULT_REMOVE = 50001;
+    public static final int RESULT_RESTORE = 50002;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,6 +187,10 @@ public class EditorActivity extends AppCompatActivity {
                 break;
             case R.id.menu_editor_remove:
                 setResult(RESULT_REMOVE, packCurrentNotePosition());
+                finish();
+                break;
+            case R.id.menu_editor_restore:
+                setResult(RESULT_RESTORE, packCurrentNotePosition());
                 finish();
                 break;
             case R.id.menu_editor_color:
