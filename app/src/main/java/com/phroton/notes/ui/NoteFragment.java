@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -11,7 +14,9 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
@@ -24,6 +29,8 @@ import com.phroton.notes.Note;
 import com.phroton.notes.NoteViewAdapter;
 import com.phroton.notes.NoteViewModel;
 import com.phroton.notes.R;
+import com.phroton.notes.RequestCode;
+import com.phroton.notes.ui.editor.EditorActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +46,21 @@ public abstract class NoteFragment extends Fragment {
 
     public ActivityResultLauncher<Intent> getActivityResultContract(){
         return mActivityResultContract;
+    }
+
+    public MenuProvider getDefaultMenuProvider(){
+        return new MenuProvider() {
+
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menuInflater.inflate(R.menu.main, menu);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                return false;
+            }
+        };
     }
 
     public NoteViewModel getNoteViewModel(){
@@ -103,9 +125,72 @@ public abstract class NoteFragment extends Fragment {
     public abstract View onInitializeView(@NonNull LayoutInflater inflater,
                                           ViewGroup container, Bundle savedInstanceState);
 
-    public abstract ActivityResultLauncher<Intent> onActivityResult();
+    public ActivityResultLauncher<Intent> onActivityResult(){
+        return registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                Note note;
+                switch(result.getResultCode()){
+                    case EditorActivity.RESULT_OK:
+                        note = Note.unpackCurrentNote(result.getData(), true);
+                        onActivityResultOk(result, note);
+                        break;
+                    case EditorActivity.RESULT_DELETE:
+                        note = Note.unpackCurrentNote(result.getData(), true);
+                        onActivityResultDelete(result, note);
+                        break;
+                    case EditorActivity.RESULT_REMOVE:
+                        int noteId = result.getData().getIntExtra(Note.NOTE_ID_EXTRA, -1);
+                        onActivityResultRemove(result, noteId);
+                        break;
+                    case EditorActivity.RESULT_CANCELED:
+                        onActivityResultCancel(result);
+                        break;
+                    default:
+                        onActivityResultNull(result);
+                        break;
+                }
+            }
+        });
+    }
 
-    public abstract NoteViewAdapter.OnClickListener onItemClick();
+    protected void onActivityResultCancel(ActivityResult result){
+        Toast.makeText(getContext(), "EditorActivity: Canceled", Toast.LENGTH_SHORT).show();
+    }
+
+    protected void onActivityResultDelete(ActivityResult result, Note note){
+        getNoteViewModel().delete(note);
+    }
+
+    protected void onActivityResultNull(ActivityResult result){
+        Toast.makeText(getContext(), "EditorActivity: Error", Toast.LENGTH_SHORT).show();
+    }
+
+    protected void onActivityResultOk(ActivityResult result, @NonNull Note note){
+        Toast.makeText(getContext(), "MainActivity noteId: " + note.getId(), Toast.LENGTH_SHORT).show();
+        if(note.getId() == -1){
+            Toast.makeText(getContext(), "Failed to update note", Toast.LENGTH_SHORT).show();
+        }
+
+        getNoteViewModel().update(note);
+    }
+
+    protected void onActivityResultRemove(ActivityResult result, int noteId){
+        getNoteViewModel().markAsDeleted(noteId, true);
+    }
+
+    public NoteViewAdapter.OnClickListener onItemClick(){
+        return new NoteViewAdapter.OnClickListener() {
+            @Override
+            public void onClick(int rvPosition, int dbPosition) {
+                Intent intent = new Intent(requireContext(), EditorActivity.class);
+                intent.putExtra(RequestCode.REQUEST_CODE, RequestCode.REQUEST_CODE_EDIT_NOTE);
+                intent.putExtra(Note.NOTE_ID_EXTRA, dbPosition);
+                intent.putExtra(Note.NOTE_POSITION_EXTRA, rvPosition);
+                getActivityResultContract().launch(intent);
+            }
+        };
+    }
 
     public void setFlags(int flags){
         mFlags = flags;
