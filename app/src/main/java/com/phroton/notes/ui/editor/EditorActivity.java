@@ -147,11 +147,11 @@ public class EditorActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem moveToTrash = menu.findItem(R.id.menu_editor_remove);
-        moveToTrash.setVisible(false);
-
         if(mNote != null){
-            if(!mNote.getIsDeleted()){
+            if(mNote.getIsDeleted()){
+                MenuItem moveToTrash = menu.findItem(R.id.menu_editor_remove);
+                moveToTrash.setVisible(false);
+            }else if(mRequestCode != RequestCode.REQUEST_CODE_CREATE_NOTE){
                 MenuItem delete = menu.findItem(R.id.menu_editor_delete);
                 MenuItem restore = menu.findItem(R.id.menu_editor_restore);
                 delete.setVisible(false);
@@ -160,7 +160,6 @@ public class EditorActivity extends AppCompatActivity {
         }else{
             Toast.makeText(this, "mNote is null!", Toast.LENGTH_SHORT).show();
         }
-
         return super.onPrepareOptionsMenu(menu);
     }
 
