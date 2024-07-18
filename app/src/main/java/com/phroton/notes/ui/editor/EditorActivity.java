@@ -122,10 +122,16 @@ public class EditorActivity extends AppCompatActivity {
                             @Override
                             public void onChanged(List<Note> notes) {
                                 //RV is Index 0.
-                                mNote = notes.get(mRvPosition);
-                                mEditorTitle.setText(mNote.getTitle());
-                                mEditorContent.setText(mNote.getContent());
-                                ChangeBackgroundColor(mNote.getColor());
+                                int size = notes.size();
+
+                                //Check size to avoid IndexOutOfBoundsException.
+                                if(mRvPosition < size){
+                                    mNote = notes.get(mRvPosition);
+                                    mEditorTitle.setText(mNote.getTitle());
+                                    mEditorContent.setText(mNote.getContent());
+                                    ChangeBackgroundColor(mNote.getColor());
+                                }
+
                             }
                         });
                     }else{
@@ -151,7 +157,7 @@ public class EditorActivity extends AppCompatActivity {
             if(mNote.getIsDeleted()){
                 MenuItem moveToTrash = menu.findItem(R.id.menu_editor_remove);
                 moveToTrash.setVisible(false);
-            }else{
+            }else if(mRequestCode != RequestCode.REQUEST_CODE_CREATE_NOTE){
                 MenuItem delete = menu.findItem(R.id.menu_editor_delete);
                 MenuItem restore = menu.findItem(R.id.menu_editor_restore);
                 delete.setVisible(false);

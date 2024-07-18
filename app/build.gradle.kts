@@ -12,7 +12,7 @@ android {
         minSdk = 24
         targetSdk = 34
         versionCode = 108
-        versionName = "v0.1.0.1 build 227"
+        versionName = "v0.1.0.1 build 231"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -64,6 +64,7 @@ android {
 dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.6.1")
     // https://mvnrepository.com/artifact/androidx.activity/activity
     runtimeOnly("androidx.activity:activity-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -86,8 +87,8 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test.ext:junit:1.2.1")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     annotationProcessor("androidx.room:room-compiler:2.6.1")
