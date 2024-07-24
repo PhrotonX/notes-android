@@ -107,9 +107,6 @@ public class EditorActivity extends AppCompatActivity {
         if(mRequestCode != null){
             switch(mRequestCode){
                 case REQUEST_CODE_CREATE_NOTE:
-                    MenuItem deleteItem = (MenuItem)findViewById(R.id.menu_editor_delete);
-                    deleteItem.setEnabled(false);
-                    break;
                 case REQUEST_CODE_EDIT_NOTE:
                     mDbPosition = intent.getIntExtra(Note.NOTE_ID_EXTRA, -1);
                     mRvPosition = intent.getIntExtra(Note.NOTE_POSITION_EXTRA, -1);
