@@ -93,7 +93,7 @@ public abstract class NoteFragment extends Fragment {
                 @Override
                 public void onChanged(List<Note> notes) {
                     if(notes != null){
-                        mNoteViewAdapter = new NoteViewAdapter(mContext, notes, mFlags);
+                        mNoteViewAdapter = new NoteViewAdapter(mContext, notes, mFlags, onItemClick());
                         //mNoteViewAdapter.setNotes(notes);
                         //mNoteViewAdapter.notifyDataSetChanged();
                     }
@@ -106,14 +106,14 @@ public abstract class NoteFragment extends Fragment {
             sampleNote.add(new Note("Error 2", "Error Note 2"));
             sampleNote.add(new Note("Error 3", "Error Note 3"));
 
-            mNoteViewAdapter = new NoteViewAdapter(mContext, sampleNote, mFlags);
+            mNoteViewAdapter = new NoteViewAdapter(mContext, sampleNote, mFlags, onItemClick());
             //mNoteViewAdapter.setNotes(sampleNote);
             //mNoteViewAdapter.notifyDataSetChanged();
         }
 
 
         notesView.setAdapter(mNoteViewAdapter);
-        mNoteViewAdapter.setOnClickListener(onItemClick());
+        //mNoteViewAdapter.setOnClickListener(onItemClick());
 
         //@NOTE: Handle request after editing a note.
         mActivityResultContract = onActivityResult();

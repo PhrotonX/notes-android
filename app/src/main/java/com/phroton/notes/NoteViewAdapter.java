@@ -41,6 +41,14 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
         Init();
     }
 
+    public NoteViewAdapter(Context context, List<Note> notes, int flags, OnClickListener listener){
+        this.mContext = context;
+        this.mNotes = notes;
+        this.mFlags = flags;
+        this.mClickListener = listener;
+        Init();
+    }
+
     public void Init(){
 
     }
