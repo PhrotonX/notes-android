@@ -187,12 +187,12 @@ public abstract class NoteFragment extends Fragment {
 
     protected void onActivityResultRemove(ActivityResult result, int dbNoteId, int rvNoteId){
         getNoteViewModel().markAsDeleted(dbNoteId, true);
-        getNoteViewAdapter().notifyItemRemoved(rvNoteId);
+        getNoteViewAdapter().notifyItemChanged(rvNoteId);
     }
 
     protected void onActivityResultRestore(ActivityResult result, int dbNoteId, int rvNoteId){
         getNoteViewModel().markAsDeleted(dbNoteId, false);
-        getNoteViewAdapter().notifyItemRemoved(rvNoteId);
+        getNoteViewAdapter().notifyItemChanged(rvNoteId);
     }
 
     public NoteViewAdapter.OnClickListener onItemClick(){
