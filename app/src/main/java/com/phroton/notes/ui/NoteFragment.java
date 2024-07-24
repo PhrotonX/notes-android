@@ -42,6 +42,7 @@ public abstract class NoteFragment extends Fragment {
     protected int mFlags;
     protected LifecycleOwner mLifecycleOwner;
     private NoteViewAdapter.OnClickListener mListener;
+    private RecyclerView mNoteRecyclerView;
     protected NoteViewModel mNoteViewModel;
 
     public ActivityResultLauncher<Intent> getActivityResultContract(){
@@ -71,6 +72,17 @@ public abstract class NoteFragment extends Fragment {
         return mNoteViewModel;
     }
 
+    public void initializeNoteViewAdapter(List<Note> notes){
+        mNoteViewAdapter = new NoteViewAdapter(mContext, notes, mFlags);
+
+        mNoteRecyclerView.setAdapter(mNoteViewAdapter);
+
+        mNoteViewAdapter.setOnClickListener(onItemClick());
+
+        //@NOTE: Handle request after editing a note.
+        mActivityResultContract = onActivityResult();
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -80,41 +92,36 @@ public abstract class NoteFragment extends Fragment {
         mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
         mLifecycleOwner = getViewLifecycleOwner();
 
-        RecyclerView notesView = (RecyclerView)root.findViewById(R.id.notesList);
-        notesView.setLayoutManager(new LinearLayoutManager(mContext));
-        mNoteViewAdapter = new NoteViewAdapter(mContext, mFlags);
-
-        notesView.setAdapter(mNoteViewAdapter);
-
-        mNoteViewAdapter.setOnClickListener(onItemClick());
+        mNoteRecyclerView = (RecyclerView)root.findViewById(R.id.notesList);
+        mNoteRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 
         //Original NoteVIewModel initialization code...
 
         LiveData<List<Note>> allNotes = mNoteViewModel.getNotesCompat();
-
         if(allNotes != null){
             allNotes.observe(mLifecycleOwner, new Observer<List<Note>>() {
                 @Override
                 public void onChanged(List<Note> notes) {
                     if(notes != null){
-                        mNoteViewAdapter.setNotes(notes);
-                        mNoteViewAdapter.notifyDataSetChanged();
+                        initializeNoteViewAdapter(notes);
+                        //mNoteViewAdapter.setNotes(notes);
+                        //mNoteViewAdapter.notifyDataSetChanged();
                     }
                 }
             });
         }else{
             Toast.makeText(mContext, R.string.database_read_error, Toast.LENGTH_SHORT).show();
-            List<Note> sampleNote = new ArrayList<>();
-            sampleNote.add(new Note("Error 1", "Error Note 1"));
-            sampleNote.add(new Note("Error 2", "Error Note 2"));
-            sampleNote.add(new Note("Error 3", "Error Note 3"));
+            List<Note> errorNotes = new ArrayList<>();
+            errorNotes.add(new Note("Error 1", "Error Note 1"));
+            errorNotes.add(new Note("Error 2", "Error Note 2"));
+            errorNotes.add(new Note("Error 3", "Error Note 3"));
 
-            mNoteViewAdapter.setNotes(sampleNote);
-            mNoteViewAdapter.notifyDataSetChanged();
+            initializeNoteViewAdapter(errorNotes);
+            //mNoteViewAdapter.setNotes(sampleNote);
+            //mNoteViewAdapter.notifyDataSetChanged();
         }
 
-        //@NOTE: Handle request after editing a note.
-        mActivityResultContract = onActivityResult();
+
 
 
         return root;
