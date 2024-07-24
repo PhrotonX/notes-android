@@ -14,7 +14,7 @@
     <string name="cancel">Cancel</string>
     <string name="no_content">No Content</string>
     <string name="database_read_error">Error retrieving data from database</string>
-    <string name="title_activity_editor">EditorActivity</string>
+    <string name="title_activity_editor">Editor</string>
     <string name="menu_save">Save</string>
     <string name="menu_share">Share</string>
     <string name="menu_delete">Delete</string>
