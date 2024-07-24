@@ -78,9 +78,6 @@ public abstract class NoteFragment extends Fragment {
         mNoteRecyclerView.setAdapter(mNoteViewAdapter);
 
         mNoteViewAdapter.setOnClickListener(onItemClick());
-
-        //@NOTE: Handle request after editing a note.
-        mActivityResultContract = onActivityResult();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -121,7 +118,8 @@ public abstract class NoteFragment extends Fragment {
             //mNoteViewAdapter.notifyDataSetChanged();
         }
 
-
+        //@NOTE: Handle request after editing a note.
+        mActivityResultContract = onActivityResult();
 
 
         return root;
