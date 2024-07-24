@@ -17,16 +17,40 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
     private List<Note> mNotes;
     private Context mContext;
 
+    public static final int DISPLAY_DEFAULT = 1;
+    public static final int DISPLAY_DELETED = 2;
+    public static final int DISPLAY_ARCHIVED = 4;
+    public static final int DISPLAY_TAGGED = 8;
+    public static final int DISPLAY_SEARCH = 16;
+
+    private int mFlags = 0;
+
     private OnClickListener mClickListener;
 
-    public NoteViewAdapter(Context context){
+    public NoteViewAdapter(Context context, int flags){
         this.mContext = context;
-        this.mNotes = null;
+        this.mNotes = new ArrayList<>();
+        this.mFlags = flags;
+        Init();
     }
 
-    public NoteViewAdapter(Context context, List<Note> notes){
+    public NoteViewAdapter(Context context, List<Note> notes, int flags){
         this.mContext = context;
         this.mNotes = notes;
+        this.mFlags = flags;
+        Init();
+    }
+
+    public NoteViewAdapter(Context context, List<Note> notes, int flags, OnClickListener listener){
+        this.mContext = context;
+        this.mNotes = notes;
+        this.mFlags = flags;
+        this.mClickListener = listener;
+        Init();
+    }
+
+    public void Init(){
+
     }
 
     @NonNull
@@ -35,41 +59,46 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.note, parent, false);
 
-        return new NoteViewHolder(view);
+        return new NoteViewHolder(view, mContext);
     }
 
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, @SuppressLint("RecyclerView") int position) {
         if(mNotes != null) {
-            Note currentNote = mNotes.get(position);
 
-            String shortenedText;
+            Note currentData = mNotes.get(position);
 
-            if(currentNote.getTitle().length() >= 100) {
-                shortenedText = currentNote.getTitle().substring(0, 100) + "...";
-                holder.mTitle.setText(shortenedText);
-            }else{
-                holder.mTitle.setText(currentNote.getTitle());
-            }
+            if(currentData != null){
+                if((mFlags & DISPLAY_DELETED) == DISPLAY_DELETED){
+                    if(!currentData.getIsDeleted()){
+                        holder.hide();
+                        return;
+                    }
+                }else{
+                    if(currentData.getIsDeleted()){
+                        holder.hide();
+                        return;
+                    }
+                }
 
-            if(currentNote.getContent().length() >= 200){
-                shortenedText = currentNote.getContent().substring(0, 200) + "...";
-                holder.mContent.setText(shortenedText);
-            }else{
-                holder.mContent.setText(currentNote.getContent());
-            }
+                holder.bind(currentData, position);
 
-            //if(mClickListener != null){
+                //if(mClickListener != null){
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(mClickListener != null){
-                            mClickListener.onClick(position);
+                            mClickListener.onClick(position, currentData.getId());
                         }
                     }
                 });
-            //}
+            }
+
+
+        }else{
+            holder.hide();
         }
+
     }
 
     @Override
@@ -83,7 +112,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
 
 
     public interface OnClickListener {
-        void onClick(int position);
+        void onClick(int rvPosition, int dbPosition);
     }
 
     public void setNotes(List<Note> notes){
