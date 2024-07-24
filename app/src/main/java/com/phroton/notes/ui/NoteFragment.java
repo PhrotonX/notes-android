@@ -139,8 +139,10 @@ public abstract class NoteFragment extends Fragment {
             @Override
             public void onActivityResult(ActivityResult result) {
                 Note note;
-                int dbNoteId = result.getData().getIntExtra(Note.NOTE_ID_EXTRA, -1);
-                int rvNoteId = result.getData().getIntExtra(Note.NOTE_POSITION_EXTRA, -1);
+                Intent intent = result.getData();
+                if(intent == null) return;
+                int dbNoteId = intent.getIntExtra(Note.NOTE_ID_EXTRA, -1);
+                int rvNoteId = intent.getIntExtra(Note.NOTE_POSITION_EXTRA, -1);
                 switch(result.getResultCode()){
                     case EditorActivity.RESULT_OK:
                         note = Note.unpackCurrentNote(result.getData(), true);
