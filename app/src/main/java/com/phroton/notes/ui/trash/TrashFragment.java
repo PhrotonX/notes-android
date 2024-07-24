@@ -31,15 +31,6 @@ public class TrashFragment extends NoteFragment {
                              ViewGroup container, Bundle savedInstanceState) {
         setFlags(NoteViewAdapter.DISPLAY_DELETED);
 
-        MenuHost menuHost = getActivity();
-        if (menuHost != null) {
-            menuHost.invalidateMenu();
-            menuHost.removeMenuProvider(getDefaultMenuProvider());
-
-            menuHost.addMenuProvider(getDefaultMenuProvider());
-        }
-
-
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
