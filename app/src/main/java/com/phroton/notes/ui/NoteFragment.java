@@ -182,7 +182,7 @@ public abstract class NoteFragment extends Fragment {
         }
 
         getNoteViewModel().update(note);
-        getNoteViewAdapter().notifyItemChanged(rvNoteId);
+        //getNoteViewAdapter().notifyItemChanged(rvNoteId);
     }
 
     protected void onActivityResultRemove(ActivityResult result, int dbNoteId, int rvNoteId){
