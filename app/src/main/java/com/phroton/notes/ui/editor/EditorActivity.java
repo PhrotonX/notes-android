@@ -107,9 +107,6 @@ public class EditorActivity extends AppCompatActivity {
         if(mRequestCode != null){
             switch(mRequestCode){
                 case REQUEST_CODE_CREATE_NOTE:
-                    MenuItem deleteItem = (MenuItem)findViewById(R.id.menu_editor_delete);
-                    deleteItem.setEnabled(false);
-                    break;
                 case REQUEST_CODE_EDIT_NOTE:
                     mDbPosition = intent.getIntExtra(Note.NOTE_ID_EXTRA, -1);
                     mRvPosition = intent.getIntExtra(Note.NOTE_POSITION_EXTRA, -1);
@@ -141,7 +138,6 @@ public class EditorActivity extends AppCompatActivity {
 
                     break;
                 case REQUEST_CODE_UNKNOWN:
-                    break;
                 default:
                     break;
             }
@@ -153,19 +149,21 @@ public class EditorActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem delete = menu.findItem(R.id.menu_editor_delete);
+        MenuItem restore = menu.findItem(R.id.menu_editor_restore);
+        MenuItem moveToTrash = menu.findItem(R.id.menu_editor_remove);
+
+        delete.setVisible(false);
+        restore.setVisible(false);
+
         if(mNote != null){
             if(mNote.getIsDeleted()){
-                MenuItem moveToTrash = menu.findItem(R.id.menu_editor_remove);
                 moveToTrash.setVisible(false);
-            }else if(mRequestCode != RequestCode.REQUEST_CODE_CREATE_NOTE){
-                MenuItem delete = menu.findItem(R.id.menu_editor_delete);
-                MenuItem restore = menu.findItem(R.id.menu_editor_restore);
-                delete.setVisible(false);
-                restore.setVisible(false);
+                delete.setVisible(true);
+                restore.setVisible(true);
             }
-        }else{
-            Toast.makeText(this, "mNote is null!", Toast.LENGTH_SHORT).show();
         }
+
         return super.onPrepareOptionsMenu(menu);
     }
 

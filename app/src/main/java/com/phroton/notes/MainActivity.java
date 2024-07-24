@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, EditorActivity.class);
+                intent.putExtra(RequestCode.REQUEST_CODE, RequestCode.REQUEST_CODE_CREATE_NOTE);
                 //startActivityForResult(intent, CREATE_NOTE_REQUEST);
                 mInsertContent.launch(intent);
             }
