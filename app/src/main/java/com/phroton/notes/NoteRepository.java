@@ -35,4 +35,34 @@ public class NoteRepository {
         }
     }
 
+    public void update(Note note){
+        try{
+            NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
+                mNoteDao.update(note);
+            });
+        }catch(NullPointerException e){
+            Log.e("com.phroton.notes", "NoteDao is null!");
+            e.printStackTrace();
+        }
+    }
+
+    public void markAsDeleted(int id, boolean isDeleted){
+        try{
+            NoteRoomDatabase.databaseWriteExecutor.execute(() ->{
+                mNoteDao.markAsDeleted(id, isDeleted);
+            });
+        }catch(NullPointerException e){
+            e.printStackTrace();
+        }
+    }
+    public void delete(Note note){
+        try{
+            NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
+                mNoteDao.delete(note);
+            });
+        }catch(NullPointerException e){
+            Log.e("com.phroton.notes", "NoteDao is null!");
+            e.printStackTrace();
+        }
+    }
 }
