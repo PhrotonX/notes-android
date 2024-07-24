@@ -134,23 +134,22 @@ public abstract class NoteFragment extends Fragment {
             @Override
             public void onActivityResult(ActivityResult result) {
                 Note note;
-                int noteId;
+                int dbNoteId = result.getData().getIntExtra(Note.NOTE_ID_EXTRA, -1);
+                int rvNoteId = result.getData().getIntExtra(Note.NOTE_POSITION_EXTRA, -1);
                 switch(result.getResultCode()){
                     case EditorActivity.RESULT_OK:
                         note = Note.unpackCurrentNote(result.getData(), true);
-                        onActivityResultOk(result, note);
+                        onActivityResultOk(result, note, dbNoteId, rvNoteId);
                         break;
                     case EditorActivity.RESULT_DELETE:
                         note = Note.unpackCurrentNote(result.getData(), true);
-                        onActivityResultDelete(result, note);
+                        onActivityResultDelete(result, note, dbNoteId, rvNoteId);
                         break;
                     case EditorActivity.RESULT_REMOVE:
-                        noteId = result.getData().getIntExtra(Note.NOTE_ID_EXTRA, -1);
-                        onActivityResultRemove(result, noteId);
+                        onActivityResultRemove(result, dbNoteId, rvNoteId);
                         break;
                     case EditorActivity.RESULT_RESTORE:
-                        noteId = result.getData().getIntExtra(Note.NOTE_ID_EXTRA, -1);
-                        onActivityResultRestore(result, noteId);
+                        onActivityResultRestore(result, dbNoteId, rvNoteId);
                         break;
                     case EditorActivity.RESULT_CANCELED:
                         onActivityResultCancel(result);
@@ -167,7 +166,7 @@ public abstract class NoteFragment extends Fragment {
         Toast.makeText(getContext(), "EditorActivity: Canceled", Toast.LENGTH_SHORT).show();
     }
 
-    protected void onActivityResultDelete(ActivityResult result, Note note){
+    protected void onActivityResultDelete(ActivityResult result, Note note, int dbNoteId, int rvNoteId){
         getNoteViewModel().delete(note);
         getNoteViewAdapter().notifyItemRemoved(note.getId());
     }
@@ -176,21 +175,24 @@ public abstract class NoteFragment extends Fragment {
         Toast.makeText(getContext(), "EditorActivity: Error", Toast.LENGTH_SHORT).show();
     }
 
-    protected void onActivityResultOk(ActivityResult result, @NonNull Note note){
+    protected void onActivityResultOk(ActivityResult result, @NonNull Note note, int dbNoteId, int rvNoteId){
         Toast.makeText(getContext(), "MainActivity noteId: " + note.getId(), Toast.LENGTH_SHORT).show();
         if(note.getId() == -1){
             Toast.makeText(getContext(), "Failed to update note", Toast.LENGTH_SHORT).show();
         }
 
         getNoteViewModel().update(note);
+        getNoteViewAdapter().notifyItemChanged(rvNoteId);
     }
 
-    protected void onActivityResultRemove(ActivityResult result, int noteId){
-        getNoteViewModel().markAsDeleted(noteId, true);
+    protected void onActivityResultRemove(ActivityResult result, int dbNoteId, int rvNoteId){
+        getNoteViewModel().markAsDeleted(dbNoteId, true);
+        getNoteViewAdapter().notifyItemRemoved(rvNoteId);
     }
 
-    protected void onActivityResultRestore(ActivityResult result, int noteId){
-        getNoteViewModel().markAsDeleted(noteId, false);
+    protected void onActivityResultRestore(ActivityResult result, int dbNoteId, int rvNoteId){
+        getNoteViewModel().markAsDeleted(dbNoteId, false);
+        getNoteViewAdapter().notifyItemRemoved(rvNoteId);
     }
 
     public NoteViewAdapter.OnClickListener onItemClick(){

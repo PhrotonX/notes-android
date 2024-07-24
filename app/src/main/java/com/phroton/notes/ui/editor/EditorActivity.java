@@ -178,12 +178,12 @@ public class EditorActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()) {
             case R.id.menu_editor_delete:
-                setResult(RESULT_DELETE, Note.packCurrentNote(packCurrentNote(), true));
+                setResult(RESULT_DELETE, Note.packCurrentNote(this.packCurrentNote(), true, mRvPosition));
                 finish();
                 break;
             case R.id.menu_editor_save:
                 boolean isEditing = mRequestCode == RequestCode.REQUEST_CODE_EDIT_NOTE;
-                setResult(RESULT_OK, Note.packCurrentNote(packCurrentNote(), isEditing));
+                setResult(RESULT_OK, Note.packCurrentNote(this.packCurrentNote(), isEditing, mRvPosition));
                 finish();
                 break;
             case R.id.menu_editor_share:

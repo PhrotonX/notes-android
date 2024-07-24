@@ -56,10 +56,17 @@ public class Note {
     }
 
     @Ignore
-    public static Intent packCurrentNote(Note note, boolean withId){
+    public static Intent packCurrentNote(Note note, boolean withDbId, int rvId){
+        Intent intent = packCurrentNote(note, withDbId);
+        intent.putExtra(NOTE_POSITION_EXTRA, rvId);
+        return intent;
+    }
+
+    @Ignore
+    public static Intent packCurrentNote(Note note, boolean withDbId){
         Intent intent = new Intent();
 
-        if(withId){
+        if(withDbId){
             intent.putExtra(NOTE_ID_EXTRA, note.getId());
         }
 

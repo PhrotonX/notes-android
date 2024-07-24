@@ -45,7 +45,7 @@ public class TrashFragment extends NoteFragment {
     }
 
     @Override
-    protected void onActivityResultRemove(ActivityResult result, int noteId) {
+    protected void onActivityResultRemove(ActivityResult result, int dbNoteId, int rvNoteId) {
         return;
     }
 }
