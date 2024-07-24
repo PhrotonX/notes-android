@@ -153,22 +153,15 @@ public class EditorActivity extends AppCompatActivity {
         MenuItem restore = menu.findItem(R.id.menu_editor_restore);
         MenuItem moveToTrash = menu.findItem(R.id.menu_editor_remove);
 
-        switch(mRequestCode){
-            case REQUEST_CODE_EDIT_NOTE:
-                if(mNote != null){
-                    if(mNote.getIsDeleted()){
-                        moveToTrash.setVisible(false);
-                    }
-                }
-            case REQUEST_CODE_CREATE_NOTE:
-                delete.setVisible(false);
-                restore.setVisible(false);
+        delete.setVisible(false);
+        restore.setVisible(false);
 
-                if(mRequestCode != RequestCode.REQUEST_CODE_EDIT_NOTE) moveToTrash.setVisible(false);
-                break;
-            default:
-                break;
+        if(mNote != null){
+            if(mNote.getIsDeleted()){
+                moveToTrash.setVisible(false);
+            }
         }
+
         return super.onPrepareOptionsMenu(menu);
     }
 
