@@ -159,6 +159,8 @@ public class EditorActivity extends AppCompatActivity {
         if(mNote != null){
             if(mNote.getIsDeleted()){
                 moveToTrash.setVisible(false);
+                delete.setVisible(true);
+                restore.setVisible(true);
             }
         }
 
