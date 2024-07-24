@@ -9,11 +9,5 @@
     android:background="@color/background_yellow"
     tools:context=".ui.home.HomeFragment">
 <!--  Add UI elements here for tips.  -->
-    <TextView
-        android:id="@+id/textDeleted"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/menu_home"
-        />
     <include layout="@layout/notes_list"/>
 </LinearLayout>

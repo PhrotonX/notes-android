@@ -110,8 +110,8 @@ public class EditorActivity extends AppCompatActivity {
                 case REQUEST_CODE_EDIT_NOTE:
                     mDbPosition = intent.getIntExtra(Note.NOTE_ID_EXTRA, -1);
                     mRvPosition = intent.getIntExtra(Note.NOTE_POSITION_EXTRA, -1);
-                    Toast.makeText(this, "EditorAcitvity DbPosition: " + mDbPosition, Toast.LENGTH_SHORT).show();
-                    Toast.makeText(this, "EditorAcitvity RvPosition: " + mRvPosition, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this, "EditorAcitvity DbPosition: " + mDbPosition, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this, "EditorAcitvity RvPosition: " + mRvPosition, Toast.LENGTH_SHORT).show();
 
                     if(mDbPosition != -1){
                         mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
@@ -132,8 +132,8 @@ public class EditorActivity extends AppCompatActivity {
                             }
                         });
                     }else{
-                        Toast.makeText(this, "dbPosition: " + mDbPosition, Toast.LENGTH_SHORT).show();
-                        Toast.makeText(this, "rvPosition: " + mRvPosition, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(this, "dbPosition: " + mDbPosition, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(this, "rvPosition: " + mRvPosition, Toast.LENGTH_SHORT).show();
                     }
 
                     break;
@@ -142,7 +142,7 @@ public class EditorActivity extends AppCompatActivity {
                     break;
             }
         }else{
-            Toast.makeText(this, "requestCode is null", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "requestCode is null", Toast.LENGTH_SHORT).show();
         }
 
     }

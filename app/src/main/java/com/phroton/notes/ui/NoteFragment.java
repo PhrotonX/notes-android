@@ -170,7 +170,7 @@ public abstract class NoteFragment extends Fragment {
     }
 
     protected void onActivityResultCancel(ActivityResult result){
-        Toast.makeText(getContext(), "EditorActivity: Canceled", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "EditorActivity: Canceled", Toast.LENGTH_SHORT).show();
     }
 
     protected void onActivityResultDelete(ActivityResult result, Note note, int dbNoteId, int rvNoteId){
@@ -183,7 +183,7 @@ public abstract class NoteFragment extends Fragment {
     }
 
     protected void onActivityResultOk(ActivityResult result, @NonNull Note note, int dbNoteId, int rvNoteId){
-        Toast.makeText(getContext(), "MainActivity noteId: " + note.getId(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "MainActivity noteId: " + note.getId(), Toast.LENGTH_SHORT).show();
         if(note.getId() == -1){
             Toast.makeText(getContext(), "Failed to update note", Toast.LENGTH_SHORT).show();
         }
