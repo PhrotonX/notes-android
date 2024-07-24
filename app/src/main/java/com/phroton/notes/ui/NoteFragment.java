@@ -98,7 +98,7 @@ public abstract class NoteFragment extends Fragment {
                 public void onChanged(List<Note> notes) {
                     if(notes != null){
                         mNoteViewAdapter.setNotes(notes);
-                        mNoteViewAdapter.notifyDataSetChanged();
+                        //mNoteViewAdapter.notifyDataSetChanged();
                     }
                 }
             });
@@ -110,7 +110,7 @@ public abstract class NoteFragment extends Fragment {
             sampleNote.add(new Note("Error 3", "Error Note 3"));
 
             mNoteViewAdapter.setNotes(sampleNote);
-            mNoteViewAdapter.notifyDataSetChanged();
+            //mNoteViewAdapter.notifyDataSetChanged();
         }
 
         //@NOTE: Handle request after editing a note.
@@ -168,7 +168,7 @@ public abstract class NoteFragment extends Fragment {
 
     protected void onActivityResultDelete(ActivityResult result, Note note, int dbNoteId, int rvNoteId){
         getNoteViewModel().delete(note);
-        getNoteViewAdapter().notifyItemRemoved(note.getId());
+        getNoteViewAdapter().notifyItemRemoved(rvNoteId);
     }
 
     protected void onActivityResultNull(ActivityResult result){
