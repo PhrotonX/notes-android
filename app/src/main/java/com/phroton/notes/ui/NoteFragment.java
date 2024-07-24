@@ -82,12 +82,8 @@ public abstract class NoteFragment extends Fragment {
 
         RecyclerView notesView = (RecyclerView)root.findViewById(R.id.notesList);
         notesView.setLayoutManager(new LinearLayoutManager(mContext));
-        mNoteViewAdapter = new NoteViewAdapter(mContext, mFlags);
 
-        notesView.setAdapter(mNoteViewAdapter);
-
-        mNoteViewAdapter.setOnClickListener(onItemClick());
-
+        //Original NoteViewAdapter initialization code...
         //Original NoteVIewModel initialization code...
 
         LiveData<List<Note>> allNotes = mNoteViewModel.getNotesCompat();
@@ -97,7 +93,8 @@ public abstract class NoteFragment extends Fragment {
                 @Override
                 public void onChanged(List<Note> notes) {
                     if(notes != null){
-                        mNoteViewAdapter.setNotes(notes);
+                        mNoteViewAdapter = new NoteViewAdapter(mContext, notes, mFlags);
+                        //mNoteViewAdapter.setNotes(notes);
                         //mNoteViewAdapter.notifyDataSetChanged();
                     }
                 }
@@ -109,9 +106,14 @@ public abstract class NoteFragment extends Fragment {
             sampleNote.add(new Note("Error 2", "Error Note 2"));
             sampleNote.add(new Note("Error 3", "Error Note 3"));
 
-            mNoteViewAdapter.setNotes(sampleNote);
+            mNoteViewAdapter = new NoteViewAdapter(mContext, sampleNote, mFlags);
+            //mNoteViewAdapter.setNotes(sampleNote);
             //mNoteViewAdapter.notifyDataSetChanged();
         }
+
+
+        notesView.setAdapter(mNoteViewAdapter);
+        mNoteViewAdapter.setOnClickListener(onItemClick());
 
         //@NOTE: Handle request after editing a note.
         mActivityResultContract = onActivityResult();
