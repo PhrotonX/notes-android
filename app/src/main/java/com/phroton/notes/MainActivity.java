@@ -1,5 +1,6 @@
 package com.phroton.notes;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -14,6 +15,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -26,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.phroton.notes.databinding.ActivityMainBinding;
 import com.phroton.notes.ui.editor.EditorActivity;
 import com.phroton.notes.ui.home.HomeFragment;
+import com.phroton.notes.ui.search.SearchFragment;
 
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
@@ -120,8 +123,20 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.menu_main_search:
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.add(R.id.nav_host_fragment_content_main, new SearchFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
+                break;
+            default:
+                break;
+        }
+
         return NavigationUI.onNavDestinationSelected(item, mNavController)
                 || super.onOptionsItemSelected(item);
     }
