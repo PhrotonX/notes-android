@@ -129,13 +129,19 @@ public class MainActivity extends AppCompatActivity {
         MenuItem searchItem = menu.findItem(R.id.menu_main_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
+        ComponentName componentName = new ComponentName(getApplicationContext(), SearchActivity.class);
+        if(searchView != null){
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
+        }else{
+            Toast.makeText(getApplicationContext(), "Error: searchView is null", Toast.LENGTH_SHORT).show();
+        }
+
+
+        /*searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.add(R.id.nav_host_fragment_content_main, new SearchFragment());
-                transaction.addToBackStack(null);
-                transaction.commit();
                 return true;
             }
 
@@ -143,12 +149,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
-        });
-
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
-        ComponentName componentName = new ComponentName(getApplicationContext(), SearchActivity.class);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
+        });*/
 
         return super.onCreateOptionsMenu(menu);
     }
