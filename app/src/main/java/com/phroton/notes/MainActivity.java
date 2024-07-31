@@ -1,6 +1,9 @@
 package com.phroton.notes;
 
 import android.annotation.SuppressLint;
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -24,10 +27,12 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 
 import com.phroton.notes.databinding.ActivityMainBinding;
 import com.phroton.notes.ui.editor.EditorActivity;
 import com.phroton.notes.ui.home.HomeFragment;
+import com.phroton.notes.ui.search.SearchActivity;
 import com.phroton.notes.ui.search.SearchFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -120,23 +125,36 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+
+        SearchView searchView = (SearchView)findViewById(R.id.menu_main_search);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.add(R.id.nav_host_fragment_content_main, new SearchFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
+        ComponentName componentName = new ComponentName(getApplicationContext(), SearchActivity.class);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
+
         return super.onCreateOptionsMenu(menu);
     }
 
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch(item.getItemId()){
-            case R.id.menu_main_search:
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.add(R.id.nav_host_fragment_content_main, new SearchFragment());
-                transaction.addToBackStack(null);
-                transaction.commit();
-                break;
-            default:
-                break;
-        }
-
         return NavigationUI.onNavDestinationSelected(item, mNavController)
                 || super.onOptionsItemSelected(item);
     }
