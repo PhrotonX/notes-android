@@ -18,8 +18,8 @@
     <string name="menu_save">Save</string>
     <string name="menu_share">Share</string>
     <string name="menu_delete">Delete</string>
-    <string name="type_note_here">Type note here...</string>
-    <string name="type_title_here">Type title here...</string>
+    <string name="type_note_here">Type note here…</string>
+    <string name="type_title_here">Type title here…</string>
     <string name="menu_color">Color</string>
 
     <string name="blue">Blue</string>
@@ -37,4 +37,6 @@
     <string name="deleted_notes">Deleted Notes</string>
     <string name="restore">Restore</string>
     <string name="move_to_trash">Move to Trash</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Type here to search</string>
 </resources>
