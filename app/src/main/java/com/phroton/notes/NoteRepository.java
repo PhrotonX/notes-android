@@ -24,6 +24,10 @@ public class NoteRepository {
         return mNotes;
     }
 
+    public LiveData<Note> getNote(int id){
+        return mNoteDao.getNote(id);
+    }
+
     public void insert(Note note){
         try{
             NoteRoomDatabase.databaseWriteExecutor.execute(() -> {

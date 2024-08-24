@@ -115,21 +115,14 @@ public class EditorActivity extends AppCompatActivity {
 
                     if(mDbPosition != -1){
                         mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
-                        mNoteViewModel.getNotesCompat().observe(this, new Observer<List<Note>>() {
+
+                        mNoteViewModel.getNote(mDbPosition).observe(this, new Observer<Note>() {
                             @Override
-                            public void onChanged(List<Note> notes) {
-                                //RV is Index 0.
-                                int size = notes.size();
-
-                                //Check size to avoid IndexOutOfBoundsException.
-                                //if(mDbPosition < size){
-
-                                    mNote = notes.get(mDbPosition);
-                                    mEditorTitle.setText(mNote.getTitle());
-                                    mEditorContent.setText(mNote.getContent());
-                                    ChangeBackgroundColor(mNote.getColor());
-                                //}
-
+                            public void onChanged(Note note) {
+                                mNote = note;
+                                mEditorTitle.setText(note.getTitle());
+                                mEditorContent.setText(note.getContent());
+                                ChangeBackgroundColor(note.getColor());
                             }
                         });
                     }else{
