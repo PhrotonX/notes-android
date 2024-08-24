@@ -72,8 +72,8 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
 
             if(currentData != null){
 
-                //if(((mFlags & DISPLAY_SEARCH) != DISPLAY_SEARCH) ||
-                //        ((mFlags & DISPLAY_ALL) != DISPLAY_ALL)){
+                if(((mFlags & DISPLAY_SEARCH) != DISPLAY_SEARCH) ||
+                        ((mFlags & DISPLAY_ALL) != DISPLAY_ALL)){
                     if((mFlags & DISPLAY_DELETED) == DISPLAY_DELETED){
                         if(!currentData.getIsDeleted()){
                             holder.hide();
@@ -85,7 +85,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
                             return;
                         }
                     }
-                //}
+                }
 
                 holder.bind(currentData, position, mQuery);
 
