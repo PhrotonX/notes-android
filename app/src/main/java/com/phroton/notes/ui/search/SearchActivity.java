@@ -27,6 +27,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.phroton.notes.R;
 import com.phroton.notes.databinding.ActivityMainBinding;
 
+import java.util.Objects;
+
 /*
     @TODO: Make this class inherit MainActivity.
  */
@@ -85,10 +87,9 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void setResultLabel(String query){
-        TextView searchLabel = (TextView)findViewById(R.id.infoText);
-        searchLabel.setVisibility(View.VISIBLE);
-        String searchResult = getResources().getString(R.string.results_for) + query;
-        searchLabel.setText(searchResult);
+        String searchResult = getString(R.string.results_for) + query;
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle(searchResult);
     }
 
     private void setUpFragment(Bundle savedInstanceState){
@@ -105,7 +106,6 @@ public class SearchActivity extends AppCompatActivity {
 
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 
-        NavigationUI.setupActionBarWithNavController(this, mNavController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, mNavController);
 
         if(savedInstanceState == null){
