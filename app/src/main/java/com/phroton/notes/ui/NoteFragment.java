@@ -94,7 +94,7 @@ public abstract class NoteFragment extends Fragment {
 
         //Original NoteVIewModel initialization code...
 
-        LiveData<List<Note>> allNotes = mNoteViewModel.getNotesCompat();
+        LiveData<List<Note>> allNotes = onRetrieveNotes();
         if(allNotes != null){
             allNotes.observe(mLifecycleOwner, new Observer<List<Note>>() {
                 @Override
@@ -213,6 +213,10 @@ public abstract class NoteFragment extends Fragment {
                 getActivityResultContract().launch(intent);
             }
         };
+    }
+
+    protected LiveData<List<Note>> onRetrieveNotes(){
+        return mNoteViewModel.getNotesCompat();
     }
 
     public void setFlags(int flags){

@@ -24,6 +24,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.phroton.notes.NoteViewModel;
 import com.phroton.notes.R;
 import com.phroton.notes.databinding.ActivityMainBinding;
 
@@ -37,6 +38,7 @@ public class SearchActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ConstraintLayout mLayout;
     private NavController mNavController;
+    private String mQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -88,6 +90,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void setResultLabel(String query){
+        mQuery = query;
         String searchResult = getString(R.string.results_for) + query;
 
         Objects.requireNonNull(getSupportActionBar()).setTitle(searchResult);
@@ -111,7 +114,7 @@ public class SearchActivity extends AppCompatActivity {
 
         if(savedInstanceState == null){
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.nav_host_fragment_content_main, new SearchFragment());
+            fragmentTransaction.add(R.id.nav_host_fragment_content_main, new SearchFragment(mQuery));
             fragmentTransaction.commit();
         }
     }

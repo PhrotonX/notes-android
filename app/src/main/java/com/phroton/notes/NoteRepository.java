@@ -65,4 +65,17 @@ public class NoteRepository {
             e.printStackTrace();
         }
     }
+
+    public LiveData<List<Note>> search(String query, String color){
+        LiveData<List<Note>> data;
+
+        try{
+            data = mNoteDao.search(query, color);
+            return data;
+        }catch(NullPointerException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }
