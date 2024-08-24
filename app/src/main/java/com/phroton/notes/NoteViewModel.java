@@ -41,4 +41,15 @@ public class NoteViewModel extends AndroidViewModel {
     public void delete(Note note){
         mRepository.delete(note);
     }
+
+    public LiveData<List<Note>> search(String query, int color){
+        String strColor;
+        if(color == -1){
+            strColor = "%%";
+        }else{
+            strColor = "%" + color + "%";
+        }
+
+        return mRepository.search("%" + query + "%", strColor);
+    }
 }
