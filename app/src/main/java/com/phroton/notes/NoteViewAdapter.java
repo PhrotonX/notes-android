@@ -25,6 +25,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
     public static final int DISPLAY_ALL = 128;
 
     private int mFlags = 0;
+    private String mQuery = null;
 
     private OnClickListener mClickListener;
 
@@ -86,7 +87,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
                     }
                 }
 
-                holder.bind(currentData, position);
+                holder.bind(currentData, position, mQuery);
 
                 //if(mClickListener != null){
                 holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +114,10 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
 
     public void setOnClickListener(OnClickListener clickListener){
         this.mClickListener = clickListener;
+    }
+
+    public void setQuery(String query){
+        mQuery = query;
     }
 
 

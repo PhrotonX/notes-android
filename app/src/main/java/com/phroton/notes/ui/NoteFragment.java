@@ -72,10 +72,12 @@ public abstract class NoteFragment extends Fragment {
         return mNoteViewModel;
     }
 
-    public void initializeNoteViewAdapter(List<Note> notes){
+    private void initializeNoteViewAdapter(List<Note> notes){
         mNoteViewAdapter = new NoteViewAdapter(mContext, notes, mFlags);
 
         mNoteRecyclerView.setAdapter(mNoteViewAdapter);
+
+        onInitializeNoteViewAdapter();
 
         mNoteViewAdapter.setOnClickListener(onItemClick());
     }
@@ -92,7 +94,7 @@ public abstract class NoteFragment extends Fragment {
         mNoteRecyclerView = (RecyclerView)root.findViewById(R.id.notesList);
         mNoteRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 
-        //Original NoteVIewModel initialization code...
+        //Original NoteViewModel initialization code...
 
         LiveData<List<Note>> allNotes = onRetrieveNotes();
         if(allNotes != null){
@@ -201,6 +203,8 @@ public abstract class NoteFragment extends Fragment {
         getNoteViewModel().markAsDeleted(dbNoteId, false);
         getNoteViewAdapter().notifyItemChanged(rvNoteId);
     }
+
+    protected void onInitializeNoteViewAdapter(){}
 
     public NoteViewAdapter.OnClickListener onItemClick(){
         return new NoteViewAdapter.OnClickListener() {

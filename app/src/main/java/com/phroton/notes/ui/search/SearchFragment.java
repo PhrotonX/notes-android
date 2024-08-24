@@ -23,10 +23,16 @@ public class SearchFragment extends NoteFragment {
     public SearchFragment(String query){
         mQuery = query;
     }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setFlags(NoteViewAdapter.DISPLAY_SEARCH);
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    protected void onInitializeNoteViewAdapter() {
+        getNoteViewAdapter().setQuery(mQuery);
     }
 
     @Override
@@ -36,6 +42,6 @@ public class SearchFragment extends NoteFragment {
 
     @Override
     protected LiveData<List<Note>> onRetrieveNotes() {
-        return mNoteViewModel.search(mQuery, -1);
+        return getNoteViewModel().search(mQuery, -1);
     }
 }
