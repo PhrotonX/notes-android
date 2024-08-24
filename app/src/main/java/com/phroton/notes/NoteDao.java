@@ -21,6 +21,9 @@ public interface NoteDao {
     @Query("SELECT * FROM notes")
     LiveData<List<Note>> getAllNotes();
 
+    @Query("SELECT * FROM notes WHERE id = :id")
+    LiveData<Note> getNote(int id);
+
     @Query("SELECT * FROM notes ORDER BY id DESC")
     LiveData<List<Note>> getNotesByDescendingId();
 
@@ -32,4 +35,7 @@ public interface NoteDao {
 
     @Delete
     void delete(Note note);
+
+    @Query("SELECT * FROM notes WHERE title LIKE :content OR content LIKE :content AND color LIKE :color")
+    LiveData<List<Note>> search(String content, String color);
 }

@@ -24,6 +24,10 @@ public class NoteRepository {
         return mNotes;
     }
 
+    public LiveData<Note> getNote(int id){
+        return mNoteDao.getNote(id);
+    }
+
     public void insert(Note note){
         try{
             NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
@@ -64,5 +68,18 @@ public class NoteRepository {
             Log.e("com.phroton.notes", "NoteDao is null!");
             e.printStackTrace();
         }
+    }
+
+    public LiveData<List<Note>> search(String query, String color){
+        LiveData<List<Note>> data;
+
+        try{
+            data = mNoteDao.search(query, color);
+            return data;
+        }catch(NullPointerException e){
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
