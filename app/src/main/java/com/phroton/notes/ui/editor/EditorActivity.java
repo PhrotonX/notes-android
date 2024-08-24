@@ -122,12 +122,13 @@ public class EditorActivity extends AppCompatActivity {
                                 int size = notes.size();
 
                                 //Check size to avoid IndexOutOfBoundsException.
-                                if(mRvPosition < size){
-                                    mNote = notes.get(mRvPosition);
+                                //if(mDbPosition < size){
+
+                                    mNote = notes.get(mDbPosition);
                                     mEditorTitle.setText(mNote.getTitle());
                                     mEditorContent.setText(mNote.getContent());
                                     ChangeBackgroundColor(mNote.getColor());
-                                }
+                                //}
 
                             }
                         });
