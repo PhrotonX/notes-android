@@ -22,7 +22,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
     public static final int DISPLAY_ARCHIVED = 4;
     public static final int DISPLAY_TAGGED = 8;
     public static final int DISPLAY_SEARCH = 16;
-    public static final int DISPLAY_ALL = 128;
+    public static final int DISPLAY_ALL = DISPLAY_DEFAULT + DISPLAY_DELETED + DISPLAY_ARCHIVED + DISPLAY_TAGGED;
 
     private int mFlags = 0;
     private String mQuery = null;
@@ -72,8 +72,8 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
 
             if(currentData != null){
 
-                if(((mFlags & DISPLAY_SEARCH) != DISPLAY_SEARCH) ||
-                        ((mFlags & DISPLAY_ALL) != DISPLAY_ALL)){
+                //if(((mFlags & DISPLAY_SEARCH) != DISPLAY_SEARCH) ||
+                //        ((mFlags & DISPLAY_ALL) != DISPLAY_ALL)){
                     if((mFlags & DISPLAY_DELETED) == DISPLAY_DELETED){
                         if(!currentData.getIsDeleted()){
                             holder.hide();
@@ -85,7 +85,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
                             return;
                         }
                     }
-                }
+                //}
 
                 holder.bind(currentData, position, mQuery);
 
