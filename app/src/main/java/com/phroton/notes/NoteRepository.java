@@ -70,7 +70,7 @@ public class NoteRepository {
         LiveData<List<Note>> data;
 
         try{
-            data = mNoteDao.search(query);
+            data = mNoteDao.search(query, color);
             return data;
         }catch(NullPointerException e){
             e.printStackTrace();
