@@ -51,6 +51,7 @@ public class SearchActivity extends AppCompatActivity {
         handleIntent(getIntent());
         setUpFragment(savedInstanceState);
 
+        binding.appBarMain.fab.setVisibility(View.GONE);
     }
 
     @Override
