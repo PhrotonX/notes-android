@@ -103,6 +103,8 @@ public class SearchActivity extends AppCompatActivity {
                 .setOpenableLayout(drawer)
                 .build();
 
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
         NavigationUI.setupActionBarWithNavController(this, mNavController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, mNavController);
 
