@@ -36,6 +36,9 @@ import com.phroton.notes.ui.home.HomeFragment;
 import com.phroton.notes.ui.search.SearchActivity;
 import com.phroton.notes.ui.search.SearchFragment;
 
+/*
+    @TODO: Rename this class into HomeActivity and make this class inherit MainActivity.
+ */
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
