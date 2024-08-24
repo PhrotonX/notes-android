@@ -33,6 +33,6 @@ public interface NoteDao {
     @Delete
     void delete(Note note);
 
-    @Query("SELECT * FROM notes WHERE title = :content OR content = :content")
+    @Query("SELECT * FROM notes WHERE title LIKE :content OR content LIKE :content")
     LiveData<List<Note>> search(String content);
 }
