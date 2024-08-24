@@ -64,11 +64,16 @@ public class NoteViewHolder extends RecyclerView.ViewHolder{
     }
 
     private SpannableString highlightQueriedText(String text, String query){
-        SpannableString highlightedText;
-        highlightedText = new SpannableString(text);
-        int begin = text.indexOf(query);
-        int end = query.length() - 1;
-        highlightedText.setSpan(new BackgroundColorSpan(Color.YELLOW), begin, end, 0);
-        return highlightedText;
+        if(query != null){
+            SpannableString highlightedText;
+            highlightedText = new SpannableString(text);
+            int begin = text.indexOf(query);
+            int end = query.length() - 1;
+            highlightedText.setSpan(new BackgroundColorSpan(Color.YELLOW), begin, end, 0);
+            return highlightedText;
+        }else{
+            return new SpannableString(text);
+        }
+
     }
 }
