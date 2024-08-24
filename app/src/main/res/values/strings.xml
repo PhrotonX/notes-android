@@ -39,4 +39,5 @@
     <string name="move_to_trash">Move to Trash</string>
     <string name="search">Search</string>
     <string name="search_hint">Type here to search</string>
+    <string name="results_for">"Results for: "</string>
 </resources>
