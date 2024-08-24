@@ -40,7 +40,7 @@ public class NoteViewHolder extends RecyclerView.ViewHolder{
             mTitle.setText(highlightQueriedText(shortenedText, query));
         }else{
             //mTitle.setText("DB: " + note.getId() + " - " + note.getTitle());
-            mTitle.setText(note.getTitle());
+            mTitle.setText(highlightQueriedText(note.getTitle(), query));
         }
 
         if(note.getContent().length() >= 200){
@@ -49,7 +49,7 @@ public class NoteViewHolder extends RecyclerView.ViewHolder{
             mContent.setText(highlightQueriedText(shortenedText, query));
         }else{
             //mContent.setText("RV: " + position + " - " + note.getContent());
-            mContent.setText(note.getContent());
+            mContent.setText(highlightQueriedText(note.getContent(), query));
         }
 
         if(note.getColor() == 0x0){
@@ -67,7 +67,7 @@ public class NoteViewHolder extends RecyclerView.ViewHolder{
         if(query != null){
             SpannableString highlightedText;
             highlightedText = new SpannableString(text);
-            int begin = text.indexOf(query);
+            int begin = text.indexOf(query) + 1;
             int end = begin + (query.length());
             highlightedText.setSpan(new BackgroundColorSpan(Color.YELLOW), begin, end, 0);
             return highlightedText;
