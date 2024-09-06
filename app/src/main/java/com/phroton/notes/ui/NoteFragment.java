@@ -90,10 +90,10 @@ public abstract class NoteFragment extends Fragment {
                 int dbPosition = (int)viewHolder.itemView.getTag();
                 switch(direction){
                     case ItemTouchHelper.LEFT:
-                        onItemSwipedLeft(viewHolder, dbPosition);
+                        onItemSwipedLeft(viewHolder, dbPosition, rvPosition);
                         break;
                     case ItemTouchHelper.RIGHT:
-                        onItemSwipedRight(viewHolder, dbPosition);
+                        onItemSwipedRight(viewHolder, dbPosition, rvPosition);
                         break;
                     default:
                         break;
@@ -107,6 +107,11 @@ public abstract class NoteFragment extends Fragment {
         onInitializeNoteViewAdapter();
 
         mNoteViewAdapter.setOnClickListener(onItemClick());
+    }
+
+    public void deleteItem(Note note, int rvPosition){
+        getNoteViewModel().delete(note);
+        getNoteViewAdapter().notifyItemRemoved(rvPosition);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -203,8 +208,7 @@ public abstract class NoteFragment extends Fragment {
     }
 
     protected void onActivityResultDelete(ActivityResult result, Note note, int dbNoteId, int rvNoteId){
-        getNoteViewModel().delete(note);
-        getNoteViewAdapter().notifyItemRemoved(rvNoteId);
+        deleteItem(note, rvNoteId);
     }
 
     protected void onActivityResultNull(ActivityResult result){
@@ -222,13 +226,11 @@ public abstract class NoteFragment extends Fragment {
     }
 
     protected void onActivityResultRemove(ActivityResult result, int dbNoteId, int rvNoteId){
-        getNoteViewModel().markAsDeleted(dbNoteId, true);
-        getNoteViewAdapter().notifyItemChanged(rvNoteId);
+        removeItem(dbNoteId, rvNoteId);
     }
 
     protected void onActivityResultRestore(ActivityResult result, int dbNoteId, int rvNoteId){
-        getNoteViewModel().markAsDeleted(dbNoteId, false);
-        getNoteViewAdapter().notifyItemChanged(rvNoteId);
+        restoreItem(dbNoteId, rvNoteId);
     }
 
     protected void onInitializeNoteViewAdapter(){}
@@ -237,12 +239,12 @@ public abstract class NoteFragment extends Fragment {
         return false;
     }
 
-    protected void onItemSwipedLeft(@NonNull RecyclerView.ViewHolder viewHolder, int position){
-        Toast.makeText(getContext(), "Item swiped left ID: " + position, Toast.LENGTH_SHORT).show();
-
+    protected void onItemSwipedLeft(@NonNull RecyclerView.ViewHolder viewHolder, int dbPosition, int rvPosition){
+        Toast.makeText(getContext(), "Item swiped left ID: " + dbPosition + " (removed)", Toast.LENGTH_SHORT).show();
+        removeItem(dbPosition, rvPosition);
     }
-    protected void onItemSwipedRight(@NonNull RecyclerView.ViewHolder viewHolder, int position){
-        Toast.makeText(getContext(), "Item swiped right ID: " + position, Toast.LENGTH_SHORT).show();
+    protected void onItemSwipedRight(@NonNull RecyclerView.ViewHolder viewHolder, int dbPosition, int rvPosition){
+        Toast.makeText(getContext(), "Item swiped right ID: " + dbPosition, Toast.LENGTH_SHORT).show();
     }
 
     public NoteViewAdapter.OnClickListener onItemClick(){
@@ -260,6 +262,16 @@ public abstract class NoteFragment extends Fragment {
 
     protected LiveData<List<Note>> onRetrieveNotes(){
         return mNoteViewModel.getNotesCompat();
+    }
+
+    public void removeItem(int dbPosition, int rvPosition){
+        getNoteViewModel().markAsDeleted(dbPosition, true);
+        getNoteViewAdapter().notifyItemChanged(rvPosition);
+    }
+
+    public void restoreItem(int dbPosition, int rvPosition){
+        getNoteViewModel().markAsDeleted(dbPosition, false);
+        getNoteViewAdapter().notifyItemChanged(rvPosition);
     }
 
     public void setFlags(int flags){
