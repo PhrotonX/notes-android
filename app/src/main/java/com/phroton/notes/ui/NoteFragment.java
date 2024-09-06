@@ -22,6 +22,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -76,6 +77,31 @@ public abstract class NoteFragment extends Fragment {
         mNoteViewAdapter = new NoteViewAdapter(mContext, notes, mFlags);
 
         mNoteRecyclerView.setAdapter(mNoteViewAdapter);
+
+        ItemTouchHelper.SimpleCallback itemCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return onItemMove();
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getBindingAdapterPosition();
+                switch(direction){
+                    case ItemTouchHelper.LEFT:
+                        onItemSwipedLeft();
+                        break;
+                    case ItemTouchHelper.RIGHT:
+                        onItemSwipedRight();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemCallback);
+        itemTouchHelper.attachToRecyclerView(mNoteRecyclerView);
 
         onInitializeNoteViewAdapter();
 
@@ -205,6 +231,17 @@ public abstract class NoteFragment extends Fragment {
     }
 
     protected void onInitializeNoteViewAdapter(){}
+
+    protected boolean onItemMove(){
+        return false;
+    }
+
+    protected void onItemSwipedLeft(){
+        Toast.makeText(getContext(), "Item swiped left", Toast.LENGTH_SHORT).show();
+    }
+    protected void onItemSwipedRight(){
+        Toast.makeText(getContext(), "Item swiped right", Toast.LENGTH_SHORT).show();
+    }
 
     public NoteViewAdapter.OnClickListener onItemClick(){
         return new NoteViewAdapter.OnClickListener() {
