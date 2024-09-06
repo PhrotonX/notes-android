@@ -86,13 +86,14 @@ public abstract class NoteFragment extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                int position = viewHolder.getBindingAdapterPosition();
+                int rvPosition = viewHolder.getBindingAdapterPosition();
+                int dbPosition = (int)viewHolder.itemView.getTag(NoteViewAdapter.ITEM_TAG_ID);
                 switch(direction){
                     case ItemTouchHelper.LEFT:
-                        onItemSwipedLeft();
+                        onItemSwipedLeft(viewHolder, dbPosition);
                         break;
                     case ItemTouchHelper.RIGHT:
-                        onItemSwipedRight();
+                        onItemSwipedRight(viewHolder, dbPosition);
                         break;
                     default:
                         break;
@@ -236,11 +237,12 @@ public abstract class NoteFragment extends Fragment {
         return false;
     }
 
-    protected void onItemSwipedLeft(){
-        Toast.makeText(getContext(), "Item swiped left", Toast.LENGTH_SHORT).show();
+    protected void onItemSwipedLeft(@NonNull RecyclerView.ViewHolder viewHolder, int position){
+        Toast.makeText(getContext(), "Item swiped left ID: " + position, Toast.LENGTH_SHORT).show();
+
     }
-    protected void onItemSwipedRight(){
-        Toast.makeText(getContext(), "Item swiped right", Toast.LENGTH_SHORT).show();
+    protected void onItemSwipedRight(@NonNull RecyclerView.ViewHolder viewHolder, int position){
+        Toast.makeText(getContext(), "Item swiped right ID: " + position, Toast.LENGTH_SHORT).show();
     }
 
     public NoteViewAdapter.OnClickListener onItemClick(){

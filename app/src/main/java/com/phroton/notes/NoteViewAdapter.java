@@ -23,7 +23,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
     public static final int DISPLAY_TAGGED = 8;
     public static final int DISPLAY_SEARCH = 16;
     public static final int DISPLAY_ALL = DISPLAY_DEFAULT + DISPLAY_DELETED + DISPLAY_ARCHIVED + DISPLAY_TAGGED;
-
+    public static final int ITEM_TAG_ID = 0;
     private int mFlags = 0;
     private String mQuery = null;
 
@@ -88,6 +88,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
                 }
 
                 holder.bind(currentData, position, mQuery);
+                holder.itemView.setTag(ITEM_TAG_ID, currentData.getId());
 
                 //if(mClickListener != null){
                 holder.mView.setOnClickListener(new View.OnClickListener() {
