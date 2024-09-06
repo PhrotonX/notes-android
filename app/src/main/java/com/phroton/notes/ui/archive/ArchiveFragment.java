@@ -18,7 +18,7 @@ public class ArchiveFragment extends NoteFragment {
 
     @Override
     public View onInitializeView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_notes, container);
+        return inflater.inflate(R.layout.fragment_archive, container);
     }
 
 
