@@ -24,7 +24,7 @@ public class NoteRepository {
         return mNotes;
     }
 
-    public LiveData<Note> getNote(int id){
+    public LiveData<Note> getNote(long id){
         return mNoteDao.getNote(id);
     }
 
@@ -50,7 +50,7 @@ public class NoteRepository {
         }
     }
 
-    public void markAsDeleted(int id, boolean isDeleted){
+    public void markAsDeleted(long id, boolean isDeleted){
         try{
             NoteRoomDatabase.databaseWriteExecutor.execute(() ->{
                 mNoteDao.markAsDeleted(id, isDeleted);

@@ -38,7 +38,7 @@ public class EditorActivity extends AppCompatActivity {
     * However, databases or DB are 1-based or index 1. Increment 1 value for accessing DB items.
     * */
     private int mRvPosition = -1;
-    private int mDbPosition = 0;
+    private long mDbPosition = 0;
     private RequestCode mRequestCode;
     private View mView;
 

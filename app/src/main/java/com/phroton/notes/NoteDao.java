@@ -22,7 +22,7 @@ public interface NoteDao {
     LiveData<List<Note>> getAllNotes();
 
     @Query("SELECT * FROM notes WHERE id = :id")
-    LiveData<Note> getNote(int id);
+    LiveData<Note> getNote(long id);
 
     @Query("SELECT * FROM notes ORDER BY id DESC")
     LiveData<List<Note>> getNotesByDescendingId();
@@ -31,7 +31,7 @@ public interface NoteDao {
     void update(Note note);
 
     @Query("UPDATE notes SET is_deleted =:isDeleted WHERE id=:id")
-    void markAsDeleted(int id, boolean isDeleted);
+    void markAsDeleted(long id, boolean isDeleted);
 
     @Delete
     void delete(Note note);

@@ -33,7 +33,7 @@ public class HomeFragment extends NoteFragment {
     }
 
     @Override
-    protected void onActivityResultDelete(ActivityResult result, Note note, int dbNoteId, int rvNoteId) {
+    protected void onActivityResultDelete(ActivityResult result, Note note, long dbNoteId, int rvNoteId) {
         return;
     }
 }

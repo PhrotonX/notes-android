@@ -10,7 +10,6 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "notes")
 public class Note {
-
     @Ignore public static final String NOTE_ID_EXTRA = Build.ID + "NOTE_ID_EXTRA";
     @Ignore public static final String NOTE_POSITION_EXTRA = Build.ID + "NOTE_POSITION_EXTRA";
     @Ignore public static final String NOTE_TITLE_EXTRA = "NOTE_TITLE_EXTRA";
@@ -19,7 +18,7 @@ public class Note {
     @Ignore public static final String NOTE_DELETE_EXTRA = "NOTE_DELETE_EXTRA";
 
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    public long id;
 
     @ColumnInfo(name = "color")
     public int mColor;
@@ -32,6 +31,8 @@ public class Note {
 
     @ColumnInfo(name = "content")
     public String mContent;
+
+    @ColumnInfo(name = "tags") public long tag;
     public Note(String title, String content){
         this.mTitle = title;
         this.mContent = content;
@@ -40,7 +41,7 @@ public class Note {
     }
 
     public int getColor(){ return mColor; }
-    public int getId(){ return id; }
+    public long getId(){ return id; }
 
     public boolean getIsDeleted(){
         return mIsDeleted;
@@ -81,7 +82,7 @@ public class Note {
         mColor = val;
     }
 
-    public void setId(int val){id = val;}
+    public void setId(long val){id = val;}
 
     public void setIsDeleted(boolean val){
         mIsDeleted = val;
