@@ -11,8 +11,8 @@ android {
         applicationId = "com.phroton.notes"
         minSdk = 24
         targetSdk = 34
-        versionCode = 108
-        versionName = "v0.1.0.3 build 287"
+        versionCode = 109
+        versionName = "v0.1.0.3 build 288"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
