@@ -34,21 +34,16 @@ public class NoteViewHolder extends RecyclerView.ViewHolder{
         String shortenedText;
 
         if(note.getTitle().length() >= 100) {
-            shortenedText = note.getTitle().substring(0, 100) + "...";
-
-            //mTitle.setText("DB: " + note.getId() + " - " + shortenedText);
+            shortenedText = "DB: " + note.getId() + " " + note.getTitle().substring(0, 100) + "...";
             mTitle.setText(highlightQueriedText(shortenedText, query));
         }else{
-            //mTitle.setText("DB: " + note.getId() + " - " + note.getTitle());
             mTitle.setText(highlightQueriedText(note.getTitle(), query));
         }
 
         if(note.getContent().length() >= 200){
-            shortenedText = note.getContent().substring(0, 200) + "...";
-            //mContent.setText("RV: " + position + " - " + shortenedText);
+            shortenedText = "RV: " + position + " " + note.getContent().substring(0, 200) + "...";
             mContent.setText(highlightQueriedText(shortenedText, query));
         }else{
-            //mContent.setText("RV: " + position + " - " + note.getContent());
             mContent.setText(highlightQueriedText(note.getContent(), query));
         }
 
