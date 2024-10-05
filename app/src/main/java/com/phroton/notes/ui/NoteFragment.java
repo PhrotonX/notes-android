@@ -265,6 +265,7 @@ public abstract class NoteFragment extends Fragment {
     }
 
     public void removeItem(long dbPosition, int rvPosition){
+        Toast.makeText(getContext(), "Deleting DB ID: " + dbPosition + " with RV Pos: " + rvPosition, Toast.LENGTH_SHORT).show();
         getNoteViewModel().markAsDeleted(dbPosition, true);
         getNoteViewAdapter().notifyItemChanged(rvPosition);
     }
