@@ -87,7 +87,7 @@ public abstract class NoteFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int rvPosition = viewHolder.getBindingAdapterPosition();
-                int dbPosition = (int)viewHolder.itemView.getTag();
+                long dbPosition = (long)viewHolder.itemView.getTag();
                 switch(direction){
                     case ItemTouchHelper.LEFT:
                         onItemSwipedLeft(viewHolder, dbPosition, rvPosition);
@@ -175,8 +175,10 @@ public abstract class NoteFragment extends Fragment {
                 Note note;
                 Intent intent = result.getData();
                 if(intent == null) return;
-                int dbNoteId = intent.getIntExtra(Note.NOTE_ID_EXTRA, -1);
+                long dbNoteId = intent.getLongExtra(Note.NOTE_ID_EXTRA, -1);
                 int rvNoteId = intent.getIntExtra(Note.NOTE_POSITION_EXTRA, -1);
+                //Toast.makeText(getContext(), "onACtivityResult() DB: " + dbNoteId + " RV: " + rvNoteId, Toast.LENGTH_SHORT).show();
+
                 switch(result.getResultCode()){
                     case EditorActivity.RESULT_OK:
                         note = Note.unpackCurrentNote(result.getData(), true);
@@ -207,7 +209,7 @@ public abstract class NoteFragment extends Fragment {
         //Toast.makeText(getContext(), "EditorActivity: Canceled", Toast.LENGTH_SHORT).show();
     }
 
-    protected void onActivityResultDelete(ActivityResult result, Note note, int dbNoteId, int rvNoteId){
+    protected void onActivityResultDelete(ActivityResult result, Note note, long dbNoteId, int rvNoteId){
         deleteItem(note, rvNoteId);
     }
 
@@ -215,7 +217,7 @@ public abstract class NoteFragment extends Fragment {
         Toast.makeText(getContext(), "EditorActivity: Error", Toast.LENGTH_SHORT).show();
     }
 
-    protected void onActivityResultOk(ActivityResult result, @NonNull Note note, int dbNoteId, int rvNoteId){
+    protected void onActivityResultOk(ActivityResult result, @NonNull Note note, long dbNoteId, int rvNoteId){
         //Toast.makeText(getContext(), "MainActivity noteId: " + note.getId(), Toast.LENGTH_SHORT).show();
         if(note.getId() == -1){
             Toast.makeText(getContext(), "Failed to update note", Toast.LENGTH_SHORT).show();
@@ -225,11 +227,11 @@ public abstract class NoteFragment extends Fragment {
         //getNoteViewAdapter().notifyItemChanged(rvNoteId);
     }
 
-    protected void onActivityResultRemove(ActivityResult result, int dbNoteId, int rvNoteId){
+    protected void onActivityResultRemove(ActivityResult result, long dbNoteId, int rvNoteId){
         removeItem(dbNoteId, rvNoteId);
     }
 
-    protected void onActivityResultRestore(ActivityResult result, int dbNoteId, int rvNoteId){
+    protected void onActivityResultRestore(ActivityResult result, long dbNoteId, int rvNoteId){
         restoreItem(dbNoteId, rvNoteId);
     }
 
@@ -239,18 +241,18 @@ public abstract class NoteFragment extends Fragment {
         return false;
     }
 
-    protected void onItemSwipedLeft(@NonNull RecyclerView.ViewHolder viewHolder, int dbPosition, int rvPosition){
+    protected void onItemSwipedLeft(@NonNull RecyclerView.ViewHolder viewHolder, long dbPosition, int rvPosition){
         Toast.makeText(getContext(), "Item swiped left ID: " + dbPosition + " (removed)", Toast.LENGTH_SHORT).show();
         removeItem(dbPosition, rvPosition);
     }
-    protected void onItemSwipedRight(@NonNull RecyclerView.ViewHolder viewHolder, int dbPosition, int rvPosition){
+    protected void onItemSwipedRight(@NonNull RecyclerView.ViewHolder viewHolder, long dbPosition, int rvPosition){
         Toast.makeText(getContext(), "Item swiped right ID: " + dbPosition, Toast.LENGTH_SHORT).show();
     }
 
     public NoteViewAdapter.OnClickListener onItemClick(){
         return new NoteViewAdapter.OnClickListener() {
             @Override
-            public void onClick(int rvPosition, int dbPosition) {
+            public void onClick(int rvPosition, long dbPosition) {
                 Intent intent = new Intent(requireContext(), EditorActivity.class);
                 intent.putExtra(RequestCode.REQUEST_CODE, RequestCode.REQUEST_CODE_EDIT_NOTE);
                 intent.putExtra(Note.NOTE_ID_EXTRA, dbPosition);
@@ -264,12 +266,13 @@ public abstract class NoteFragment extends Fragment {
         return mNoteViewModel.getNotesCompat();
     }
 
-    public void removeItem(int dbPosition, int rvPosition){
+    public void removeItem(long dbPosition, int rvPosition){
+        //Toast.makeText(getContext(), "Deleting DB ID: " + dbPosition + " with RV Pos: " + rvPosition, Toast.LENGTH_SHORT).show();
         getNoteViewModel().markAsDeleted(dbPosition, true);
         getNoteViewAdapter().notifyItemChanged(rvPosition);
     }
 
-    public void restoreItem(int dbPosition, int rvPosition){
+    public void restoreItem(long dbPosition, int rvPosition){
         getNoteViewModel().markAsDeleted(dbPosition, false);
         getNoteViewAdapter().notifyItemChanged(rvPosition);
     }

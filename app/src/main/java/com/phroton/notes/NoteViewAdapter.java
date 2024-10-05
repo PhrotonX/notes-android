@@ -122,7 +122,7 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
 
 
     public interface OnClickListener {
-        void onClick(int rvPosition, int dbPosition);
+        void onClick(int rvPosition, long dbPosition);
     }
 
     public void setNotes(List<Note> notes){

@@ -38,7 +38,7 @@ public class EditorActivity extends AppCompatActivity {
     * However, databases or DB are 1-based or index 1. Increment 1 value for accessing DB items.
     * */
     private int mRvPosition = -1;
-    private int mDbPosition = 0;
+    private long mDbPosition = 0;
     private RequestCode mRequestCode;
     private View mView;
 
@@ -108,10 +108,10 @@ public class EditorActivity extends AppCompatActivity {
             switch(mRequestCode){
                 case REQUEST_CODE_CREATE_NOTE:
                 case REQUEST_CODE_EDIT_NOTE:
-                    mDbPosition = intent.getIntExtra(Note.NOTE_ID_EXTRA, -1);
+                    mDbPosition = intent.getLongExtra(Note.NOTE_ID_EXTRA, -1);
                     mRvPosition = intent.getIntExtra(Note.NOTE_POSITION_EXTRA, -1);
-                    //Toast.makeText(this, "EditorAcitvity DbPosition: " + mDbPosition, Toast.LENGTH_SHORT).show();
-                    //Toast.makeText(this, "EditorAcitvity RvPosition: " + mRvPosition, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "EditorAcitvity DbPosition: " + mDbPosition, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "EditorAcitvity RvPosition: " + mRvPosition, Toast.LENGTH_SHORT).show();
 
                     if(mDbPosition != -1){
                         mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
@@ -119,10 +119,13 @@ public class EditorActivity extends AppCompatActivity {
                         mNoteViewModel.getNote(mDbPosition).observe(this, new Observer<Note>() {
                             @Override
                             public void onChanged(Note note) {
-                                mNote = note;
-                                mEditorTitle.setText(note.getTitle());
-                                mEditorContent.setText(note.getContent());
-                                ChangeBackgroundColor(note.getColor());
+                                if(note != null){
+                                    mNote = note;
+                                    mEditorTitle.setText(note.getTitle());
+                                    mEditorContent.setText(note.getContent());
+                                    ChangeBackgroundColor(note.getColor());
+                                }
+
                             }
                         });
                     }else{

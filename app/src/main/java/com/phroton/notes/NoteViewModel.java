@@ -27,7 +27,7 @@ public class NoteViewModel extends AndroidViewModel {
 
     }
 
-    public LiveData<Note> getNote(int id){
+    public LiveData<Note> getNote(long id){
         return mRepository.getNote(id);
     }
 
@@ -39,7 +39,7 @@ public class NoteViewModel extends AndroidViewModel {
         mRepository.update(note);
     }
 
-    public void markAsDeleted(int id, boolean isDeleted){
+    public void markAsDeleted(long id, boolean isDeleted){
         mRepository.markAsDeleted(id, isDeleted);
     }
     public void delete(Note note){
