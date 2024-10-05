@@ -177,7 +177,7 @@ public abstract class NoteFragment extends Fragment {
                 if(intent == null) return;
                 long dbNoteId = intent.getLongExtra(Note.NOTE_ID_EXTRA, -1);
                 int rvNoteId = intent.getIntExtra(Note.NOTE_POSITION_EXTRA, -1);
-                Toast.makeText(getContext(), "onACtivityResult() DB: " + dbNoteId + " RV: " + rvNoteId, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "onACtivityResult() DB: " + dbNoteId + " RV: " + rvNoteId, Toast.LENGTH_SHORT).show();
 
                 switch(result.getResultCode()){
                     case EditorActivity.RESULT_OK:
@@ -267,7 +267,7 @@ public abstract class NoteFragment extends Fragment {
     }
 
     public void removeItem(long dbPosition, int rvPosition){
-        Toast.makeText(getContext(), "Deleting DB ID: " + dbPosition + " with RV Pos: " + rvPosition, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "Deleting DB ID: " + dbPosition + " with RV Pos: " + rvPosition, Toast.LENGTH_SHORT).show();
         getNoteViewModel().markAsDeleted(dbPosition, true);
         getNoteViewAdapter().notifyItemChanged(rvPosition);
     }

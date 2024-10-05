@@ -119,10 +119,13 @@ public class EditorActivity extends AppCompatActivity {
                         mNoteViewModel.getNote(mDbPosition).observe(this, new Observer<Note>() {
                             @Override
                             public void onChanged(Note note) {
-                                mNote = note;
-                                mEditorTitle.setText(note.getTitle());
-                                mEditorContent.setText(note.getContent());
-                                ChangeBackgroundColor(note.getColor());
+                                if(note != null){
+                                    mNote = note;
+                                    mEditorTitle.setText(note.getTitle());
+                                    mEditorContent.setText(note.getContent());
+                                    ChangeBackgroundColor(note.getColor());
+                                }
+
                             }
                         });
                     }else{
