@@ -104,7 +104,7 @@ public class Note {
                 R.color.background_white));
 
         if(withId){
-            note.setId(intent.getIntExtra(NOTE_ID_EXTRA, -1));
+            note.setId(intent.getLongExtra(NOTE_ID_EXTRA, -1));
         }
 
         if(note.getColor() == 0x0) {
