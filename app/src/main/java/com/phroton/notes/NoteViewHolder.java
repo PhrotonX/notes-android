@@ -33,7 +33,7 @@ public class NoteViewHolder extends RecyclerView.ViewHolder{
     public void bind(Note note, int position, String query){
         String shortenedText;
         String dbInfo = "DB: " + note.getId() + " ";
-        String rvInfo = "DB: " + position + " ";
+        String rvInfo = "RV: " + position + " ";
 
         if(note.getTitle().length() >= 100) {
             shortenedText = note.getTitle().substring(0, 100) + "...";

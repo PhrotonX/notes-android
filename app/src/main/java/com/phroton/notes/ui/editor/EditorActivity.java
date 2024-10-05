@@ -108,7 +108,7 @@ public class EditorActivity extends AppCompatActivity {
             switch(mRequestCode){
                 case REQUEST_CODE_CREATE_NOTE:
                 case REQUEST_CODE_EDIT_NOTE:
-                    mDbPosition = intent.getIntExtra(Note.NOTE_ID_EXTRA, -1);
+                    mDbPosition = intent.getLongExtra(Note.NOTE_ID_EXTRA, -1);
                     mRvPosition = intent.getIntExtra(Note.NOTE_POSITION_EXTRA, -1);
                     Toast.makeText(this, "EditorAcitvity DbPosition: " + mDbPosition, Toast.LENGTH_SHORT).show();
                     Toast.makeText(this, "EditorAcitvity RvPosition: " + mRvPosition, Toast.LENGTH_SHORT).show();
