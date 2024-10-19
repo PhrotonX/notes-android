@@ -55,10 +55,16 @@ public class TrashFragment extends NoteFragment {
         return inflater.inflate(R.layout.fragment_trash, container, false);
     }
 
-    
+
 
     @Override
     protected void onActivityResultRemove(ActivityResult result, long dbNoteId, int rvNoteId) {
         return;
+    }
+
+    @Override
+    public void removeItem(long dbPosition, int rvPosition) {
+        getNoteViewModel().markAsDeleted(dbPosition, false);
+        getNoteViewAdapter().notifyItemRemoved(rvPosition);
     }
 }

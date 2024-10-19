@@ -92,13 +92,12 @@ public abstract class NoteFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int rvPosition = viewHolder.getBindingAdapterPosition();
                 long dbPosition = (long)viewHolder.itemView.getTag();
-                Note note = notes.get((int) dbPosition - 1);
                 switch(direction){
                     case ItemTouchHelper.LEFT:
-                        onItemSwipedLeft(viewHolder, dbPosition, rvPosition, note);
+                        onItemSwipedLeft(viewHolder, dbPosition, rvPosition);
                         break;
                     case ItemTouchHelper.RIGHT:
-                        onItemSwipedRight(viewHolder, dbPosition, rvPosition, note);
+                        onItemSwipedRight(viewHolder, dbPosition, rvPosition);
                         break;
                     default:
                         break;
@@ -251,13 +250,13 @@ public abstract class NoteFragment extends Fragment {
         return false;
     }
 
-    protected void onItemSwipedLeft(@NonNull RecyclerView.ViewHolder viewHolder, long dbPosition, int rvPosition, Note currentNote){
+    protected void onItemSwipedLeft(@NonNull RecyclerView.ViewHolder viewHolder, long dbPosition, int rvPosition){
         Toast.makeText(getContext(), "Item swiped left ID: " + dbPosition + " (removed)", Toast.LENGTH_SHORT).show();
-        toggleRemove(dbPosition, rvPosition, currentNote);
+        removeItem(dbPosition, rvPosition);
     }
-    protected void onItemSwipedRight(@NonNull RecyclerView.ViewHolder viewHolder, long dbPosition, int rvPosition, Note currentNote){
+    protected void onItemSwipedRight(@NonNull RecyclerView.ViewHolder viewHolder, long dbPosition, int rvPosition){
         Toast.makeText(getContext(), "Item swiped right ID: " + dbPosition + " (archived)", Toast.LENGTH_SHORT).show();
-        toggleArchive(dbPosition, rvPosition, currentNote);
+        archiveItem(dbPosition, rvPosition);
     }
 
     public NoteViewAdapter.OnClickListener onItemClick(){

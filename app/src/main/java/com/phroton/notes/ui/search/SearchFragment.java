@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
@@ -42,5 +43,15 @@ public class SearchFragment extends NoteFragment {
     @Override
     protected LiveData<List<Note>> onRetrieveNotes() {
         return getNoteViewModel().search(mQuery, -1);
+    }
+
+    @Override
+    public void archiveItem(long dbPosition, int rvPosition) {
+        return;
+    }
+
+    @Override
+    public void removeItem(long dbPosition, int rvPosition) {
+        return;
     }
 }

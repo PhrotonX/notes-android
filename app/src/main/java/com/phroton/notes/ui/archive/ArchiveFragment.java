@@ -37,4 +37,10 @@ public class ArchiveFragment extends NoteFragment {
     public View onInitializeView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_archive, container, false);
     }
+
+    @Override
+    public void archiveItem(long dbPosition, int rvPosition) {
+        getNoteViewModel().markAsArchived(dbPosition, false);
+        getNoteViewAdapter().notifyItemRemoved(rvPosition);
+    }
 }
