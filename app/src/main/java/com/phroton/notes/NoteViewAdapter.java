@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,36 +15,25 @@ import java.util.List;
 public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
     private List<Note> mNotes;
     private Context mContext;
-
-    public static final int DISPLAY_DEFAULT = 1;
-    public static final int DISPLAY_DELETED = 2;
-    public static final int DISPLAY_ARCHIVED = 4;
-    public static final int DISPLAY_TAGGED = 8;
-    public static final int DISPLAY_SEARCH = 16;
-    public static final int DISPLAY_ALL = DISPLAY_DEFAULT + DISPLAY_DELETED + DISPLAY_ARCHIVED + DISPLAY_TAGGED;
-    private int mFlags = 0;
     private String mQuery = null;
-
     private OnClickListener mClickListener;
+    private OnBindViewHolderListener mBindViewHolderListener;
 
-    public NoteViewAdapter(Context context, int flags){
+    public NoteViewAdapter(Context context){
         this.mContext = context;
         this.mNotes = new ArrayList<>();
-        this.mFlags = flags;
         Init();
     }
 
-    public NoteViewAdapter(Context context, List<Note> notes, int flags){
+    public NoteViewAdapter(Context context, List<Note> notes){
         this.mContext = context;
         this.mNotes = notes;
-        this.mFlags = flags;
         Init();
     }
 
-    public NoteViewAdapter(Context context, List<Note> notes, int flags, OnClickListener listener){
+    public NoteViewAdapter(Context context, List<Note> notes, OnClickListener listener){
         this.mContext = context;
         this.mNotes = notes;
-        this.mFlags = flags;
         this.mClickListener = listener;
         Init();
     }
@@ -71,20 +59,8 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
 
             if(currentData != null){
 
-                if(((mFlags & DISPLAY_SEARCH) != DISPLAY_SEARCH) ||
-                        ((mFlags & DISPLAY_ALL) != DISPLAY_ALL)){
-                    if((mFlags & DISPLAY_DELETED) == DISPLAY_DELETED){
-                        if(!currentData.getIsDeleted()){
-                            holder.hide();
-                            return;
-                        }
-                    }else{
-                        if(currentData.getIsDeleted()){
-                            holder.hide();
-                            return;
-                        }
-                    }
-                }
+                if(mBindViewHolderListener != null)
+                    mBindViewHolderListener.onBindViewHolder(holder, position, currentData);
 
                 holder.bind(currentData, position, mQuery);
                 holder.itemView.setTag(currentData.getId());
@@ -112,6 +88,9 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
         return mNotes != null ? mNotes.size() : 0;
     }
 
+    public void setOnBindViewHolderListener(OnBindViewHolderListener listener){
+        this.mBindViewHolderListener = listener;
+    }
     public void setOnClickListener(OnClickListener clickListener){
         this.mClickListener = clickListener;
     }
@@ -120,6 +99,9 @@ public class NoteViewAdapter extends RecyclerView.Adapter<NoteViewHolder>{
         mQuery = query;
     }
 
+    public interface OnBindViewHolderListener {
+        void onBindViewHolder(@NonNull NoteViewHolder holder, @SuppressLint("RecyclerView") int position, Note currentData);
+    }
 
     public interface OnClickListener {
         void onClick(int rvPosition, long dbPosition);

@@ -21,16 +21,27 @@ import android.widget.Toast;
 
 import com.phroton.notes.Note;
 import com.phroton.notes.NoteViewAdapter;
+import com.phroton.notes.NoteViewHolder;
 import com.phroton.notes.R;
 import com.phroton.notes.RequestCode;
 import com.phroton.notes.ui.NoteFragment;
 import com.phroton.notes.ui.editor.EditorActivity;
 
 public class TrashFragment extends NoteFragment {
+    @Override
+    protected NoteViewAdapter.OnBindViewHolderListener onBindViewHolder() {
+        return new NoteViewAdapter.OnBindViewHolderListener() {
+            @Override
+            public void onBindViewHolder(@NonNull NoteViewHolder holder, int position, Note currentData) {
+                if(!currentData.isDeleted()){
+                    holder.hide();
+                }
+            }
+        };
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        setFlags(NoteViewAdapter.DISPLAY_DELETED);
-
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

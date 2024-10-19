@@ -16,7 +16,7 @@ import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Note.class}, version = 109, exportSchema = true/*,
+@Database(entities = {Note.class}, version = 110, exportSchema = true/*,
     autoMigrations = {
         @AutoMigration(from = 106, to = 108),
             @AutoMigration(from = 107, to = 108)
