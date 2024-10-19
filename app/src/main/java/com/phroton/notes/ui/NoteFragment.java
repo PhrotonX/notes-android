@@ -92,12 +92,13 @@ public abstract class NoteFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int rvPosition = viewHolder.getBindingAdapterPosition();
                 long dbPosition = (long)viewHolder.itemView.getTag();
+                Note note = notes.get((int) dbPosition);
                 switch(direction){
                     case ItemTouchHelper.LEFT:
-                        onItemSwipedLeft(viewHolder, dbPosition, rvPosition);
+                        onItemSwipedLeft(viewHolder, dbPosition, rvPosition, note);
                         break;
                     case ItemTouchHelper.RIGHT:
-                        onItemSwipedRight(viewHolder, dbPosition, rvPosition);
+                        onItemSwipedRight(viewHolder, dbPosition, rvPosition, note);
                         break;
                     default:
                         break;
@@ -250,13 +251,13 @@ public abstract class NoteFragment extends Fragment {
         return false;
     }
 
-    protected void onItemSwipedLeft(@NonNull RecyclerView.ViewHolder viewHolder, long dbPosition, int rvPosition){
+    protected void onItemSwipedLeft(@NonNull RecyclerView.ViewHolder viewHolder, long dbPosition, int rvPosition, Note currentNote){
         Toast.makeText(getContext(), "Item swiped left ID: " + dbPosition + " (removed)", Toast.LENGTH_SHORT).show();
-        removeItem(dbPosition, rvPosition);
+        toggleRemove(dbPosition, rvPosition, currentNote);
     }
-    protected void onItemSwipedRight(@NonNull RecyclerView.ViewHolder viewHolder, long dbPosition, int rvPosition){
+    protected void onItemSwipedRight(@NonNull RecyclerView.ViewHolder viewHolder, long dbPosition, int rvPosition, Note currentNote){
         Toast.makeText(getContext(), "Item swiped right ID: " + dbPosition + " (archived)", Toast.LENGTH_SHORT).show();
-        archiveItem(dbPosition, rvPosition);
+        toggleArchive(dbPosition, rvPosition, currentNote);
     }
 
     public NoteViewAdapter.OnClickListener onItemClick(){
@@ -285,5 +286,15 @@ public abstract class NoteFragment extends Fragment {
     public void restoreItem(long dbPosition, int rvPosition){
         getNoteViewModel().markAsDeleted(dbPosition, false);
         getNoteViewAdapter().notifyItemRemoved(rvPosition);
+    }
+
+    public void toggleArchive(long dbPosition, int rvPosition, Note currentNote){
+        getNoteViewModel().markAsArchived(dbPosition, !currentNote.isArchived());
+        getNoteViewAdapter().notifyItemChanged(rvPosition);
+    }
+
+    public void toggleRemove(long dbPosition, int rvPosition, Note currentNote){
+        getNoteViewModel().markAsDeleted(dbPosition, !currentNote.isDeleted());
+        getNoteViewAdapter().notifyItemChanged(rvPosition);
     }
 }

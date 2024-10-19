@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.phroton.notes.Note;
 import com.phroton.notes.NoteViewAdapter;
@@ -36,6 +37,4 @@ public class ArchiveFragment extends NoteFragment {
     public View onInitializeView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_archive, container, false);
     }
-
-
 }
