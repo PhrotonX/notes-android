@@ -92,7 +92,7 @@ public abstract class NoteFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int rvPosition = viewHolder.getBindingAdapterPosition();
                 long dbPosition = (long)viewHolder.itemView.getTag();
-                Note note = notes.get((int) dbPosition);
+                Note note = notes.get((int) dbPosition - 1);
                 switch(direction){
                     case ItemTouchHelper.LEFT:
                         onItemSwipedLeft(viewHolder, dbPosition, rvPosition, note);
