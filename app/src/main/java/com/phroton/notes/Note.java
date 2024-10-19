@@ -18,6 +18,7 @@ public class Note {
     @Ignore public static final String NOTE_DELETE_EXTRA = "NOTE_DELETE_EXTRA";
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "note_id")
     public long id;
 
     @ColumnInfo(name = "color")
@@ -25,6 +26,9 @@ public class Note {
 
     @ColumnInfo(name = "title")
     public String mTitle;
+
+    @ColumnInfo(name = "is_archived", defaultValue = "0")
+    public boolean mIsArchived = false;
 
     @ColumnInfo(name = "is_deleted", defaultValue = "0")
     public boolean mIsDeleted = false;
@@ -38,22 +42,21 @@ public class Note {
         this.mContent = content;
         this.mColor = 0;
         this.mIsDeleted = false;
+        this.mIsArchived = false;
     }
 
     public int getColor(){ return mColor; }
     public long getId(){ return id; }
-
-    public boolean getIsDeleted(){
-        return mIsDeleted;
-    }
-
     public String getTitle()
     {
         return mTitle;
     }
-
     public String getContent(){
         return mContent;
+    }
+    public boolean isArchived(){ return mIsArchived; }
+    public boolean isDeleted(){
+        return mIsDeleted;
     }
 
     @Ignore

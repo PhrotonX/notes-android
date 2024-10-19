@@ -22,8 +22,6 @@ import com.phroton.notes.NoteViewModel;
 import com.phroton.notes.R;
 import com.phroton.notes.RequestCode;
 
-import java.util.List;
-
 public class EditorActivity extends AppCompatActivity {
     //private EditorViewModel mEditorViewModel;
     private int mColor;
@@ -154,7 +152,7 @@ public class EditorActivity extends AppCompatActivity {
         restore.setVisible(false);
 
         if(mNote != null){
-            if(mNote.getIsDeleted()){
+            if(mNote.isDeleted()){
                 moveToTrash.setVisible(false);
                 delete.setVisible(true);
                 restore.setVisible(true);

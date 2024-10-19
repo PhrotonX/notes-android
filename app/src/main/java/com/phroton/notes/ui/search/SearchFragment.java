@@ -26,7 +26,6 @@ public class SearchFragment extends NoteFragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        setFlags(NoteViewAdapter.DISPLAY_ALL | NoteViewAdapter.DISPLAY_SEARCH);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

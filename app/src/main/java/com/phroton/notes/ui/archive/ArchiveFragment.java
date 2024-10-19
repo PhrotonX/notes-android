@@ -7,16 +7,27 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
+import com.phroton.notes.Note;
 import com.phroton.notes.NoteViewAdapter;
+import com.phroton.notes.NoteViewHolder;
 import com.phroton.notes.R;
 import com.phroton.notes.ui.NoteFragment;
 
 public class ArchiveFragment extends NoteFragment {
+    @Override
+    protected NoteViewAdapter.OnBindViewHolderListener onBindViewHolder() {
+        return new NoteViewAdapter.OnBindViewHolderListener() {
+            @Override
+            public void onBindViewHolder(@NonNull NoteViewHolder holder, int position, Note currentData) {
+                if(currentData.isDeleted()){
+                    holder.hide();
+                }
+            }
+        };
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        setFlags(NoteViewAdapter.DISPLAY_DEFAULT);
-
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

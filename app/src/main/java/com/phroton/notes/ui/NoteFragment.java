@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.phroton.notes.Note;
 import com.phroton.notes.NoteViewAdapter;
+import com.phroton.notes.NoteViewHolder;
 import com.phroton.notes.NoteViewModel;
 import com.phroton.notes.R;
 import com.phroton.notes.RequestCode;
@@ -40,9 +41,7 @@ public abstract class NoteFragment extends Fragment {
     protected ActivityResultLauncher<Intent> mActivityResultContract;
     protected Context mContext;
     protected NoteViewAdapter mNoteViewAdapter;
-    protected int mFlags;
     protected LifecycleOwner mLifecycleOwner;
-    private NoteViewAdapter.OnClickListener mListener;
     private RecyclerView mNoteRecyclerView;
     protected NoteViewModel mNoteViewModel;
 
@@ -74,7 +73,7 @@ public abstract class NoteFragment extends Fragment {
     }
 
     private void initializeNoteViewAdapter(List<Note> notes){
-        mNoteViewAdapter = new NoteViewAdapter(mContext, notes, mFlags);
+        mNoteViewAdapter = new NoteViewAdapter(mContext, notes);
 
         mNoteRecyclerView.setAdapter(mNoteViewAdapter);
 
@@ -106,6 +105,7 @@ public abstract class NoteFragment extends Fragment {
 
         onInitializeNoteViewAdapter();
 
+        mNoteViewAdapter.setOnBindViewHolderListener(onBindViewHolder());
         mNoteViewAdapter.setOnClickListener(onItemClick());
     }
 
@@ -235,6 +235,10 @@ public abstract class NoteFragment extends Fragment {
         restoreItem(dbNoteId, rvNoteId);
     }
 
+    protected NoteViewAdapter.OnBindViewHolderListener onBindViewHolder(){
+        return null;
+    }
+
     protected void onInitializeNoteViewAdapter(){}
 
     protected boolean onItemMove(){
@@ -275,9 +279,5 @@ public abstract class NoteFragment extends Fragment {
     public void restoreItem(long dbPosition, int rvPosition){
         getNoteViewModel().markAsDeleted(dbPosition, false);
         getNoteViewAdapter().notifyItemChanged(rvPosition);
-    }
-
-    public void setFlags(int flags){
-        mFlags = flags;
     }
 }
