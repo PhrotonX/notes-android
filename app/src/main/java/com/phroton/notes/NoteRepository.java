@@ -50,6 +50,16 @@ public class NoteRepository {
         }
     }
 
+    public void markAsArchived(long id, boolean isArchived){
+        try{
+            NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
+                mNoteDao.markAsArchived(id, isArchived);
+            });
+        }catch(NullPointerException e){
+            e.printStackTrace();
+        }
+    }
+
     public void markAsDeleted(long id, boolean isDeleted){
         try{
             NoteRoomDatabase.databaseWriteExecutor.execute(() ->{

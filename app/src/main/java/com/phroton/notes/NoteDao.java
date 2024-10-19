@@ -30,6 +30,9 @@ public interface NoteDao {
     @Update
     void update(Note note);
 
+    @Query("UPDATE notes SET is_archived = :isArchived WHERE note_id = :id")
+    void markAsArchived(long id, boolean isArchived);
+
     @Query("UPDATE notes SET is_deleted =:isDeleted WHERE note_id=:id")
     void markAsDeleted(long id, boolean isDeleted);
 
