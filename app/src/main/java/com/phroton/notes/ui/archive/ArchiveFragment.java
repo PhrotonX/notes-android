@@ -20,7 +20,7 @@ public class ArchiveFragment extends NoteFragment {
         return new NoteViewAdapter.OnBindViewHolderListener() {
             @Override
             public void onBindViewHolder(@NonNull NoteViewHolder holder, int position, Note currentData) {
-                if(!currentData.isArchived()){
+                if(!currentData.isArchived() || currentData.isDeleted()){
                     holder.hide();
                 }
             }

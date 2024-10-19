@@ -67,4 +67,9 @@ public class TrashFragment extends NoteFragment {
         getNoteViewModel().markAsDeleted(dbPosition, false);
         getNoteViewAdapter().notifyItemRemoved(rvPosition);
     }
+
+    @Override
+    public void archiveItem(long dbPosition, int rvPosition) {
+        return;
+    }
 }
