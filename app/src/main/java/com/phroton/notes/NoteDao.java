@@ -21,17 +21,20 @@ public interface NoteDao {
     @Query("SELECT * FROM notes")
     LiveData<List<Note>> getAllNotes();
 
-    @Query("SELECT * FROM notes WHERE id = :id")
-    LiveData<Note> getNote(int id);
+    @Query("SELECT * FROM notes WHERE note_id = :id")
+    LiveData<Note> getNote(long id);
 
-    @Query("SELECT * FROM notes ORDER BY id DESC")
+    @Query("SELECT * FROM notes ORDER BY note_id DESC")
     LiveData<List<Note>> getNotesByDescendingId();
 
     @Update
     void update(Note note);
 
-    @Query("UPDATE notes SET is_deleted =:isDeleted WHERE id=:id")
-    void markAsDeleted(int id, boolean isDeleted);
+    @Query("UPDATE notes SET is_archived = :isArchived WHERE note_id = :id")
+    void markAsArchived(long id, boolean isArchived);
+
+    @Query("UPDATE notes SET is_deleted =:isDeleted WHERE note_id=:id")
+    void markAsDeleted(long id, boolean isDeleted);
 
     @Delete
     void delete(Note note);

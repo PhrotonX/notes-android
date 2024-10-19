@@ -11,6 +11,12 @@
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
     <fragment
+        android:id="@+id/nav_archive"
+        android:name="com.phroton.notes.ui.archive.ArchiveFragment"
+        android:label="Archive"
+        tools:layout="@layout/fragment_archive"
+        />
+    <fragment
         android:id="@+id/nav_trash"
         android:name="com.phroton.notes.ui.trash.TrashFragment"
         android:label="@string/trash"

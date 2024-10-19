@@ -10,7 +10,6 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "notes")
 public class Note {
-
     @Ignore public static final String NOTE_ID_EXTRA = Build.ID + "NOTE_ID_EXTRA";
     @Ignore public static final String NOTE_POSITION_EXTRA = Build.ID + "NOTE_POSITION_EXTRA";
     @Ignore public static final String NOTE_TITLE_EXTRA = "NOTE_TITLE_EXTRA";
@@ -19,7 +18,8 @@ public class Note {
     @Ignore public static final String NOTE_DELETE_EXTRA = "NOTE_DELETE_EXTRA";
 
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    @ColumnInfo(name = "note_id")
+    public long id;
 
     @ColumnInfo(name = "color")
     public int mColor;
@@ -27,32 +27,36 @@ public class Note {
     @ColumnInfo(name = "title")
     public String mTitle;
 
+    @ColumnInfo(name = "is_archived", defaultValue = "0")
+    public boolean mIsArchived = false;
+
     @ColumnInfo(name = "is_deleted", defaultValue = "0")
     public boolean mIsDeleted = false;
 
     @ColumnInfo(name = "content")
     public String mContent;
+
+    @ColumnInfo(name = "tags") public long tag;
     public Note(String title, String content){
         this.mTitle = title;
         this.mContent = content;
         this.mColor = 0;
         this.mIsDeleted = false;
+        this.mIsArchived = false;
     }
 
     public int getColor(){ return mColor; }
-    public int getId(){ return id; }
-
-    public boolean getIsDeleted(){
-        return mIsDeleted;
-    }
-
+    public long getId(){ return id; }
     public String getTitle()
     {
         return mTitle;
     }
-
     public String getContent(){
         return mContent;
+    }
+    public boolean isArchived(){ return mIsArchived; }
+    public boolean isDeleted(){
+        return mIsDeleted;
     }
 
     @Ignore
@@ -81,7 +85,7 @@ public class Note {
         mColor = val;
     }
 
-    public void setId(int val){id = val;}
+    public void setId(long val){id = val;}
 
     public void setIsDeleted(boolean val){
         mIsDeleted = val;
@@ -103,7 +107,7 @@ public class Note {
                 R.color.background_white));
 
         if(withId){
-            note.setId(intent.getIntExtra(NOTE_ID_EXTRA, -1));
+            note.setId(intent.getLongExtra(NOTE_ID_EXTRA, -1));
         }
 
         if(note.getColor() == 0x0) {

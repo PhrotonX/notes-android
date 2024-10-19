@@ -9,8 +9,13 @@
             android:icon="@drawable/ic_home_light"
             android:title="@string/menu_home" />
         <item
+            android:id="@+id/nav_archive"
+            android:icon="@drawable/ic_archive_light"
+            android:title="@string/archive"/>
+        <item
             android:id="@+id/nav_trash"
             android:icon="@drawable/ic_delete_light"
             android:title="@string/trash" />
+
     </group>
 </menu>

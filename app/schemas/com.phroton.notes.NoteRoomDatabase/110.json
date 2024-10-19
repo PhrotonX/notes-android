@@ -1,16 +1,16 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 108,
-    "identityHash": "30d18d74f02ca17d086fb29b19b9d6c7",
+    "version": 110,
+    "identityHash": "6fb92fea7c1719f925c7e72435ebecf3",
     "entities": [
       {
         "tableName": "notes",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `color` INTEGER NOT NULL, `title` TEXT, `is_deleted` INTEGER NOT NULL DEFAULT 0, `content` TEXT, `tags` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`note_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `color` INTEGER NOT NULL, `title` TEXT, `is_archived` INTEGER NOT NULL DEFAULT 0, `is_deleted` INTEGER NOT NULL DEFAULT 0, `content` TEXT, `tags` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
-            "columnName": "id",
+            "columnName": "note_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -25,6 +25,13 @@
             "columnName": "title",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "mIsArchived",
+            "columnName": "is_archived",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
           },
           {
             "fieldPath": "mIsDeleted",
@@ -49,7 +56,7 @@
         "primaryKey": {
           "autoGenerate": true,
           "columnNames": [
-            "id"
+            "note_id"
           ]
         },
         "indices": [],
@@ -59,7 +66,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '30d18d74f02ca17d086fb29b19b9d6c7')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6fb92fea7c1719f925c7e72435ebecf3')"
     ]
   }
 }

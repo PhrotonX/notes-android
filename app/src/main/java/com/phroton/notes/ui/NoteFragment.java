@@ -22,11 +22,13 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.phroton.notes.Note;
 import com.phroton.notes.NoteViewAdapter;
+import com.phroton.notes.NoteViewHolder;
 import com.phroton.notes.NoteViewModel;
 import com.phroton.notes.R;
 import com.phroton.notes.RequestCode;
@@ -39,11 +41,14 @@ public abstract class NoteFragment extends Fragment {
     protected ActivityResultLauncher<Intent> mActivityResultContract;
     protected Context mContext;
     protected NoteViewAdapter mNoteViewAdapter;
-    protected int mFlags;
     protected LifecycleOwner mLifecycleOwner;
-    private NoteViewAdapter.OnClickListener mListener;
     private RecyclerView mNoteRecyclerView;
     protected NoteViewModel mNoteViewModel;
+
+    public void archiveItem(long dbPosition, int rvPosition){
+        getNoteViewModel().markAsArchived(dbPosition, true);
+        getNoteViewAdapter().notifyItemRemoved(rvPosition);
+    }
 
     public ActivityResultLauncher<Intent> getActivityResultContract(){
         return mActivityResultContract;
@@ -73,13 +78,45 @@ public abstract class NoteFragment extends Fragment {
     }
 
     private void initializeNoteViewAdapter(List<Note> notes){
-        mNoteViewAdapter = new NoteViewAdapter(mContext, notes, mFlags);
+        mNoteViewAdapter = new NoteViewAdapter(mContext, notes);
 
         mNoteRecyclerView.setAdapter(mNoteViewAdapter);
 
+        ItemTouchHelper.SimpleCallback itemCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return onItemMove();
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int rvPosition = viewHolder.getBindingAdapterPosition();
+                long dbPosition = (long)viewHolder.itemView.getTag();
+                switch(direction){
+                    case ItemTouchHelper.LEFT:
+                        onItemSwipedLeft(viewHolder, dbPosition, rvPosition);
+                        break;
+                    case ItemTouchHelper.RIGHT:
+                        onItemSwipedRight(viewHolder, dbPosition, rvPosition);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemCallback);
+        itemTouchHelper.attachToRecyclerView(mNoteRecyclerView);
+
         onInitializeNoteViewAdapter();
 
+        mNoteViewAdapter.setOnBindViewHolderListener(onBindViewHolder());
         mNoteViewAdapter.setOnClickListener(onItemClick());
+    }
+
+    public void deleteItem(Note note, int rvPosition){
+        getNoteViewModel().delete(note);
+        getNoteViewAdapter().notifyItemRemoved(rvPosition);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -143,8 +180,10 @@ public abstract class NoteFragment extends Fragment {
                 Note note;
                 Intent intent = result.getData();
                 if(intent == null) return;
-                int dbNoteId = intent.getIntExtra(Note.NOTE_ID_EXTRA, -1);
+                long dbNoteId = intent.getLongExtra(Note.NOTE_ID_EXTRA, -1);
                 int rvNoteId = intent.getIntExtra(Note.NOTE_POSITION_EXTRA, -1);
+                //Toast.makeText(getContext(), "onACtivityResult() DB: " + dbNoteId + " RV: " + rvNoteId, Toast.LENGTH_SHORT).show();
+
                 switch(result.getResultCode()){
                     case EditorActivity.RESULT_OK:
                         note = Note.unpackCurrentNote(result.getData(), true);
@@ -175,16 +214,15 @@ public abstract class NoteFragment extends Fragment {
         //Toast.makeText(getContext(), "EditorActivity: Canceled", Toast.LENGTH_SHORT).show();
     }
 
-    protected void onActivityResultDelete(ActivityResult result, Note note, int dbNoteId, int rvNoteId){
-        getNoteViewModel().delete(note);
-        getNoteViewAdapter().notifyItemRemoved(rvNoteId);
+    protected void onActivityResultDelete(ActivityResult result, Note note, long dbNoteId, int rvNoteId){
+        deleteItem(note, rvNoteId);
     }
 
     protected void onActivityResultNull(ActivityResult result){
         Toast.makeText(getContext(), "EditorActivity: Error", Toast.LENGTH_SHORT).show();
     }
 
-    protected void onActivityResultOk(ActivityResult result, @NonNull Note note, int dbNoteId, int rvNoteId){
+    protected void onActivityResultOk(ActivityResult result, @NonNull Note note, long dbNoteId, int rvNoteId){
         //Toast.makeText(getContext(), "MainActivity noteId: " + note.getId(), Toast.LENGTH_SHORT).show();
         if(note.getId() == -1){
             Toast.makeText(getContext(), "Failed to update note", Toast.LENGTH_SHORT).show();
@@ -194,22 +232,37 @@ public abstract class NoteFragment extends Fragment {
         //getNoteViewAdapter().notifyItemChanged(rvNoteId);
     }
 
-    protected void onActivityResultRemove(ActivityResult result, int dbNoteId, int rvNoteId){
-        getNoteViewModel().markAsDeleted(dbNoteId, true);
-        getNoteViewAdapter().notifyItemChanged(rvNoteId);
+    protected void onActivityResultRemove(ActivityResult result, long dbNoteId, int rvNoteId){
+        removeItem(dbNoteId, rvNoteId);
     }
 
-    protected void onActivityResultRestore(ActivityResult result, int dbNoteId, int rvNoteId){
-        getNoteViewModel().markAsDeleted(dbNoteId, false);
-        getNoteViewAdapter().notifyItemChanged(rvNoteId);
+    protected void onActivityResultRestore(ActivityResult result, long dbNoteId, int rvNoteId){
+        restoreItem(dbNoteId, rvNoteId);
+    }
+
+    protected NoteViewAdapter.OnBindViewHolderListener onBindViewHolder(){
+        return null;
     }
 
     protected void onInitializeNoteViewAdapter(){}
 
+    protected boolean onItemMove(){
+        return false;
+    }
+
+    protected void onItemSwipedLeft(@NonNull RecyclerView.ViewHolder viewHolder, long dbPosition, int rvPosition){
+        Toast.makeText(getContext(), "Item swiped left ID: " + dbPosition + " (removed)", Toast.LENGTH_SHORT).show();
+        removeItem(dbPosition, rvPosition);
+    }
+    protected void onItemSwipedRight(@NonNull RecyclerView.ViewHolder viewHolder, long dbPosition, int rvPosition){
+        Toast.makeText(getContext(), "Item swiped right ID: " + dbPosition + " (archived)", Toast.LENGTH_SHORT).show();
+        archiveItem(dbPosition, rvPosition);
+    }
+
     public NoteViewAdapter.OnClickListener onItemClick(){
         return new NoteViewAdapter.OnClickListener() {
             @Override
-            public void onClick(int rvPosition, int dbPosition) {
+            public void onClick(int rvPosition, long dbPosition) {
                 Intent intent = new Intent(requireContext(), EditorActivity.class);
                 intent.putExtra(RequestCode.REQUEST_CODE, RequestCode.REQUEST_CODE_EDIT_NOTE);
                 intent.putExtra(Note.NOTE_ID_EXTRA, dbPosition);
@@ -223,7 +276,24 @@ public abstract class NoteFragment extends Fragment {
         return mNoteViewModel.getNotesCompat();
     }
 
-    public void setFlags(int flags){
-        mFlags = flags;
+    public void removeItem(long dbPosition, int rvPosition){
+        //Toast.makeText(getContext(), "Deleting DB ID: " + dbPosition + " with RV Pos: " + rvPosition, Toast.LENGTH_SHORT).show();
+        getNoteViewModel().markAsDeleted(dbPosition, true);
+        getNoteViewAdapter().notifyItemRemoved(rvPosition);
+    }
+
+    public void restoreItem(long dbPosition, int rvPosition){
+        getNoteViewModel().markAsDeleted(dbPosition, false);
+        getNoteViewAdapter().notifyItemRemoved(rvPosition);
+    }
+
+    public void toggleArchive(long dbPosition, int rvPosition, Note currentNote){
+        getNoteViewModel().markAsArchived(dbPosition, !currentNote.isArchived());
+        getNoteViewAdapter().notifyItemChanged(rvPosition);
+    }
+
+    public void toggleRemove(long dbPosition, int rvPosition, Note currentNote){
+        getNoteViewModel().markAsDeleted(dbPosition, !currentNote.isDeleted());
+        getNoteViewAdapter().notifyItemChanged(rvPosition);
     }
 }
