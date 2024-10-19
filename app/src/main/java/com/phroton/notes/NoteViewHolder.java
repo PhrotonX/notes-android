@@ -32,24 +32,21 @@ public class NoteViewHolder extends RecyclerView.ViewHolder{
 
     public void bind(Note note, int position, String query){
         String shortenedText;
+        String dbInfo = "DB: " + note.getId() + " ";
+        String rvInfo = "RV: " + position + " ";
 
         if(note.getTitle().length() >= 100) {
             shortenedText = note.getTitle().substring(0, 100) + "...";
-
-            //mTitle.setText("DB: " + note.getId() + " - " + shortenedText);
-            mTitle.setText(highlightQueriedText(shortenedText, query));
+            mTitle.setText(highlightQueriedText(dbInfo + shortenedText, query));
         }else{
-            //mTitle.setText("DB: " + note.getId() + " - " + note.getTitle());
-            mTitle.setText(highlightQueriedText(note.getTitle(), query));
+            mTitle.setText(highlightQueriedText(dbInfo + note.getTitle(), query));
         }
 
         if(note.getContent().length() >= 200){
             shortenedText = note.getContent().substring(0, 200) + "...";
-            //mContent.setText("RV: " + position + " - " + shortenedText);
-            mContent.setText(highlightQueriedText(shortenedText, query));
+            mContent.setText(highlightQueriedText(rvInfo + shortenedText, query));
         }else{
-            //mContent.setText("RV: " + position + " - " + note.getContent());
-            mContent.setText(highlightQueriedText(note.getContent(), query));
+            mContent.setText(highlightQueriedText(rvInfo + note.getContent(), query));
         }
 
         if(note.getColor() == 0x0){
