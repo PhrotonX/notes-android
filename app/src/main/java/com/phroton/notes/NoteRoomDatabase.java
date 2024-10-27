@@ -27,6 +27,7 @@ import java.util.concurrent.Executors;
 public abstract class NoteRoomDatabase extends RoomDatabase{
 
     public abstract NoteDao noteDao();
+    public abstract TagDao tagDao();
     private static volatile NoteRoomDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
     static ExecutorService databaseWriteExecutor =
@@ -67,6 +68,11 @@ public abstract class NoteRoomDatabase extends RoomDatabase{
                         "deserunt mollit anim id est laborum."));
                 noteDao.insert(new Note("Sample Data 3", "Take notes by tapping the + " +
                         "button."));
+
+                TagDao tagDao = INSTANCE.tagDao();
+                tagDao.insert(new Tag("To Do"));
+                tagDao.insert(new Tag("Shopping"));
+                tagDao.insert(new Tag("Others"));
             });
         }
     };

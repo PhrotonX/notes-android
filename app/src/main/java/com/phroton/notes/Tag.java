@@ -2,6 +2,7 @@ package com.phroton.notes;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
@@ -23,4 +24,10 @@ public class Tag{
 
     @ColumnInfo(name = "tag_updated_at")
     public Date mTagUpdatedAt;
+
+    @Ignore
+    public Tag(String tagName){
+        mName = tagName;
+    }
+
 }
