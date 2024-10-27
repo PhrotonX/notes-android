@@ -9,6 +9,7 @@ import androidx.room.DatabaseConfiguration;
 import androidx.room.InvalidationTracker;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
@@ -16,12 +17,13 @@ import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Note.class}, version = 110, exportSchema = true/*,
+@Database(entities = {Note.class}, version = 111, exportSchema = true/*,
     autoMigrations = {
         @AutoMigration(from = 106, to = 108),
             @AutoMigration(from = 107, to = 108)
     }*/
 )
+@TypeConverters({Converters.class})
 public abstract class NoteRoomDatabase extends RoomDatabase{
 
     public abstract NoteDao noteDao();
