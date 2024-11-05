@@ -1,7 +1,9 @@
+package com.phroton.notes
+
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 
-@Entity(primaryKeys = ["note_id", "tag_id"])
+@Entity(tableName = "tagged_note", primaryKeys = ["note_id", "tag_id"])
 data class TaggedNote (
     @ColumnInfo(name = "note_id")
     var noteId: Long,
