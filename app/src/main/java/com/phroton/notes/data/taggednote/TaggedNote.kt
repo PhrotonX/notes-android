@@ -1,4 +1,4 @@
-package com.phroton.notes
+package com.phroton.notes.data.taggednote
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
