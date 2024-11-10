@@ -33,7 +33,7 @@ public abstract class NoteRoomDatabase extends RoomDatabase{
     public abstract TaggedNoteDao taggedNoteDao();
     private static volatile NoteRoomDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
-    static ExecutorService databaseWriteExecutor =
+    public static ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public static NoteRoomDatabase getDatabase(final Context context){
