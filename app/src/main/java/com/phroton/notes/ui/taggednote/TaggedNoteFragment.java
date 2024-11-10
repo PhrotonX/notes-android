@@ -6,13 +6,32 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.phroton.notes.Note;
 import com.phroton.notes.NoteViewAdapter;
 import com.phroton.notes.NoteViewHolder;
+import com.phroton.notes.Tag;
+import com.phroton.notes.data.taggednote.TaggedNote;
+import com.phroton.notes.data.taggednote.TaggedNoteViewModel;
 import com.phroton.notes.ui.NoteFragment;
 
+import java.util.List;
+
 public class TaggedNoteFragment extends NoteFragment {
+
+    private Tag mTag;
+
+    private TaggedNoteViewModel mTaggedNoteViewModel;
+
+    public TaggedNoteFragment(){
+        mTaggedNoteViewModel = new ViewModelProvider(this).get(TaggedNoteViewModel.class);
+
+
+    }
+
+    public TaggedNoteViewModel getTaggedNoteViewModel(){ return mTaggedNoteViewModel; }
 
     @Override
     protected NoteViewAdapter.OnBindViewHolderListener onBindViewHolder() {
@@ -27,5 +46,15 @@ public class TaggedNoteFragment extends NoteFragment {
     @Override
     public View onInitializeView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return null;
+    }
+
+    @Override
+    protected void onInitializeNoteViewAdapter() {
+        mTaggedNoteViewModel.getTaggedNotesById(mTag.id).observe(getViewLifecycleOwner(), new Observer<List<TaggedNote>>() {
+            @Override
+            public void onChanged(List<TaggedNote> taggedNotes) {
+
+            }
+        });
     }
 }

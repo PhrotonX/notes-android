@@ -133,6 +133,12 @@ public abstract class NoteFragment extends Fragment {
 
         //Original NoteViewModel initialization code...
 
+        ////////////////////////////////////////////////
+        // @TODO This snippet shall be changed to support custom data other than
+        // Notes. Other data such as TaggedNote (which consists of joined tag and
+        // Note entity may be initialized here.
+        // Such functionality will also render onRetrieveNotes() redundant.
+        ////////////////////////////////////////////////
         LiveData<List<Note>> allNotes = onRetrieveNotes();
         if(allNotes != null){
             allNotes.observe(mLifecycleOwner, new Observer<List<Note>>() {
@@ -156,6 +162,7 @@ public abstract class NoteFragment extends Fragment {
             //mNoteViewAdapter.setNotes(sampleNote);
             //mNoteViewAdapter.notifyDataSetChanged();
         }
+        ////////////////////////////////////////////////
 
         //@NOTE: Handle request after editing a note.
         mActivityResultContract = onActivityResult();
