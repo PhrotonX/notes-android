@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 112,
-    "identityHash": "8a87e07474613e7150a00c2ed498c0b8",
+    "identityHash": "6e99a164115c9097c6bb072b1a89061d",
     "entities": [
       {
         "tableName": "notes",
@@ -107,12 +107,28 @@
         "foreignKeys": []
       },
       {
-        "tableName": "TaggedNoteDao",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` ()",
-        "fields": [],
+        "tableName": "tagged_note",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`note_id` INTEGER NOT NULL, `tag_id` INTEGER NOT NULL, PRIMARY KEY(`note_id`, `tag_id`))",
+        "fields": [
+          {
+            "fieldPath": "noteId",
+            "columnName": "note_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tagId",
+            "columnName": "tag_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
         "primaryKey": {
           "autoGenerate": false,
-          "columnNames": []
+          "columnNames": [
+            "note_id",
+            "tag_id"
+          ]
         },
         "indices": [],
         "foreignKeys": []
@@ -121,7 +137,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8a87e07474613e7150a00c2ed498c0b8')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6e99a164115c9097c6bb072b1a89061d')"
     ]
   }
 }

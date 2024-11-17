@@ -11,8 +11,8 @@ android {
         applicationId = "com.phroton.notes"
         minSdk = 24
         targetSdk = 34
-        versionCode = 110
-        versionName = "v0.1.0.3 build 304"
+        versionCode = 112
+        versionName = "v0.1.0.4 build 305"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -64,6 +64,7 @@ android {
 dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("junit:junit:4.12")
     androidTestImplementation("androidx.test.espresso:espresso-contrib:3.6.1")
     // https://mvnrepository.com/artifact/androidx.activity/activity
     runtimeOnly("androidx.activity:activity-ktx:1.9.0")

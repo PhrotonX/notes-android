@@ -6,11 +6,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "tagged_note", primaryKeys = ["note_id", "tag_id"])
 data class TaggedNote (
-    @PrimaryKey
     @ColumnInfo(name = "note_id")
-    var noteId: Long,
+    var noteId: Long = 0L,
 
-    @PrimaryKey
     @ColumnInfo(name = "tag_id")
-    var tagId: Long
+    var tagId: Long = 0L
 )
