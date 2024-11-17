@@ -14,12 +14,13 @@ import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
+import com.phroton.notes.data.taggednote.TaggedNote;
 import com.phroton.notes.data.taggednote.TaggedNoteDao;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Note.class}, version = 112, exportSchema = true/*,
+@Database(entities = {Note.class, Tag.class, TaggedNote.class}, version = 112, exportSchema = true/*,
     autoMigrations = {
         @AutoMigration(from = 106, to = 108),
             @AutoMigration(from = 107, to = 108)

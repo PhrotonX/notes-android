@@ -13,6 +13,10 @@ public class Tag{
     @PrimaryKey
     public int id;
 
+    public Tag(){
+
+    }
+
     @ColumnInfo(name = "tag_name")
     public String mName;
 
