@@ -27,8 +27,6 @@ public class TaggedNoteFragment extends NoteFragment {
 
     public TaggedNoteFragment(){
         mTaggedNoteViewModel = new ViewModelProvider(this).get(TaggedNoteViewModel.class);
-
-
     }
 
     public TaggedNoteViewModel getTaggedNoteViewModel(){ return mTaggedNoteViewModel; }
