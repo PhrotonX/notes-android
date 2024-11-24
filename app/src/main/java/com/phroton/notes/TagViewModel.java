@@ -17,6 +17,8 @@ public class TagViewModel extends AndroidViewModel {
         mTags = mRepository.getAllTags();
     }
 
+    public LiveData<List<Tag>> getTags(){ return mTags; }
+
     public LiveData<Tag> getTag(long id){
         return mRepository.getTag(id);
     }
