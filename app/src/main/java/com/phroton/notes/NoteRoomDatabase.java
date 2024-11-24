@@ -45,7 +45,7 @@ public abstract class NoteRoomDatabase extends RoomDatabase{
                                     NoteRoomDatabase.class, "note_database")
                             .fallbackToDestructiveMigration()
                             .addMigrations(MIGRATION_106_107, MIGRATION_106_108, MIGRATION_107_108)
-                            //.addCallback(sRoomDatabaseCallback)
+                            .addCallback(sRoomDatabaseCallback)
                             .build();
                 }
             }
