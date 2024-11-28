@@ -24,6 +24,10 @@ public class NoteRepository {
         return mNotes;
     }
 
+    public LiveData<Note> getNote(long id){
+        return mNoteDao.getNote(id);
+    }
+
     public void insert(Note note){
         try{
             NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
@@ -35,4 +39,57 @@ public class NoteRepository {
         }
     }
 
+    public void update(Note note){
+        try{
+            NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
+                mNoteDao.update(note);
+            });
+        }catch(NullPointerException e){
+            Log.e("com.phroton.notes", "NoteDao is null!");
+            e.printStackTrace();
+        }
+    }
+
+    public void markAsArchived(long id, boolean isArchived){
+        try{
+            NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
+                mNoteDao.markAsArchived(id, isArchived);
+            });
+        }catch(NullPointerException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void markAsDeleted(long id, boolean isDeleted){
+        try{
+            NoteRoomDatabase.databaseWriteExecutor.execute(() ->{
+                mNoteDao.markAsDeleted(id, isDeleted);
+            });
+        }catch(NullPointerException e){
+            e.printStackTrace();
+        }
+    }
+    public void delete(Note note){
+        try{
+            NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
+                mNoteDao.delete(note);
+            });
+        }catch(NullPointerException e){
+            Log.e("com.phroton.notes", "NoteDao is null!");
+            e.printStackTrace();
+        }
+    }
+
+    public LiveData<List<Note>> search(String query, String color){
+        LiveData<List<Note>> data;
+
+        try{
+            data = mNoteDao.search(query, color);
+            return data;
+        }catch(NullPointerException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

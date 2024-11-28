@@ -6,6 +6,14 @@
     <color name="blue_A">#0057C3</color>
     <color name="blue_B">#013D87</color>
     <color name="background_yellow">#CDBD8C</color>
+    <color name="background_blue">#8C97CD</color>
+    <color name="background_green">#96CD8C</color>
+    <color name="background_red">#CD8C8C</color>
+    <color name="background_orange">#CDA88C</color>
+    <color name="background_purple">#968CCD</color>
+    <color name="background_pink">#C98CCD</color>
+    <color name="background_gray">#9E9E9E</color>
+    <color name="background_white">#FFFFFF</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

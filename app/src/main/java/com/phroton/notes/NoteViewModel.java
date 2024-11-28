@@ -27,7 +27,36 @@ public class NoteViewModel extends AndroidViewModel {
 
     }
 
+    public LiveData<Note> getNote(long id){
+        return mRepository.getNote(id);
+    }
+
     public void insert(Note note){
         mRepository.insert(note);
+    }
+
+    public void update(Note note){
+        mRepository.update(note);
+    }
+
+    public void markAsArchived(long id, boolean isArchived){
+        mRepository.markAsArchived(id, isArchived);
+    }
+    public void markAsDeleted(long id, boolean isDeleted){
+        mRepository.markAsDeleted(id, isDeleted);
+    }
+    public void delete(Note note){
+        mRepository.delete(note);
+    }
+
+    public LiveData<List<Note>> search(String query, int color){
+        String strColor;
+        if(color == -1){
+            strColor = "%%";
+        }else{
+            strColor = "%" + color + "%";
+        }
+
+        return mRepository.search("%" + query + "%", strColor);
     }
 }
