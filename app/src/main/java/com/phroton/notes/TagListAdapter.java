@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+//@NOTE: Rename into PinnedTagAdapter
 public class TagListAdapter extends RecyclerView.Adapter<TagListViewHolder> {
     private List<Tag> mTags;
     private OnClickListener mClickListener;
