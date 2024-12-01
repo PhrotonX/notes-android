@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -57,15 +58,28 @@ public class TagListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_tag_list, container, false);
-        getViewModel().getTags().observe(getViewLifecycleOwner(), new Observer<List<Tag>>() {
-            @Override
-            public void onChanged(List<Tag> tags) {
-                TagListAdapter tagListAdapter = new TagListAdapter(getContext(), new ArrayList<>(tags));
-                setRecyclerView((RecyclerView) root.findViewById(R.id.tag_list));
-                getRecyclerView().setLayoutManager(new GridLayoutManager(getContext(),
-                        GridLayoutManager.DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL, false));
-            }
-        });
+        LiveData<List<Tag>> tags = getViewModel().getTags();
+        if(tags != null){
+            tags.observe(getViewLifecycleOwner(), new Observer<List<Tag>>() {
+                @Override
+                public void onChanged(List<Tag> tags) {
+                    TagListAdapter tagListAdapter = new TagListAdapter(getContext(), new ArrayList<>(tags));
+                    getRecyclerView().setAdapter(tagListAdapter);
+                }
+            });
+        }else{
+            List<Tag> errorTag = new ArrayList<>();
+            errorTag.add(new Tag("Error 1"));
+            errorTag.add(new Tag("Error 2"));
+            errorTag.add(new Tag("Error 3"));
+            TagListAdapter tagListAdapter = new TagListAdapter(getContext(), new ArrayList<>(errorTag));
+            getRecyclerView().setAdapter(tagListAdapter);
+        }
+
+
+        setRecyclerView((RecyclerView) root.findViewById(R.id.tag_list));
+        getRecyclerView().setLayoutManager(new GridLayoutManager(getContext(),
+                GridLayoutManager.DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL, false));
 
         // Inflate the layout for this fragment
         return root;
