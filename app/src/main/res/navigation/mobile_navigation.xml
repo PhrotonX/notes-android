@@ -22,4 +22,10 @@
         android:label="@string/trash"
         tools:layout="@layout/fragment_trash"
         />
+    <fragment
+        android:id="@+id/nav_tags"
+        android:name="com.phroton.notes.ui.tags.TagListFragment"
+        android:label="@string/tags"
+        tools:layout="@layout/fragment_tag_list"
+        />
 </navigation>
