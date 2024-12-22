@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.compose") version "2.0.0"
 }
 
 android {
@@ -62,6 +63,7 @@ android {
 
 
 dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.8.0")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("junit:junit:4.13.2")
