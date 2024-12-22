@@ -18,11 +18,6 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
     private Context mContext;
     private List<Tag> mTag;
 
-    public TagAdapter(Context context){
-        mContext = context;
-        mTag = new ArrayList<Tag>();
-    }
-
     public TagAdapter(Context context, List<Tag> tag){
         mContext = context;
         mTag = tag;

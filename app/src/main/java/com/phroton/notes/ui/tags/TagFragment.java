@@ -66,6 +66,9 @@ public class TagFragment extends Fragment {
             tags.observe(getViewLifecycleOwner(), new Observer<List<Tag>>() {
                 @Override
                 public void onChanged(List<Tag> tags) {
+                    if(tags == null){
+                        tags = new ArrayList<>();
+                    }
                     mTagAdapter = new TagAdapter(getContext(), tags);
                     mTagRecyclerView.setAdapter(mTagAdapter);
                 }
