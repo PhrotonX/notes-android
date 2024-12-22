@@ -38,9 +38,9 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TagViewHolder holder, int position) {
-        if(!mTag.isEmpty()){
+        /*if(!mTag.isEmpty()){
             holder.bind(mTag.get(position));
-        }
+        }*/
     }
 
     @Override
