@@ -60,27 +60,42 @@ public class TagFragment extends Fragment {
         //Initialize RecyclerView
         mTagRecyclerView = (RecyclerView) root.findViewById(R.id.tag_list);
 
+        //Obtain the data from the DB.
         LiveData<List<Tag>> tags = getViewModel().getTags();
         if(tags != null){
             tags.observe(getViewLifecycleOwner(), new Observer<List<Tag>>() {
                 @Override
                 public void onChanged(List<Tag> tags) {
-                    if(tags == null){
-                        tags = new ArrayList<>();
-                    }
+                    //Set the tags into the TagAdapter.
                     mTagAdapter = new TagAdapter(getContext(), tags);
+
+                    //Set the adapter into the RecyclerView.
                     mTagRecyclerView.setAdapter(mTagAdapter);
                 }
             });
         }else{
-            mTagAdapter = new TagAdapter(getContext());
+            //Fill the list with error tags as placeholder value
+            //@TODO: Move to TagViewModel. This code is data-related.
+            List<Tag> errorTag = new ArrayList<>();
+            errorTag.add(new Tag("Error 1"));
+            errorTag.add(new Tag("Error 2"));
+            errorTag.add(new Tag("Error 3"));
+
+            //Set the tags into the TagAdapter.
+            mTagAdapter = new TagAdapter(getContext(), errorTag);
+
+            //Set the adapter into the RecyclerView.
             mTagRecyclerView.setAdapter(mTagAdapter);
         }
 
+        //Set the layout manager.
         if(mTagAdapter.getItemCount() > 0){
+            //Set to GridLayoutManager if the item count is greater than 0.
             mTagRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),
                     GridLayoutManager.DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL, false));
         }else{
+            //Set to LinearLayoutManager if the item count is 0 or less.
+            //Used to avoid crashes with empty items on a GridLayoutManager.
             mTagRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         }
 

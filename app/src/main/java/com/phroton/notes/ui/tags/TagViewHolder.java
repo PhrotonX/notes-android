@@ -13,6 +13,10 @@ public class TagViewHolder extends RecyclerView.ViewHolder {
     public TextView tagName;
     public View view;
 
+    /**
+     * Initializes values for all view instances.
+     * @param itemView The itemView instance where data shall be bound.
+     * */
     public TagViewHolder(@NonNull View itemView) {
         super(itemView);
 
@@ -21,6 +25,11 @@ public class TagViewHolder extends RecyclerView.ViewHolder {
         view = itemView;
     }
 
+    /**
+     * Binds the data into the item view.
+     *
+     * @param tag The data that shall be bound into the itemView.
+     * */
     public void bind(Tag tag){
         tagName.setText(tag.mName);
     }
