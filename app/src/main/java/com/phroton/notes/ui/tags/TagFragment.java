@@ -91,8 +91,9 @@ public class TagFragment extends Fragment {
         //Set the layout manager.
         if(mTagAdapter.getItemCount() > 0){
             //Set to GridLayoutManager if the item count is greater than 0.
-            mTagRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),
-                    GridLayoutManager.DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL, false));
+            /*mTagRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),
+                    GridLayoutManager.DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL, false));*/
+            mTagRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         }else{
             //Set to LinearLayoutManager if the item count is 0 or less.
             //Used to avoid crashes with empty items on a GridLayoutManager.
