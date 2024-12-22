@@ -66,7 +66,7 @@ public class TagFragment extends Fragment {
             tags.observe(getViewLifecycleOwner(), new Observer<List<Tag>>() {
                 @Override
                 public void onChanged(List<Tag> tags) {
-                    mTagAdapter = new TagAdapter(getContext(), new ArrayList<>(tags));
+                    mTagAdapter = new TagAdapter(getContext(), tags);
                     mTagRecyclerView.setAdapter(mTagAdapter);
                 }
             });
@@ -75,7 +75,7 @@ public class TagFragment extends Fragment {
             errorTag.add(new Tag("Error 1"));
             errorTag.add(new Tag("Error 2"));
             errorTag.add(new Tag("Error 3"));
-            mTagAdapter = new TagAdapter(getContext(), new ArrayList<>(errorTag));
+            mTagAdapter = new TagAdapter(getContext(), errorTag);
             mTagRecyclerView.setAdapter(mTagAdapter);
         }
 
