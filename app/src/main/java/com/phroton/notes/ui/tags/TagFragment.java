@@ -58,7 +58,7 @@ public class TagFragment extends Fragment {
 
         //Initialize RecyclerView
         mTagRecyclerView = (RecyclerView)root.findViewById(R.id.tag_list);
-        mTagRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
 
         LiveData<List<Tag>> tags = getViewModel().getTags();
         if(tags != null){
@@ -77,6 +77,8 @@ public class TagFragment extends Fragment {
             TagAdapter tagListAdapter = new TagAdapter(getContext(), new ArrayList<>(errorTag));
             getRecyclerView().setAdapter(tagListAdapter);
         }
+
+        mTagRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
 
         setRecyclerView((RecyclerView) root.findViewById(R.id.tag_list));
