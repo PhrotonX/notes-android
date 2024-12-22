@@ -20,7 +20,7 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
 
     public TagAdapter(Context context, List<Tag> tag){
         mContext = context;
-        mTag = tag;
+        mTag = (tag != null) ? tag : new ArrayList<>();
     }
 
     @NonNull
@@ -33,9 +33,7 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TagViewHolder holder, int position) {
-        /*if(!mTag.isEmpty()){
-            holder.bind(mTag.get(position));
-        }*/
+        holder.bind(mTag.get(position));
     }
 
     @Override
