@@ -22,13 +22,13 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
         mContext = context;
 
         //Fill the list with error tags as placeholder value
-        //@TODO: Move to TagViewModel. This code is data-related.
+        /*//@TODO: Move to TagViewModel. This code is data-related.
         List<Tag> errorTag = new ArrayList<>();
         errorTag.add(new Tag("Error 1"));
         errorTag.add(new Tag("Error 2"));
-        errorTag.add(new Tag("Error 3"));
+        errorTag.add(new Tag("Error 3"));*/
 
-        mTag = errorTag;
+        mTag = new ArrayList<>();
     }
     public TagAdapter(Context context, List<Tag> tag){
         mContext = context;
