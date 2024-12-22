@@ -57,8 +57,9 @@ public class TagFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_tag_list, container, false);
 
         //Initialize RecyclerView
-        mTagRecyclerView = (RecyclerView)root.findViewById(R.id.tag_list);
-
+        setRecyclerView((RecyclerView) root.findViewById(R.id.tag_list));
+        getRecyclerView().setLayoutManager(new GridLayoutManager(getContext(),
+                GridLayoutManager.DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL, false));
 
         LiveData<List<Tag>> tags = getViewModel().getTags();
         if(tags != null){
@@ -77,13 +78,6 @@ public class TagFragment extends Fragment {
             TagAdapter tagListAdapter = new TagAdapter(getContext(), new ArrayList<>(errorTag));
             getRecyclerView().setAdapter(tagListAdapter);
         }
-
-        mTagRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-
-
-        setRecyclerView((RecyclerView) root.findViewById(R.id.tag_list));
-        getRecyclerView().setLayoutManager(new GridLayoutManager(getContext(),
-                GridLayoutManager.DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL, false));
 
         // Inflate the layout for this fragment
         return root;
