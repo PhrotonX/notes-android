@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.phroton.notes.R;
 import com.phroton.notes.Tag;
 
 public class TagViewHolder extends RecyclerView.ViewHolder {
@@ -14,6 +15,10 @@ public class TagViewHolder extends RecyclerView.ViewHolder {
 
     public TagViewHolder(@NonNull View itemView) {
         super(itemView);
+
+        tagName = (TextView)itemView.findViewById(R.id.tag_name);
+
+        view = itemView;
     }
 
     public void bind(Tag tag){

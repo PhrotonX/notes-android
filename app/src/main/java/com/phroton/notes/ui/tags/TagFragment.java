@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TagFragment extends Fragment {
-
+    private TagAdapter mTagAdapter;
     private RecyclerView mTagRecyclerView;
     private TagViewModel mTagViewModel;
     public TagFragment() {
@@ -66,8 +66,8 @@ public class TagFragment extends Fragment {
             tags.observe(getViewLifecycleOwner(), new Observer<List<Tag>>() {
                 @Override
                 public void onChanged(List<Tag> tags) {
-                    TagAdapter tagListAdapter = new TagAdapter(getContext(), new ArrayList<>(tags));
-                    mTagRecyclerView.setAdapter(tagListAdapter);
+                    mTagAdapter = new TagAdapter(getContext(), new ArrayList<>(tags));
+                    mTagRecyclerView.setAdapter(mTagAdapter);
                 }
             });
         }else{
@@ -75,8 +75,8 @@ public class TagFragment extends Fragment {
             errorTag.add(new Tag("Error 1"));
             errorTag.add(new Tag("Error 2"));
             errorTag.add(new Tag("Error 3"));
-            TagAdapter tagListAdapter = new TagAdapter(getContext(), new ArrayList<>(errorTag));
-            mTagRecyclerView.setAdapter(tagListAdapter);
+            mTagAdapter = new TagAdapter(getContext(), new ArrayList<>(errorTag));
+            mTagRecyclerView.setAdapter(mTagAdapter);
         }
 
         // Inflate the layout for this fragment
