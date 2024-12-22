@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -58,8 +59,6 @@ public class TagFragment extends Fragment {
 
         //Initialize RecyclerView
         mTagRecyclerView = (RecyclerView) root.findViewById(R.id.tag_list);
-        mTagRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),
-                GridLayoutManager.DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL, false));
 
         LiveData<List<Tag>> tags = getViewModel().getTags();
         if(tags != null){
@@ -76,6 +75,13 @@ public class TagFragment extends Fragment {
         }else{
             mTagAdapter = new TagAdapter(getContext());
             mTagRecyclerView.setAdapter(mTagAdapter);
+        }
+
+        if(mTagAdapter.getItemCount() > 0){
+            mTagRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),
+                    GridLayoutManager.DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL, false));
+        }else{
+            mTagRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         }
 
         // Inflate the layout for this fragment
