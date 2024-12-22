@@ -7,11 +7,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 //@NOTE: Rename into PinnedTagViewHolder
-public class TagListViewHolder extends RecyclerView.ViewHolder {
+public class PinnedTagListViewHolder extends RecyclerView.ViewHolder {
     public ImageView icon;
     public TextView tagName;
 
-    public TagListViewHolder(@NonNull View itemView){
+    public PinnedTagListViewHolder(@NonNull View itemView){
         super(itemView);
     }
 }
