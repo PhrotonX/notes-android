@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -22,11 +21,11 @@ import com.phroton.notes.TagViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TagListFragment extends Fragment {
+public class TagFragment extends Fragment {
 
     private RecyclerView mTagRecyclerView;
     private TagViewModel mTagViewModel;
-    public TagListFragment() {
+    public TagFragment() {
         // Required empty public constructor
     }
 
@@ -50,20 +49,21 @@ public class TagListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
          mTagViewModel = new ViewModelProvider(this).get(TagViewModel.class);
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_tag_list, container, false);
+
+
+
         LiveData<List<Tag>> tags = getViewModel().getTags();
         if(tags != null){
             tags.observe(getViewLifecycleOwner(), new Observer<List<Tag>>() {
                 @Override
                 public void onChanged(List<Tag> tags) {
-                    TagListAdapter tagListAdapter = new TagListAdapter(getContext(), new ArrayList<>(tags));
+                    TagAdapter tagListAdapter = new TagAdapter(getContext(), new ArrayList<>(tags));
                     getRecyclerView().setAdapter(tagListAdapter);
                 }
             });
@@ -72,7 +72,7 @@ public class TagListFragment extends Fragment {
             errorTag.add(new Tag("Error 1"));
             errorTag.add(new Tag("Error 2"));
             errorTag.add(new Tag("Error 3"));
-            TagListAdapter tagListAdapter = new TagListAdapter(getContext(), new ArrayList<>(errorTag));
+            TagAdapter tagListAdapter = new TagAdapter(getContext(), new ArrayList<>(errorTag));
             getRecyclerView().setAdapter(tagListAdapter);
         }
 
