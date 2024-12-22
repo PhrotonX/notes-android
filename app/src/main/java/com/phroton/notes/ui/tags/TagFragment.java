@@ -56,7 +56,9 @@ public class TagFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_tag_list, container, false);
 
-
+        //Initialize RecyclerView
+        mTagRecyclerView = (RecyclerView)root.findViewById(R.id.tag_list);
+        mTagRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         LiveData<List<Tag>> tags = getViewModel().getTags();
         if(tags != null){
