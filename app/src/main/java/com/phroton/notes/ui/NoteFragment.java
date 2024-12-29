@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.phroton.notes.Note;
 import com.phroton.notes.NoteViewAdapter;
 import com.phroton.notes.NoteViewModel;
@@ -128,6 +129,9 @@ public abstract class NoteFragment extends FABView {
         mContext = getContext();
         mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
         mLifecycleOwner = getViewLifecycleOwner();
+
+        //Set up FAB
+        setFloatingActionButton((FloatingActionButton) root.findViewById(R.id.fab));
 
         mNoteRecyclerView = (RecyclerView)root.findViewById(R.id.notesList);
         mNoteRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -253,7 +257,7 @@ public abstract class NoteFragment extends FABView {
     }
 
     @Override
-    View.OnClickListener onFabClick() {
+    protected View.OnClickListener onFabClick() {
         return new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -266,27 +270,27 @@ public abstract class NoteFragment extends FABView {
     }
 
     @Override
-    ActivityResultLauncher<Intent> onFabIntent() {
+    protected ActivityResultLauncher<Intent> onFabIntent() {
         return registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        Note note;
-                        switch(result.getResultCode()){
-                            case RESULT_OK:
-                                note = Note.unpackCurrentNote(result.getData(), false);
-                                mNoteViewModel.insert(note);
-                                break;
-                            case RESULT_CANCELED:
-                                //Toast.makeText(getApplicationContext(), "MainActivity: Canceled", Toast.LENGTH_SHORT).show();
-                                break;
-                            default:
-                                Toast.makeText(getContext(), "MainActivity: Error", Toast.LENGTH_SHORT).show();
-                                break;
-                        }
-
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    Note note;
+                    switch(result.getResultCode()){
+                        case RESULT_OK:
+                            note = Note.unpackCurrentNote(result.getData(), false);
+                            mNoteViewModel.insert(note);
+                            break;
+                        case RESULT_CANCELED:
+                            //Toast.makeText(getApplicationContext(), "MainActivity: Canceled", Toast.LENGTH_SHORT).show();
+                            break;
+                        default:
+                            Toast.makeText(getContext(), "MainActivity: Error", Toast.LENGTH_SHORT).show();
+                            break;
                     }
-                });
+
+                }
+            });
     }
 
     protected void onInitializeNoteViewAdapter(){}

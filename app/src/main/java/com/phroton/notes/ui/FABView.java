@@ -19,14 +19,14 @@ public abstract class FABView extends Fragment {
     /**
      * @return The instance FloatingActionButton set into view.
      * */
-    FloatingActionButton getFab(){
+    public FloatingActionButton getFab(){
         return mFab;
     }
 
     /**
      * @return The instance of code for handling FloatingActionButton intent.
      * */
-    ActivityResultLauncher<Intent> getFabIntent(){
+    public ActivityResultLauncher<Intent> getFabIntent(){
         return mFabIntent;
     }
 
@@ -35,7 +35,7 @@ public abstract class FABView extends Fragment {
      *
      * @param fab The floating action button to be set.
      * */
-    void setFloatingActionButton(FloatingActionButton fab){
+    public void setFloatingActionButton(FloatingActionButton fab){
         mFabIntent = onFabIntent();
 
         mFab = fab;
@@ -47,12 +47,12 @@ public abstract class FABView extends Fragment {
      *
      * @return The click listener to be set for floating action button.
      * */
-    abstract View.OnClickListener onFabClick();
+    protected abstract View.OnClickListener onFabClick();
 
     /**
      * Sets the code for handling the result of FloatingActionButton Intent, invoked within setUpFab().
      *
      * @return The instance of code for handling the result of FloatingActionButton Intent.
      * */
-    abstract ActivityResultLauncher<Intent> onFabIntent();
+    protected abstract ActivityResultLauncher<Intent> onFabIntent();
 }
