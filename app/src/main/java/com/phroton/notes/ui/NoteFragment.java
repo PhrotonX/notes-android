@@ -131,7 +131,7 @@ public abstract class NoteFragment extends FABView {
         mLifecycleOwner = getViewLifecycleOwner();
 
         //Set up FAB
-        setFloatingActionButton((FloatingActionButton) root.findViewById(R.id.fab));
+        setFloatingActionButton(root.findViewById(R.id.fab));
 
         mNoteRecyclerView = (RecyclerView)root.findViewById(R.id.notesList);
         mNoteRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
