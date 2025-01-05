@@ -1,7 +1,9 @@
 package com.phroton.notes.ui.tags;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -18,11 +20,12 @@ import android.view.ViewGroup;
 import com.phroton.notes.R;
 import com.phroton.notes.Tag;
 import com.phroton.notes.TagViewModel;
+import com.phroton.notes.ui.FABView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TagFragment extends Fragment {
+public class TagFragment extends FABView {
     private TagAdapter mTagAdapter;
     private RecyclerView mTagRecyclerView;
     private TagViewModel mTagViewModel;
@@ -103,5 +106,15 @@ public class TagFragment extends Fragment {
         // Inflate the layout for this fragment
         return root;
 
+    }
+
+    @Override
+    protected View.OnClickListener onFabClick() {
+        return null;
+    }
+
+    @Override
+    protected ActivityResultLauncher<Intent> onFabIntent() {
+        return null;
     }
 }
