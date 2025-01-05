@@ -12,7 +12,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tag_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:horizontalSpacing="@dimen/tag_horizontal_spacing"
         android:numColumns="2"
         android:verticalSpacing="@dimen/tag_vertical_spacing"
