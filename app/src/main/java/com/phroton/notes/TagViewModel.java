@@ -9,7 +9,7 @@ import java.util.List;
 
 public class TagViewModel extends AndroidViewModel {
     private TagRepository mRepository;
-    private LiveData<List<Tag>> mTags;
+    private final LiveData<List<Tag>> mTags;
     public TagViewModel(Application application){
         super(application);
 

@@ -78,6 +78,9 @@ public class TagFragment extends FABView {
 
                     //Set the adapter into the RecyclerView.
                     mTagRecyclerView.setAdapter(mTagAdapter);
+
+                    //Initialize the RecyclerView.Adapter.
+                    initializeRecycleViewAdapter();
                 }
             });
         }else{
@@ -93,18 +96,9 @@ public class TagFragment extends FABView {
 
             //Set the adapter into the RecyclerView.
             mTagRecyclerView.setAdapter(mTagAdapter);
-        }
 
-        //Set the layout manager.
-        if(mTagAdapter.getItemCount() > 0){
-            //Set to GridLayoutManager if the item count is greater than 0.
-            /*mTagRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),
-                    GridLayoutManager.DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL, false));*/
-            mTagRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        }else{
-            //Set to LinearLayoutManager if the item count is 0 or less.
-            //Used to avoid crashes with empty items on a GridLayoutManager.
-            mTagRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            //Initialize the RecyclerView.Adapter.
+            initializeRecycleViewAdapter();
         }
 
         //Set the floating action button.
@@ -154,5 +148,19 @@ public class TagFragment extends FABView {
     @Override
     protected ActivityResultLauncher<Intent> onFabIntent() {
         return null;
+    }
+
+    private void initializeRecycleViewAdapter() {
+        //Set the layout manager.
+        if(mTagAdapter.getItemCount() > 0){
+            //Set to GridLayoutManager if the item count is greater than 0.
+            /*mTagRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),
+                    GridLayoutManager.DEFAULT_SPAN_COUNT, GridLayoutManager.VERTICAL, false));*/
+            mTagRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        }else{
+            //Set to LinearLayoutManager if the item count is 0 or less.
+            //Used to avoid crashes with empty items on a GridLayoutManager.
+            mTagRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
     }
 }

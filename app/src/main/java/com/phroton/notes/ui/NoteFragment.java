@@ -28,7 +28,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.phroton.notes.Note;
 import com.phroton.notes.NoteViewAdapter;
 import com.phroton.notes.NoteViewModel;
@@ -110,7 +109,7 @@ public abstract class NoteFragment extends FABView {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemCallback);
         itemTouchHelper.attachToRecyclerView(mNoteRecyclerView);
 
-        onInitializeNoteViewAdapter();
+        onInitializeRecycleViewAdapter();
 
         mNoteViewAdapter.setOnBindViewHolderListener(onBindViewHolder());
         mNoteViewAdapter.setOnClickListener(onItemClick());
@@ -293,7 +292,7 @@ public abstract class NoteFragment extends FABView {
             });
     }
 
-    protected void onInitializeNoteViewAdapter(){}
+    protected void onInitializeRecycleViewAdapter(){}
 
     protected boolean onItemMove(){
         return false;

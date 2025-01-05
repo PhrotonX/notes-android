@@ -47,7 +47,7 @@ public class TaggedNoteFragment extends NoteFragment {
     }
 
     @Override
-    protected void onInitializeNoteViewAdapter() {
+    public void onInitializeRecycleViewAdapter() {
         mTaggedNoteViewModel.getTaggedNotesById(mTag.id).observe(getViewLifecycleOwner(), new Observer<List<TaggedNote>>() {
             @Override
             public void onChanged(List<TaggedNote> taggedNotes) {
