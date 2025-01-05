@@ -13,9 +13,7 @@ public class TagRepository {
         NoteRoomDatabase database = NoteRoomDatabase.getDatabase(application);
         mTagDao = database.tagDao();
 
-        NoteRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mTags = mTagDao.getAllTags();
-        });
+        mTags = mTagDao.getAllTags();
 
     }
 

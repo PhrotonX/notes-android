@@ -74,6 +74,7 @@ public abstract class NoteRoomDatabase extends RoomDatabase{
                         "button."));
 
                 TagDao tagDao = INSTANCE.tagDao();
+                tagDao.deleteAll();
                 tagDao.insert(new Tag("To Do"));
                 tagDao.insert(new Tag("Shopping"));
                 tagDao.insert(new Tag("Others"));
