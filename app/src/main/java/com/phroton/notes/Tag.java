@@ -10,7 +10,7 @@ import java.util.Date;
 @Entity(tableName = "tag")
 public class Tag{
     @ColumnInfo(name = "tag_id")
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int id;
 
     public Tag(){
