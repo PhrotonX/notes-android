@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -114,33 +115,7 @@ public class TagFragment extends FABView {
         return new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
-                View dialogView = getLayoutInflater().inflate(R.layout.dialog_edit_tag, null, false);
-
-                AlertDialog dialog = new AlertDialog.Builder(getContext())
-                        .setView(dialogView)
-                        .setTitle(getResources().getString(R.string.edit_tag))
-                        .setCancelable(true)
-                        .setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                EditText edit = (EditText)dialogView.findViewById(R.id.edit_text_tag);
-                                String entry = edit.getText().toString();
-
-                                getViewModel().createTag(entry);
-                                dialog.dismiss();
-                            }
-                        })
-                        .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        })
-                        .create();
-
-                dialog.show();
+                showTagEditDialog(null);
             }
         };
     }
@@ -162,5 +137,55 @@ public class TagFragment extends FABView {
             //Used to avoid crashes with empty items on a GridLayoutManager.
             mTagRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         }
+    }
+
+    /**
+     * @param tag Pass a tag object to enter editing mode or null to create a new tag.
+     * */
+    private void showTagEditDialog(@Nullable Tag tag){
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_edit_tag, null, false);
+
+        //Check if is in editing more or not.
+        String title = (tag != null) ? getResources().getString(R.string.edit_tag) : getResources().getString(R.string.new_tag);
+
+        //Obtain edit text object.
+        EditText edit = (EditText)dialogView.findViewById(R.id.edit_text_tag);
+
+        //Set text into edit field if the dialog is in editing mode.
+        if(tag != null){
+            edit.setText(tag.getName());
+        }
+
+        AlertDialog dialog = new AlertDialog.Builder(getContext())
+                .setView(dialogView)
+                .setTitle(title)
+                .setCancelable(true)
+                .setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        String entry = edit.getText().toString();
+
+                        if(tag != null){
+                            //Update tag if in editing mode.
+                            tag.setName(entry);
+                            getViewModel().update(tag);
+                        }else{
+                            //Create tag if not in editing mode.
+                            getViewModel().createTag(entry);
+                        }
+
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .create();
+
+        dialog.show();
     }
 }

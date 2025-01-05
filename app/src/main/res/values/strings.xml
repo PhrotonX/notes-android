@@ -46,4 +46,5 @@
     <string name="add_an_item">Add an item</string>
     <string name="edit_tag">Edit Tag</string>
     <string name="enter_tag_name">Enter tag name...</string>
+    <string name="new_tag">New tag</string>
 </resources>
