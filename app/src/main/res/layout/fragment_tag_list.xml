@@ -17,5 +17,13 @@
         android:numColumns="2"
         android:verticalSpacing="@dimen/tag_vertical_spacing"
         />
-
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/add_an_item"
+        app:srcCompat="@android:drawable/ic_input_add" />
 </LinearLayout>

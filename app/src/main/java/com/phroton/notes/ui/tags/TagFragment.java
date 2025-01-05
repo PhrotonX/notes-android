@@ -1,5 +1,7 @@
 package com.phroton.notes.ui.tags;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,15 +14,17 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.phroton.notes.R;
+import com.phroton.notes.RequestCode;
 import com.phroton.notes.Tag;
 import com.phroton.notes.TagViewModel;
 import com.phroton.notes.ui.FABView;
+import com.phroton.notes.ui.editor.EditorActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,6 +107,9 @@ public class TagFragment extends FABView {
             mTagRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         }
 
+        //Set the floating action button.
+        setFloatingActionButton(root.findViewById(R.id.fab_add_tag));
+
         // Inflate the layout for this fragment
         return root;
 
@@ -110,7 +117,38 @@ public class TagFragment extends FABView {
 
     @Override
     protected View.OnClickListener onFabClick() {
-        return null;
+        return new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                View dialogView = getLayoutInflater().inflate(R.layout.dialog_edit_tag, null, false);
+
+                AlertDialog dialog = new AlertDialog.Builder(getContext())
+                        .setView(dialogView)
+                        .setTitle(getResources().getString(R.string.edit_tag))
+                        .setCancelable(true)
+                        .setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                EditText edit = (EditText)dialogView.findViewById(R.id.edit_text_tag);
+                                String entry = edit.getText().toString();
+
+                                getViewModel().createTag(entry);
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        })
+                        .create();
+
+                dialog.show();
+            }
+        };
     }
 
     @Override

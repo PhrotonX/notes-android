@@ -21,6 +21,7 @@
     <string name="type_note_here">Type note here…</string>
     <string name="type_title_here">Type title here…</string>
     <string name="menu_color">Color</string>
+    <string name="ok">OK</string>
 
     <string name="blue">Blue</string>
     <string name="gray">Gray</string>
@@ -43,4 +44,6 @@
     <string name="archive">Archive</string>
     <string name="tags">Tags</string>
     <string name="add_an_item">Add an item</string>
+    <string name="edit_tag">Edit Tag</string>
+    <string name="enter_tag_name">Enter tag name...</string>
 </resources>
