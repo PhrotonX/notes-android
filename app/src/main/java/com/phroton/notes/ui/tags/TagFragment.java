@@ -83,6 +83,9 @@ public class TagFragment extends FABView {
         //Initialize RecyclerView
         mTagRecyclerView = (RecyclerView) root.findViewById(R.id.tag_list);
 
+        //Set the context menu for RecyclerView.
+        registerForContextMenu(mTagRecyclerView);
+
         //Obtain the data from the DB.
         LiveData<List<Tag>> tags = getViewModel().getTags();
         if(tags != null){
@@ -119,9 +122,6 @@ public class TagFragment extends FABView {
 
         //Set the floating action button.
         setFloatingActionButton(root.findViewById(R.id.fab_add_tag));
-
-        //Set the context menu for RecyclerView.
-        registerForContextMenu(mTagRecyclerView);
 
         // Inflate the layout for this fragment
         return root;
