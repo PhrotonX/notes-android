@@ -1,11 +1,13 @@
 package com.phroton.notes.ui.tags;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
@@ -15,10 +17,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.phroton.notes.R;
 import com.phroton.notes.RequestCode;
@@ -58,6 +66,13 @@ public class TagFragment extends FABView {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
          mTagViewModel = new ViewModelProvider(this).get(TagViewModel.class);
+    }
+
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.menu_tag, menu);
     }
 
     @Override
@@ -105,8 +120,28 @@ public class TagFragment extends FABView {
         //Set the floating action button.
         setFloatingActionButton(root.findViewById(R.id.fab_add_tag));
 
+        //Set the context menu for RecyclerView.
+        registerForContextMenu(mTagRecyclerView);
+
         // Inflate the layout for this fragment
         return root;
+
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch(item.getItemId()){
+            case R.id.menu_tag_edit:
+                Toast.makeText(getContext(), "Tapped: " + info.id, Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.menu_tag_delete:
+                Toast.makeText(getContext(), "Tapped: " + info.id, Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
 
     }
 
