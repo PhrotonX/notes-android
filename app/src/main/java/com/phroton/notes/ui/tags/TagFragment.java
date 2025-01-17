@@ -69,13 +69,6 @@ public class TagFragment extends FABView {
     }
 
     @Override
-    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getActivity().getMenuInflater();
-        inflater.inflate(R.menu.menu_tag, menu);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_tag_list, container, false);
@@ -125,23 +118,6 @@ public class TagFragment extends FABView {
 
         // Inflate the layout for this fragment
         return root;
-
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        switch(item.getItemId()){
-            case R.id.menu_tag_edit:
-                Toast.makeText(getContext(), "Tapped: " + info.id, Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.menu_tag_delete:
-                Toast.makeText(getContext(), "Tapped: " + info.id, Toast.LENGTH_SHORT).show();
-                return true;
-            default:
-                return super.onContextItemSelected(item);
-        }
 
     }
 

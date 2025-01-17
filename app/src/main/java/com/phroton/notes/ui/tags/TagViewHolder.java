@@ -1,5 +1,7 @@
 package com.phroton.notes.ui.tags;
 
+import android.view.ContextMenu;
+import android.view.MenuInflater;
 import android.widget.TextView;
 import android.view.View;
 
@@ -9,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.phroton.notes.R;
 import com.phroton.notes.Tag;
 
-public class TagViewHolder extends RecyclerView.ViewHolder {
+public class TagViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
     public TextView tagName;
     public View view;
 
@@ -20,9 +22,8 @@ public class TagViewHolder extends RecyclerView.ViewHolder {
     public TagViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        tagName = (TextView)itemView.findViewById(R.id.tag_name);
-
-        view = itemView;
+        this.tagName = (TextView)itemView.findViewById(R.id.tag_name);
+        this.view = itemView;
     }
 
     /**
@@ -35,4 +36,8 @@ public class TagViewHolder extends RecyclerView.ViewHolder {
     }
 
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
+    }
 }
