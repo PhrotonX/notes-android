@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -124,6 +125,15 @@ public class TagFragment extends FABView {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
+        int position = -1;
+
+        try{
+            position = mTagAdapter.getSelectedPosition();
+        }catch(Exception e){
+            Log.d(TagFragment.class.getName(), e.getLocalizedMessage(), e);
+            return super.onContextItemSelected(item);
+        }
+
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch(item.getItemId()){
             case R.id.menu_tag_edit:

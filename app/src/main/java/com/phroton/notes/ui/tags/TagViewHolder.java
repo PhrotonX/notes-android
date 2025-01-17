@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.phroton.notes.R;
 import com.phroton.notes.Tag;
 
-public class TagViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
+public class TagViewHolder extends RecyclerView.ViewHolder {
     public TextView tagName;
     public View view;
     private int mSelectedTagId = -1;
@@ -34,12 +34,6 @@ public class TagViewHolder extends RecyclerView.ViewHolder implements View.OnCre
      * */
     public void bind(Tag tag){
         tagName.setText(tag.mName);
-    }
-
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-
     }
 
     public int getSelectedTagId(){

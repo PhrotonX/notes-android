@@ -26,6 +26,8 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
     private Context mContext;
     private List<Tag> mTag;
 
+    private int selectedPosition = -1;
+
     public TagAdapter(Context context){
         mContext = context;
         mTag = new ArrayList<>();
@@ -56,6 +58,7 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
             @Override
             public boolean onLongClick(View v) {
                 holder.setSelectedTagId(tag.getId());
+                setSelectedPosition(holder.getBindingAdapterPosition());
                 return true;
             }
         });
@@ -71,5 +74,13 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
     @Override
     public int getItemCount() {
         return (mTag != null) ? mTag.size() : 0;
+    }
+
+    public int getSelectedPosition(){
+        return this.selectedPosition;
+    }
+
+    public void setSelectedPosition(int position){
+        this.selectedPosition = position;
     }
 }
