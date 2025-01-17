@@ -121,6 +121,23 @@ public class TagFragment extends FABView {
 
     }
 
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch(item.getItemId()){
+            case R.id.menu_tag_edit:
+                Toast.makeText(getContext(), "Edited: " + info.id, Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.menu_tag_delete:
+                Toast.makeText(getContext(), "Deleted: " + info.id, Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+
+    }
+
     @Override
     protected View.OnClickListener onFabClick() {
         return new View.OnClickListener(){

@@ -2,6 +2,7 @@ package com.phroton.notes.ui.tags;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,42 +25,6 @@ import java.util.List;
 public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
     private Context mContext;
     private List<Tag> mTag;
-
-    private int mSelectedTagId = -1;
-
-    private final ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
-        @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            mode.getMenuInflater().inflate(R.menu.menu_tag, menu);
-            return true;
-        }
-
-        @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            return false;
-        }
-
-        @SuppressLint("NonConstantResourceId")
-        @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            switch(item.getItemId()){
-                case R.id.menu_tag_edit:
-                    Toast.makeText(mContext, "Edited: " + getSelectedTagId(), Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.menu_tag_delete:
-                    Toast.makeText(mContext, "Deleted: " + getSelectedTagId(), Toast.LENGTH_SHORT).show();
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        @Override
-        public void onDestroyActionMode(ActionMode mode) {
-            setSelectedTagId(-1);
-        }
-    };
 
     public TagAdapter(Context context){
         mContext = context;
@@ -90,9 +55,15 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
         holder.view.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                setSelectedTagId(tag.getId());
-                ((AppCompatActivity)mContext).startSupportActionMode(mActionModeCallback);
+                holder.setSelectedTagId(tag.getId());
                 return true;
+            }
+        });
+
+        holder.view.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+            @Override
+            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                ((AppCompatActivity)mContext).getMenuInflater().inflate(R.menu.menu_tag, menu);
             }
         });
     }
@@ -100,13 +71,5 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
     @Override
     public int getItemCount() {
         return (mTag != null) ? mTag.size() : 0;
-    }
-
-    public int getSelectedTagId(){
-        return mSelectedTagId;
-    }
-
-    public void setSelectedTagId(int position){
-        mSelectedTagId = position;
     }
 }

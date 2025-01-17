@@ -14,6 +14,7 @@ import com.phroton.notes.Tag;
 public class TagViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
     public TextView tagName;
     public View view;
+    private int mSelectedTagId = -1;
 
     /**
      * Initializes values for all view instances.
@@ -39,5 +40,13 @@ public class TagViewHolder extends RecyclerView.ViewHolder implements View.OnCre
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
+    }
+
+    public int getSelectedTagId(){
+        return mSelectedTagId;
+    }
+
+    public void setSelectedTagId(int position){
+        mSelectedTagId = position;
     }
 }
