@@ -140,32 +140,6 @@ public class TagFragment extends FABView {
         menu.add(0, v.getId(), 20, R.string.delete);
     }*/
 
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-        int position = -1;
-
-        try{
-            position = mTagAdapter.getSelectedPosition();
-        }catch(Exception e){
-            Log.d(TagFragment.class.getName(), e.getLocalizedMessage(), e);
-            return super.onContextItemSelected(item);
-        }
-
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        switch(item.getItemId()){
-            case R.id.menu_tag_edit:
-                Toast.makeText(getContext(), "Edited: " + info.id, Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.menu_tag_delete:
-                Toast.makeText(getContext(), "Deleted: " + info.id, Toast.LENGTH_SHORT).show();
-                return true;
-            default:
-                return super.onContextItemSelected(item);
-        }
-
-    }
-
     @Override
     protected View.OnClickListener onFabClick() {
         return new View.OnClickListener(){
@@ -243,5 +217,33 @@ public class TagFragment extends FABView {
                 .create();
 
         dialog.show();
+    }
+
+    void initializeOnContextItemSelectedListener(){
+        mTagAdapter.setOnContextItemSelected(new TagAdapter.OnContextItemSelected() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onContextItemSelected(@NonNull MenuItem item) {
+                int position = -1;
+
+                try{
+                    position = mTagAdapter.getSelectedPosition();
+                }catch(Exception e){
+                    Log.d(TagFragment.class.getName(), e.getLocalizedMessage(), e);
+                    return false;
+                }
+
+                switch(item.getItemId()){
+                    case R.id.menu_tag_edit:
+                        Toast.makeText(getContext(), "Edited: " + position, Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.menu_tag_delete:
+                        Toast.makeText(getContext(), "Deleted: " + position, Toast.LENGTH_SHORT).show();
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
     }
 }

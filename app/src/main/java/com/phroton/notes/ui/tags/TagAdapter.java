@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,8 @@ import java.util.List;
 public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
     private Context mContext;
     private List<Tag> mTag;
+
+    private OnContextItemSelected onContextItemSelected;
 
     private int selectedPosition = -1;
 
@@ -59,7 +62,18 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
             public boolean onLongClick(View v) {
                 holder.setSelectedTagId(tag.getId());
                 setSelectedPosition(holder.getBindingAdapterPosition());
-                v.showContextMenu();
+
+                PopupMenu popupMenu = new PopupMenu(mContext, v);
+                popupMenu.getMenuInflater().inflate(R.menu.menu_tag, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        return onContextItemSelected.onContextItemSelected(item);
+                    }
+                });
+
+                popupMenu.show();
+
                 return true;
             }
         });
@@ -83,7 +97,15 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
         return this.selectedPosition;
     }
 
+    public void setOnContextItemSelected(OnContextItemSelected onContextItemSelected){
+        this.onContextItemSelected = onContextItemSelected;
+    }
+
     public void setSelectedPosition(int position){
         this.selectedPosition = position;
+    }
+
+    public interface OnContextItemSelected{
+        boolean onContextItemSelected(@NonNull MenuItem item);
     }
 }
