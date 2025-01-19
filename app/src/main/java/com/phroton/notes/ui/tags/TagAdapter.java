@@ -59,6 +59,7 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
             public boolean onLongClick(View v) {
                 holder.setSelectedTagId(tag.getId());
                 setSelectedPosition(holder.getBindingAdapterPosition());
+                v.showContextMenu();
                 return true;
             }
         });
@@ -66,9 +67,9 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
         holder.view.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
             public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-                //((AppCompatActivity)mContext).getMenuInflater().inflate(R.menu.menu_tag, menu);
-                menu.add(0, v.getId(), 10, R.string.edit_tag);
-                menu.add(0, v.getId(), 20, R.string.delete);
+                ((AppCompatActivity)mContext).getMenuInflater().inflate(R.menu.menu_tag, menu);
+                //menu.add(0, R.id.menu_tag_edit, 10, R.string.edit_tag);
+                //menu.add(0, R.id.menu_tag_delete, 20, R.string.delete);
             }
         });
     }
