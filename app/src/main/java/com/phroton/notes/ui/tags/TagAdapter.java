@@ -63,12 +63,13 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
             }
         });
 
+        /*
         holder.view.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
             public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
                 ((AppCompatActivity)mContext).getMenuInflater().inflate(R.menu.menu_tag, menu);
             }
-        });
+        });*/
     }
 
     @Override

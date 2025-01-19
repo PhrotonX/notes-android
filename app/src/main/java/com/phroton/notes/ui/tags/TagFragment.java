@@ -77,10 +77,10 @@ public class TagFragment extends FABView {
         //Initialize RecyclerView
         mTagRecyclerView = (RecyclerView) root.findViewById(R.id.tag_list);
 
+        mTagRecyclerView.setOnCreateContextMenuListener(this);
+
         //Set the context menu for RecyclerView.
         registerForContextMenu(mTagRecyclerView);
-
-        mTagRecyclerView.setOnCreateContextMenuListener(this);
 
         //Obtain the data from the DB.
         LiveData<List<Tag>> tags = getViewModel().getTags();
