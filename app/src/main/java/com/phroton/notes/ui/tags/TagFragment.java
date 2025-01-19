@@ -80,6 +80,8 @@ public class TagFragment extends FABView {
         //Set the context menu for RecyclerView.
         registerForContextMenu(mTagRecyclerView);
 
+        mTagRecyclerView.setOnCreateContextMenuListener(this);
+
         //Obtain the data from the DB.
         LiveData<List<Tag>> tags = getViewModel().getTags();
         if(tags != null){
