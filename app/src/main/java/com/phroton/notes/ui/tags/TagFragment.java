@@ -85,10 +85,10 @@ public class TagFragment extends FABView {
             }
         });*/
 
-        mTagRecyclerView.setOnCreateContextMenuListener(this);
-
         //Set the context menu for RecyclerView.
         registerForContextMenu(mTagRecyclerView);
+
+        mTagRecyclerView.setOnCreateContextMenuListener(this);
 
         //Obtain the data from the DB.
         LiveData<List<Tag>> tags = getViewModel().getTags();
@@ -132,12 +132,13 @@ public class TagFragment extends FABView {
 
     }
 
+    /*
     @Override
     public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.add(0, v.getId(), 10, R.string.edit_tag);
         menu.add(0, v.getId(), 20, R.string.delete);
-    }
+    }*/
 
     @SuppressLint("NonConstantResourceId")
     @Override
