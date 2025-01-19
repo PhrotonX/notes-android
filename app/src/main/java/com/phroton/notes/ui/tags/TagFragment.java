@@ -102,6 +102,8 @@ public class TagFragment extends FABView {
                     //Set the adapter into the RecyclerView.
                     mTagRecyclerView.setAdapter(mTagAdapter);
 
+                    initializeOnContextItemSelectedListener();
+
                     //Initialize the RecyclerView.Adapter.
                     initializeRecycleViewAdapter();
                 }
@@ -119,6 +121,8 @@ public class TagFragment extends FABView {
 
             //Set the adapter into the RecyclerView.
             mTagRecyclerView.setAdapter(mTagAdapter);
+
+            initializeOnContextItemSelectedListener();
 
             //Initialize the RecyclerView.Adapter.
             initializeRecycleViewAdapter();
@@ -219,7 +223,7 @@ public class TagFragment extends FABView {
         dialog.show();
     }
 
-    void initializeOnContextItemSelectedListener(){
+    private void initializeOnContextItemSelectedListener(){
         mTagAdapter.setOnContextItemSelected(new TagAdapter.OnContextItemSelected() {
             @SuppressLint("NonConstantResourceId")
             @Override
