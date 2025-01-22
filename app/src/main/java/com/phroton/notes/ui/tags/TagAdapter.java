@@ -68,7 +68,7 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        return onContextItemSelected.onContextItemSelected(item);
+                        return onContextItemSelected.onContextItemSelected(item, tag);
                     }
                 });
 
@@ -106,6 +106,6 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
     }
 
     public interface OnContextItemSelected{
-        boolean onContextItemSelected(@NonNull MenuItem item);
+        boolean onContextItemSelected(@NonNull MenuItem item, Tag tag);
     }
 }

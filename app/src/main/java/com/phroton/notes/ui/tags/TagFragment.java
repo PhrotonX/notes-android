@@ -227,7 +227,7 @@ public class TagFragment extends FABView {
         mTagAdapter.setOnContextItemSelected(new TagAdapter.OnContextItemSelected() {
             @SuppressLint("NonConstantResourceId")
             @Override
-            public boolean onContextItemSelected(@NonNull MenuItem item) {
+            public boolean onContextItemSelected(@NonNull MenuItem item, Tag tag) {
                 int position = -1;
 
                 try{
@@ -239,10 +239,10 @@ public class TagFragment extends FABView {
 
                 switch(item.getItemId()){
                     case R.id.menu_tag_edit:
-                        Toast.makeText(getContext(), "Edited: " + position, Toast.LENGTH_SHORT).show();
+                        showTagEditDialog(tag);
                         return true;
                     case R.id.menu_tag_delete:
-                        Toast.makeText(getContext(), "Deleted: " + position, Toast.LENGTH_SHORT).show();
+                        mTagViewModel.delete(tag);
                         return true;
                     default:
                         return false;
