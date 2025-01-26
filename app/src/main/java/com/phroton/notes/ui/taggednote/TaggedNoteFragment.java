@@ -27,9 +27,6 @@ public class TaggedNoteFragment extends NoteFragment {
     private TaggedNoteViewModel mTaggedNoteViewModel;
 
     public TaggedNoteFragment(Tag tag){
-        //Initialize the view model.
-        mTaggedNoteViewModel = new ViewModelProvider(this).get(TaggedNoteViewModel.class);
-
         //Set the current set tag.
         mTag = tag;
     }
@@ -39,7 +36,11 @@ public class TaggedNoteFragment extends NoteFragment {
     @Override
     public View onInitializeView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Toast.makeText(getContext(), "Current Tag: " + mTag.mName, Toast.LENGTH_SHORT).show();
-        return null;
+
+        //Initialize the view model.
+        mTaggedNoteViewModel = new ViewModelProvider(this).get(TaggedNoteViewModel.class);
+
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     /*
