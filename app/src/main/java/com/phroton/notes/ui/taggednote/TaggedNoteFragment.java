@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.phroton.notes.Note;
 import com.phroton.notes.NoteViewAdapter;
 import com.phroton.notes.NoteViewHolder;
+import com.phroton.notes.R;
 import com.phroton.notes.Tag;
 import com.phroton.notes.data.taggednote.TaggedNote;
 import com.phroton.notes.data.taggednote.TaggedNoteViewModel;
@@ -34,13 +35,37 @@ public class TaggedNoteFragment extends NoteFragment {
     public TaggedNoteViewModel getTaggedNoteViewModel(){ return mTaggedNoteViewModel; }
 
     @Override
-    public View onInitializeView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    protected NoteViewAdapter.OnBindViewHolderListener onBindViewHolder() {
+        return new NoteViewAdapter.OnBindViewHolderListener() {
+            @Override
+            public void onBindViewHolder(@NonNull NoteViewHolder holder, int position, Note currentData) {
+                if(currentData.isDeleted() || currentData.isArchived()){
+                    holder.hide();
+                }
+            }
+        };
+    }
+
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+
         Toast.makeText(getContext(), "Current Tag: " + mTag.mName, Toast.LENGTH_SHORT).show();
 
         //Initialize the view model.
         mTaggedNoteViewModel = new ViewModelProvider(this).get(TaggedNoteViewModel.class);
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
+    public View onInitializeView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     /*
