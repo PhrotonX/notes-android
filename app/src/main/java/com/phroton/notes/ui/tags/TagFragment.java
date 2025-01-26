@@ -77,14 +77,6 @@ public class TagFragment extends FABView {
         //Initialize RecyclerView
         mTagRecyclerView = (RecyclerView) root.findViewById(R.id.tag_list);
 
-        /*
-        mTagRecyclerView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-            @Override
-            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-                //((AppCompatActivity)getContext()).getMenuInflater().inflate(R.menu.menu_tag, menu);
-            }
-        });*/
-
         //Set the context menu for RecyclerView.
         registerForContextMenu(mTagRecyclerView);
 
@@ -136,14 +128,11 @@ public class TagFragment extends FABView {
 
     }
 
-    /*
-    @Override
-    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0, v.getId(), 10, R.string.edit_tag);
-        menu.add(0, v.getId(), 20, R.string.delete);
-    }*/
-
+    /**
+     * Set the click action of the floating action button.
+     *
+     * @return The listener to for FAB.
+     * */
     @Override
     protected View.OnClickListener onFabClick() {
         return new View.OnClickListener(){
