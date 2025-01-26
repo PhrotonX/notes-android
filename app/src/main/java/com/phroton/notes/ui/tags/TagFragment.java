@@ -15,6 +15,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -145,9 +147,11 @@ public class TagFragment extends FABView {
         mTagAdapter.setOnClickListener(new TagAdapter.OnClickListener() {
             @Override
             public void onClick(Tag tag) {
-                getParentFragmentManager().beginTransaction()
-                        .replace(R.id.nav_host_fragment_content_main, new TaggedNoteFragment(tag))
-                        .commit();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(Tag.EXTRA_TAG, tag);
+
+                Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                        .navigate(R.id.action_tagFragment_to_taggedNoteFragment, bundle);
             }
         });
 

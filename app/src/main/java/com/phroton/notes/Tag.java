@@ -1,7 +1,11 @@
 package com.phroton.notes;
 
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+import androidx.compose.material.icons.sharp.CreateKt;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -10,8 +14,9 @@ import androidx.room.PrimaryKey;
 import java.util.Date;
 
 @Entity(tableName = "tag")
-public class Tag{
+public class Tag implements Parcelable {
     @Ignore
+    public static final String EXTRA_TAG = Build.ID + "EXTRA_TAG";
     public static final String EXTRA_TAG_ID = Build.ID + "EXTRA_TAG_ID";
 
     @ColumnInfo(name = "tag_id")
@@ -20,6 +25,18 @@ public class Tag{
 
     public Tag(){
 
+    }
+
+    @Ignore
+    public Tag(Parcel in){
+        this.id = in.readInt();
+        this.mName = in.readString();
+        mCreatedAt = new Date();
+        mTagDeletedAt = new Date();
+        mTagUpdatedAt = new Date();
+        this.mCreatedAt.setTime(in.readLong());
+        this.mTagDeletedAt.setTime(in.readLong());
+        this.mTagUpdatedAt.setTime(in.readLong());
     }
 
     @ColumnInfo(name = "tag_name")
@@ -78,4 +95,33 @@ public class Tag{
     public void setmTagUpdatedAt(Date val){
         mTagUpdatedAt = val;
     }
+
+    @Ignore
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Ignore
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.mName);
+        dest.writeLong(mCreatedAt.getTime());
+        dest.writeLong(mTagDeletedAt.getTime());
+        dest.writeLong(mTagUpdatedAt.getTime());
+    }
+
+    @Ignore
+    public static final Creator<Tag> CREATOR = new Creator<Tag>() {
+        @Override
+        public Tag createFromParcel(Parcel source) {
+            return new Tag(source);
+        }
+
+        @Override
+        public Tag[] newArray(int size) {
+            return new Tag[size];
+        }
+    };
 }

@@ -27,5 +27,22 @@
         android:name="com.phroton.notes.ui.tags.TagFragment"
         android:label="@string/tags"
         tools:layout="@layout/fragment_tag_list"
-        />
+        >
+        <action
+            android:id="@+id/action_tagFragment_to_taggedNoteFragment"
+            app:destination="@id/nav_tagged_note"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_tagged_note"
+        android:name="com.phroton.notes.ui.taggednote.TaggedNoteFragment"
+        android:label="@string/tagged_note"
+        tools:layout="@layout/fragment_home"
+        >
+        <argument
+            android:name="Tag"
+            app:argType="com.phroton.notes.Tag"
+            />
+
+    </fragment>
 </navigation>

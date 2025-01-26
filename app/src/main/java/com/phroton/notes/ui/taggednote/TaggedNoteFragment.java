@@ -27,9 +27,8 @@ public class TaggedNoteFragment extends NoteFragment {
 
     private TaggedNoteViewModel mTaggedNoteViewModel;
 
-    public TaggedNoteFragment(Tag tag){
-        //Set the current set tag.
-        mTag = tag;
+    public TaggedNoteFragment(){
+
     }
 
     public TaggedNoteViewModel getTaggedNoteViewModel(){ return mTaggedNoteViewModel; }
@@ -51,6 +50,11 @@ public class TaggedNoteFragment extends NoteFragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
+
+        //Obtain the tag from bundle.
+        if(getArguments() != null){
+            mTag = getArguments().getParcelable(Tag.EXTRA_TAG);
+        }
 
         Toast.makeText(getContext(), "Current Tag: " + mTag.mName, Toast.LENGTH_SHORT).show();
 
