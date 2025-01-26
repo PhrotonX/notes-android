@@ -39,7 +39,9 @@ public class TaggedNoteFragment extends NoteFragment {
         return new NoteViewAdapter.OnBindViewHolderListener() {
             @Override
             public void onBindViewHolder(@NonNull NoteViewHolder holder, int position, Note currentData) {
-                if(currentData.isDeleted() || currentData.isArchived()){
+                //@TODO: Temporary only. Must utilize TaggedNote table in the schema for faster performance.
+                //@TODO: Make tag ID long instead of int.
+                if((currentData.isDeleted() || currentData.isArchived()) && currentData.tag != (long)mTag.id){
                     holder.hide();
                 }
             }

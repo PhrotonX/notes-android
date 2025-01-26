@@ -145,10 +145,8 @@ public class TagFragment extends FABView {
         mTagAdapter.setOnClickListener(new TagAdapter.OnClickListener() {
             @Override
             public void onClick(Tag tag) {
-                TaggedNoteFragment taggedNoteFragment = new TaggedNoteFragment(tag);
-
                 getParentFragmentManager().beginTransaction()
-                        .replace(R.id.nav_host_fragment_content_main, taggedNoteFragment)
+                        .add(R.id.nav_host_fragment_content_main, new TaggedNoteFragment(tag))
                         .commit();
             }
         });
