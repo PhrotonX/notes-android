@@ -148,7 +148,7 @@ public class TagFragment extends FABView {
                 TaggedNoteFragment taggedNoteFragment = new TaggedNoteFragment(tag);
 
                 getParentFragmentManager().beginTransaction()
-                        .replace(R.id.home_fragment_root, taggedNoteFragment)
+                        .replace(R.id.nav_host_fragment_content_main, taggedNoteFragment)
                         .commit();
             }
         });
