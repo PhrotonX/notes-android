@@ -88,16 +88,8 @@ public class TagFragment extends FABView {
             tags.observe(getViewLifecycleOwner(), new Observer<List<Tag>>() {
                 @Override
                 public void onChanged(List<Tag> tags) {
-                    //Set the tags into the TagAdapter.
-                    mTagAdapter = new TagAdapter(getContext(), tags);
-
-                    //Set the adapter into the RecyclerView.
-                    mTagRecyclerView.setAdapter(mTagAdapter);
-
-                    initializeOnContextItemSelectedListener();
-
                     //Initialize the RecyclerView.Adapter.
-                    initializeRecycleViewAdapter();
+                    initializeRecycleViewAdapter(tags);
                 }
             });
         }else{
@@ -108,16 +100,8 @@ public class TagFragment extends FABView {
             errorTag.add(new Tag("Error 2"));
             errorTag.add(new Tag("Error 3"));
 
-            //Set the tags into the TagAdapter.
-            mTagAdapter = new TagAdapter(getContext(), errorTag);
-
-            //Set the adapter into the RecyclerView.
-            mTagRecyclerView.setAdapter(mTagAdapter);
-
-            initializeOnContextItemSelectedListener();
-
             //Initialize the RecyclerView.Adapter.
-            initializeRecycleViewAdapter();
+            initializeRecycleViewAdapter(errorTag);
         }
 
         //Set the floating action button.
@@ -148,7 +132,15 @@ public class TagFragment extends FABView {
         return null;
     }
 
-    private void initializeRecycleViewAdapter() {
+    private void initializeRecycleViewAdapter(List<Tag> tags) {
+        //Set the tags into the TagAdapter.
+        mTagAdapter = new TagAdapter(getContext(), tags);
+
+        //Set the adapter into the RecyclerView.
+        mTagRecyclerView.setAdapter(mTagAdapter);
+
+        initializeOnContextItemSelectedListener();
+
         //Set the layout manager.
         if(mTagAdapter.getItemCount() > 0){
             //Set to GridLayoutManager if the item count is greater than 0.
