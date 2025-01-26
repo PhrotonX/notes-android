@@ -27,6 +27,8 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
     private Context mContext;
     private List<Tag> mTag;
 
+    private TagAdapter.OnClickListener mOnClickListener;
+
     private OnContextItemSelected onContextItemSelected;
 
     private int selectedPosition = -1;
@@ -56,6 +58,13 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
         Tag tag = mTag.get(position);
 
         holder.bind(tag);
+
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnClickListener.onClick(tag);
+            }
+        });
 
         holder.view.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -97,6 +106,10 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
         return this.selectedPosition;
     }
 
+    public void setOnClickListener(TagAdapter.OnClickListener listener){
+        mOnClickListener = listener;
+    }
+
     public void setOnContextItemSelected(OnContextItemSelected onContextItemSelected){
         this.onContextItemSelected = onContextItemSelected;
     }
@@ -107,5 +120,14 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
 
     public interface OnContextItemSelected{
         boolean onContextItemSelected(@NonNull MenuItem item, Tag tag);
+    }
+
+    public interface OnClickListener{
+        /**
+         * Set the single tap or click listener for items.
+         *
+         * @param position The adapter position of an item.
+         * */
+        void onClick(Tag tag);
     }
 }

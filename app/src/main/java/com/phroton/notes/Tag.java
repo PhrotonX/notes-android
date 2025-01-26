@@ -1,5 +1,7 @@
 package com.phroton.notes;
 
+import android.os.Build;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -9,6 +11,9 @@ import java.util.Date;
 
 @Entity(tableName = "tag")
 public class Tag{
+    @Ignore
+    public static final String EXTRA_TAG_ID = Build.ID + "EXTRA_TAG_ID";
+
     @ColumnInfo(name = "tag_id")
     @PrimaryKey(autoGenerate = true)
     public int id;

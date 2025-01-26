@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
@@ -25,27 +26,23 @@ public class TaggedNoteFragment extends NoteFragment {
 
     private TaggedNoteViewModel mTaggedNoteViewModel;
 
-    public TaggedNoteFragment(){
+    public TaggedNoteFragment(Tag tag){
+        //Initialize the view model.
         mTaggedNoteViewModel = new ViewModelProvider(this).get(TaggedNoteViewModel.class);
+
+        //Set the current set tag.
+        mTag = tag;
     }
 
     public TaggedNoteViewModel getTaggedNoteViewModel(){ return mTaggedNoteViewModel; }
 
     @Override
-    protected NoteViewAdapter.OnBindViewHolderListener onBindViewHolder() {
-        return new NoteViewAdapter.OnBindViewHolderListener() {
-            @Override
-            public void onBindViewHolder(@NonNull NoteViewHolder holder, int position, Note currentData) {
-
-            }
-        };
-    }
-
-    @Override
     public View onInitializeView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Toast.makeText(getContext(), "Current Tag: " + mTag.mName, Toast.LENGTH_SHORT).show();
         return null;
     }
 
+    /*
     @Override
     public void onInitializeRecycleViewAdapter() {
         mTaggedNoteViewModel.getTaggedNotesById(mTag.id).observe(getViewLifecycleOwner(), new Observer<List<TaggedNote>>() {
@@ -54,5 +51,5 @@ public class TaggedNoteFragment extends NoteFragment {
 
             }
         });
-    }
+    }*/
 }

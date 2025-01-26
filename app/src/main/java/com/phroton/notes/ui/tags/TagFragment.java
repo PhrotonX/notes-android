@@ -10,6 +10,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -35,6 +36,7 @@ import com.phroton.notes.Tag;
 import com.phroton.notes.TagViewModel;
 import com.phroton.notes.ui.FABView;
 import com.phroton.notes.ui.editor.EditorActivity;
+import com.phroton.notes.ui.taggednote.TaggedNoteFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +45,7 @@ public class TagFragment extends FABView {
     private TagAdapter mTagAdapter;
     private RecyclerView mTagRecyclerView;
     private TagViewModel mTagViewModel;
+
     public TagFragment() {
         // Required empty public constructor
     }
@@ -138,6 +141,17 @@ public class TagFragment extends FABView {
 
         //Set the adapter into the RecyclerView.
         mTagRecyclerView.setAdapter(mTagAdapter);
+
+        mTagAdapter.setOnClickListener(new TagAdapter.OnClickListener() {
+            @Override
+            public void onClick(Tag tag) {
+                TaggedNoteFragment taggedNoteFragment = new TaggedNoteFragment(tag);
+
+                getChildFragmentManager().beginTransaction()
+                        .attach(taggedNoteFragment)
+                        .commit();
+            }
+        });
 
         initializeOnContextItemSelectedListener();
 
