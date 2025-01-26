@@ -16,6 +16,9 @@
             android:id="@+id/nav_trash"
             android:icon="@drawable/ic_delete_light"
             android:title="@string/trash" />
-
+        <item
+            android:id="@+id/nav_tags"
+            android:icon="@drawable/ic_tag_light"
+            android:title="@string/tags" />
     </group>
 </menu>

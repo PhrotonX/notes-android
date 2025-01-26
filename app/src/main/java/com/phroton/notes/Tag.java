@@ -10,7 +10,7 @@ import java.util.Date;
 @Entity(tableName = "tag")
 public class Tag{
     @ColumnInfo(name = "tag_id")
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int id;
 
     public Tag(){
@@ -34,4 +34,43 @@ public class Tag{
         mName = tagName;
     }
 
+    public String getName(){
+        return mName;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public Date getCreatedAt(){
+        return mCreatedAt;
+    }
+
+    public Date getTagDeletedAt(){
+        return mTagDeletedAt;
+    }
+
+    public Date getTagUpdateAt(){
+        return mTagUpdatedAt;
+    }
+
+    public void setName(String val){
+        mName = val;
+    }
+
+    public void setId(int id){
+        this.id = id;
+    }
+
+    public void setCreatedAt(Date val){
+        mCreatedAt = val;
+    }
+
+    public void setTagDeletedAt(Date val){
+        mTagDeletedAt = val;
+    }
+
+    public void setmTagUpdatedAt(Date val){
+        mTagUpdatedAt = val;
+    }
 }

@@ -1,5 +1,8 @@
 package com.phroton.notes.ui;
 
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +20,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.view.MenuProvider;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -28,7 +30,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.phroton.notes.Note;
 import com.phroton.notes.NoteViewAdapter;
-import com.phroton.notes.NoteViewHolder;
 import com.phroton.notes.NoteViewModel;
 import com.phroton.notes.R;
 import com.phroton.notes.RequestCode;
@@ -37,7 +38,7 @@ import com.phroton.notes.ui.editor.EditorActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class NoteFragment extends Fragment {
+public abstract class NoteFragment extends FABView {
     protected ActivityResultLauncher<Intent> mActivityResultContract;
     protected Context mContext;
     protected NoteViewAdapter mNoteViewAdapter;
@@ -108,7 +109,7 @@ public abstract class NoteFragment extends Fragment {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemCallback);
         itemTouchHelper.attachToRecyclerView(mNoteRecyclerView);
 
-        onInitializeNoteViewAdapter();
+        onInitializeRecycleViewAdapter();
 
         mNoteViewAdapter.setOnBindViewHolderListener(onBindViewHolder());
         mNoteViewAdapter.setOnClickListener(onItemClick());
@@ -127,6 +128,9 @@ public abstract class NoteFragment extends Fragment {
         mContext = getContext();
         mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
         mLifecycleOwner = getViewLifecycleOwner();
+
+        //Set up FAB
+        setFloatingActionButton(root.findViewById(R.id.fab));
 
         mNoteRecyclerView = (RecyclerView)root.findViewById(R.id.notesList);
         mNoteRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -192,7 +196,7 @@ public abstract class NoteFragment extends Fragment {
                 //Toast.makeText(getContext(), "onACtivityResult() DB: " + dbNoteId + " RV: " + rvNoteId, Toast.LENGTH_SHORT).show();
 
                 switch(result.getResultCode()){
-                    case EditorActivity.RESULT_OK:
+                    case RESULT_OK:
                         note = Note.unpackCurrentNote(result.getData(), true);
                         onActivityResultOk(result, note, dbNoteId, rvNoteId);
                         break;
@@ -206,7 +210,7 @@ public abstract class NoteFragment extends Fragment {
                     case EditorActivity.RESULT_RESTORE:
                         onActivityResultRestore(result, dbNoteId, rvNoteId);
                         break;
-                    case EditorActivity.RESULT_CANCELED:
+                    case RESULT_CANCELED:
                         onActivityResultCancel(result);
                         break;
                     default:
@@ -251,7 +255,44 @@ public abstract class NoteFragment extends Fragment {
         return null;
     }
 
-    protected void onInitializeNoteViewAdapter(){}
+    @Override
+    protected View.OnClickListener onFabClick() {
+        return new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), EditorActivity.class);
+                intent.putExtra(RequestCode.REQUEST_CODE, RequestCode.REQUEST_CODE_CREATE_NOTE);
+                //startActivityForResult(intent, CREATE_NOTE_REQUEST);
+                getFabIntent().launch(intent);
+            }
+        };
+    }
+
+    @Override
+    protected ActivityResultLauncher<Intent> onFabIntent() {
+        return registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    Note note;
+                    switch(result.getResultCode()){
+                        case RESULT_OK:
+                            note = Note.unpackCurrentNote(result.getData(), false);
+                            mNoteViewModel.insert(note);
+                            break;
+                        case RESULT_CANCELED:
+                            //Toast.makeText(getApplicationContext(), "MainActivity: Canceled", Toast.LENGTH_SHORT).show();
+                            break;
+                        default:
+                            Toast.makeText(getContext(), "MainActivity: Error", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+
+                }
+            });
+    }
+
+    protected void onInitializeRecycleViewAdapter(){}
 
     protected boolean onItemMove(){
         return false;

@@ -20,7 +20,7 @@ import com.phroton.notes.data.taggednote.TaggedNoteDao;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Note.class, Tag.class, TaggedNote.class}, version = 112, exportSchema = true/*,
+@Database(entities = {Note.class, Tag.class, TaggedNote.class}, version = 114, exportSchema = true/*,
     autoMigrations = {
         @AutoMigration(from = 106, to = 108),
             @AutoMigration(from = 107, to = 108)
@@ -74,6 +74,7 @@ public abstract class NoteRoomDatabase extends RoomDatabase{
                         "button."));
 
                 TagDao tagDao = INSTANCE.tagDao();
+                tagDao.deleteAll();
                 tagDao.insert(new Tag("To Do"));
                 tagDao.insert(new Tag("Shopping"));
                 tagDao.insert(new Tag("Others"));

@@ -9,13 +9,19 @@ import java.util.List;
 
 public class TagViewModel extends AndroidViewModel {
     private TagRepository mRepository;
-    private LiveData<List<Tag>> mTags;
+    private final LiveData<List<Tag>> mTags;
     public TagViewModel(Application application){
         super(application);
 
         mRepository = new TagRepository(application);
         mTags = mRepository.getAllTags();
     }
+
+    public void createTag(String tagName){
+        mRepository.insert(new Tag(tagName));
+    }
+
+    public LiveData<List<Tag>> getTags(){ return mTags; }
 
     public LiveData<Tag> getTag(long id){
         return mRepository.getTag(id);
