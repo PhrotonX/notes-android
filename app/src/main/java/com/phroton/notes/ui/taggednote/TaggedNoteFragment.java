@@ -63,6 +63,10 @@ public class TaggedNoteFragment extends NoteFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
+        getParentFragmentManager().beginTransaction()
+                .remove(this)
+                .commit();
     }
 
     @Override
