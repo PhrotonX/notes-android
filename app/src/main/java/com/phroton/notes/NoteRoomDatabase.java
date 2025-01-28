@@ -18,6 +18,7 @@ import com.phroton.notes.data.taggednote.TaggedNote;
 import com.phroton.notes.data.taggednote.TaggedNoteDao;
 import com.phroton.notes.data.taggednote.TaggedNoteViewModel;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -92,12 +93,14 @@ public abstract class NoteRoomDatabase extends RoomDatabase{
                 TaggedNoteDao taggedNoteDao = INSTANCE.taggedNoteDao();
                 taggedNoteDao.deleteAll();
 
-                taggedNoteDao.insert(new TaggedNote(tag1, note1));
-                taggedNoteDao.insert(new TaggedNote(tag2, note1));
-                taggedNoteDao.insert(new TaggedNote(tag2, note2));
-                taggedNoteDao.insert(new TaggedNote(tag3, note2));
-                taggedNoteDao.insert(new TaggedNote(tag1, note3));
-                taggedNoteDao.insert(new TaggedNote(tag3, note3));
+                List<Tag> tag = tagDao.getAllTags().getValue();
+                List<Note> note = noteDao.getAllNotes().getValue();
+                taggedNoteDao.insert(new TaggedNote(tag.get(0), note.get(0)));
+                taggedNoteDao.insert(new TaggedNote(tag.get(1), note.get(0)));
+                taggedNoteDao.insert(new TaggedNote(tag.get(1), note.get(1)));
+                taggedNoteDao.insert(new TaggedNote(tag.get(2), note.get(1)));
+                taggedNoteDao.insert(new TaggedNote(tag.get(0), note.get(2)));
+                taggedNoteDao.insert(new TaggedNote(tag.get(2), note.get(2)));
 
             });
         }
