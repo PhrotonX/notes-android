@@ -31,12 +31,9 @@ public class Tag implements Parcelable {
     public Tag(Parcel in){
         this.id = in.readInt();
         this.mName = in.readString();
-        mCreatedAt = new Date();
-        mTagDeletedAt = new Date();
-        mTagUpdatedAt = new Date();
-        this.mCreatedAt.setTime(in.readLong());
-        this.mTagDeletedAt.setTime(in.readLong());
-        this.mTagUpdatedAt.setTime(in.readLong());
+        this.mCreatedAt = (Date)in.readValue(Date.class.getClassLoader());
+        this.mTagDeletedAt = (Date)in.readValue(Date.class.getClassLoader());
+        this.mTagUpdatedAt = (Date)in.readValue(Date.class.getClassLoader());
     }
 
     @ColumnInfo(name = "tag_name")
@@ -107,9 +104,9 @@ public class Tag implements Parcelable {
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeInt(this.id);
         dest.writeString(this.mName);
-        dest.writeLong(mCreatedAt.getTime());
-        dest.writeLong(mTagDeletedAt.getTime());
-        dest.writeLong(mTagUpdatedAt.getTime());
+        dest.writeValue(mCreatedAt);
+        dest.writeValue(mTagDeletedAt);
+        dest.writeValue(mTagUpdatedAt);
     }
 
     @Ignore
