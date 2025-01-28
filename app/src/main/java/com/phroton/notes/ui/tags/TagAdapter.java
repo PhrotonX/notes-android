@@ -69,7 +69,7 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
         holder.view.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                holder.setSelectedTagId(tag.getId());
+                holder.setSelectedTagId((int)tag.getId());
                 setSelectedPosition(holder.getBindingAdapterPosition());
 
                 PopupMenu popupMenu = new PopupMenu(mContext, v);
@@ -126,7 +126,7 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder> {
         /**
          * Set the single tap or click listener for items.
          *
-         * @param position The adapter position of an item.
+         * @param tag The adapter position of an item.
          * */
         void onClick(Tag tag);
     }

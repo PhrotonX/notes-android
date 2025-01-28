@@ -13,6 +13,9 @@ interface TaggedNoteDao {
     @Delete
     fun delete(taggedNote: TaggedNote)
 
+    @Query("DELETE FROM tagged_note")
+    fun deleteAll();
+
     @Query("SELECT * FROM tagged_note")
     fun getAllTaggedNotes() : LiveData<List<TaggedNote>>
 

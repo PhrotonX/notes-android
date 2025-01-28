@@ -21,7 +21,7 @@ public class Tag implements Parcelable {
 
     @ColumnInfo(name = "tag_id")
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    public long id;
 
     public Tag(){
 
@@ -29,7 +29,7 @@ public class Tag implements Parcelable {
 
     @Ignore
     public Tag(Parcel in){
-        this.id = in.readInt();
+        this.id = in.readLong();
         this.mName = in.readString();
         this.mCreatedAt = (Date)in.readValue(Date.class.getClassLoader());
         this.mTagDeletedAt = (Date)in.readValue(Date.class.getClassLoader());
@@ -57,7 +57,7 @@ public class Tag implements Parcelable {
         return mName;
     }
 
-    public int getId(){
+    public long getId(){
         return id;
     }
 
@@ -102,7 +102,7 @@ public class Tag implements Parcelable {
     @Ignore
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeInt(this.id);
+        dest.writeLong(this.id);
         dest.writeString(this.mName);
         dest.writeValue(mCreatedAt);
         dest.writeValue(mTagDeletedAt);
