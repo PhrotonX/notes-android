@@ -93,23 +93,6 @@ public abstract class NoteRoomDatabase extends RoomDatabase{
 
                 TaggedNoteDao taggedNoteDao = INSTANCE.taggedNoteDao();
                 taggedNoteDao.deleteAll();
-
-                tagDao.getAllTags().removeObserver(new Observer<List<Tag>>() {
-                    @Override
-                    public void onChanged(List<Tag> tag) {
-                        noteDao.getAllNotes().removeObserver(new Observer<List<Note>>() {
-                            @Override
-                            public void onChanged(List<Note> note) {
-                                taggedNoteDao.insert(new TaggedNote(tag.get(0), note.get(0)));
-                                taggedNoteDao.insert(new TaggedNote(tag.get(1), note.get(0)));
-                                taggedNoteDao.insert(new TaggedNote(tag.get(1), note.get(1)));
-                                taggedNoteDao.insert(new TaggedNote(tag.get(2), note.get(1)));
-                                taggedNoteDao.insert(new TaggedNote(tag.get(0), note.get(2)));
-                                taggedNoteDao.insert(new TaggedNote(tag.get(2), note.get(2)));
-                            }
-                        });
-                    }
-                });
             });
         }
     };
