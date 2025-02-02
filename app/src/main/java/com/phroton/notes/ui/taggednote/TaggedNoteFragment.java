@@ -50,8 +50,6 @@ public class TaggedNoteFragment extends NoteFragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-
         //Obtain the tag from bundle.
         if(getArguments() != null){
             mTag = getArguments().getParcelable(Tag.EXTRA_TAG);
@@ -62,6 +60,7 @@ public class TaggedNoteFragment extends NoteFragment {
         //Initialize the view model.
         mTaggedNoteViewModel = new ViewModelProvider(this).get(TaggedNoteViewModel.class);
 
+        View view = super.onCreateView(inflater, container, savedInstanceState);
         return view;
     }
 
