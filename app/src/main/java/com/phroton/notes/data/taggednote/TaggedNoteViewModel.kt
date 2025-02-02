@@ -5,8 +5,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.phroton.notes.Note
 
-class TaggedNoteViewModel(application: Application) : AndroidViewModel(application) {
-    lateinit var mRepository : TaggedNoteRepository
+class TaggedNoteViewModel(application: Application) : AndroidViewModel(application){
+
+    private var mRepository = TaggedNoteRepository(application)
 
     fun getTaggedNotes() : LiveData<List<TaggedNote>>{
         return mRepository.taggedNotes
