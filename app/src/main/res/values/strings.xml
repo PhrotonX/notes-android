@@ -17,10 +17,11 @@
     <string name="title_activity_editor">Editor</string>
     <string name="menu_save">Save</string>
     <string name="menu_share">Share</string>
-    <string name="menu_delete">Delete</string>
+    <string name="delete">Delete</string>
     <string name="type_note_here">Type note here…</string>
     <string name="type_title_here">Type title here…</string>
     <string name="menu_color">Color</string>
+    <string name="ok">OK</string>
 
     <string name="blue">Blue</string>
     <string name="gray">Gray</string>
@@ -41,4 +42,11 @@
     <string name="search_hint">Type here to search</string>
     <string name="results_for">"Results for: "</string>
     <string name="archive">Archive</string>
+    <string name="tags">Tags</string>
+    <string name="add_an_item">Add an item</string>
+    <string name="edit_tag">Edit Tag</string>
+    <string name="enter_tag_name">Enter tag name...</string>
+    <string name="new_tag">New tag</string>
+    <string name="edit">Edit</string>
+    <string name="tagged_note">Tagged Note</string>
 </resources>
