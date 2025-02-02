@@ -56,22 +56,22 @@ public class TaggedNoteFragment extends NoteFragment {
             mTag = getArguments().getParcelable(Tag.EXTRA_TAG);
         }
 
-        if(mTag != null){
-            //Set the title bar into the tag name.
-            View root = getView();
-            if(root != null){
-                Toolbar toolbar = root.findViewById(R.id.toolbar);
-
-                toolbar.setTitle(mTag.getName());
-            }
-        }
-
-        Toast.makeText(getContext(), "Current Tag: " + mTag.mName, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "Current Tag: " + mTag.mName, Toast.LENGTH_SHORT).show();
 
         //Initialize the view model.
         mTaggedNoteViewModel = new ViewModelProvider(this).get(TaggedNoteViewModel.class);
 
         View view = super.onCreateView(inflater, container, savedInstanceState);
+
+        if(mTag != null){
+            //Set the title bar into the tag name.
+            if(view != null){
+                Toolbar toolbar = view.findViewById(R.id.toolbar);
+
+                toolbar.setTitle(mTag.getName());
+            }
+        }
+
         return view;
     }
 
