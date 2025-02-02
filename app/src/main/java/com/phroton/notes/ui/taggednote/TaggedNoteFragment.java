@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -65,10 +68,12 @@ public class TaggedNoteFragment extends NoteFragment {
 
         if(mTag != null){
             //Set the title bar into the tag name.
-            if(view != null){
-                Toolbar toolbar = view.findViewById(R.id.toolbar);
-
-                toolbar.setTitle(mTag.getName());
+            AppCompatActivity activity = (AppCompatActivity) getActivity();
+            if(activity != null){
+                ActionBar actionBar = activity.getSupportActionBar();
+                if(actionBar != null){
+                    actionBar.setTitle(mTag.getName());
+                }
             }
         }
 
