@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -53,6 +54,16 @@ public class TaggedNoteFragment extends NoteFragment {
         //Obtain the tag from bundle.
         if(getArguments() != null){
             mTag = getArguments().getParcelable(Tag.EXTRA_TAG);
+        }
+
+        if(mTag != null){
+            //Set the title bar into the tag name.
+            View root = getView();
+            if(root != null){
+                Toolbar toolbar = root.findViewById(R.id.toolbar);
+
+                toolbar.setTitle(mTag.getName());
+            }
         }
 
         Toast.makeText(getContext(), "Current Tag: " + mTag.mName, Toast.LENGTH_SHORT).show();
