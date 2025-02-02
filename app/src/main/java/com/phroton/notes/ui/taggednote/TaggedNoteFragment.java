@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -38,11 +39,11 @@ public class TaggedNoteFragment extends NoteFragment {
         return new NoteViewAdapter.OnBindViewHolderListener() {
             @Override
             public void onBindViewHolder(@NonNull NoteViewHolder holder, int position, Note currentData) {
-                //@TODO: Temporary only. Must utilize TaggedNote table in the schema for faster performance.
                 //@TODO: Make tag ID long instead of int.
-                if((currentData.isDeleted() || currentData.isArchived()) && currentData.tag != (long)mTag.id){
+                if((currentData.isDeleted() || currentData.isArchived())){
                     holder.hide();
                 }
+
             }
         };
     }
@@ -89,4 +90,9 @@ public class TaggedNoteFragment extends NoteFragment {
             }
         });
     }*/
+
+    @Override
+    protected LiveData<List<Note>> onRetrieveNotes() {
+        return this.getTaggedNoteViewModel().getNotesByTagId(mTag.getId());
+    }
 }

@@ -6,6 +6,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import com.phroton.notes.Note
 import com.phroton.notes.data.taggednote.TaggedNote
 
 @Dao
@@ -19,8 +20,8 @@ interface TaggedNoteDao {
     @Query("SELECT * FROM tagged_note")
     fun getAllTaggedNotes() : LiveData<List<TaggedNote>>
 
-    @Query("SELECT * FROM tagged_note WHERE tag_id =:id")
-    fun getTaggedNotesByTagId(id: Long) : LiveData<List<TaggedNote>>
+    @Query("SELECT * FROM notes JOIN tagged_note ON notes.note_id = tagged_note.note_id WHERE tagged_note.tag_id =:id")
+    fun getNotesByTagId(id: Long) : LiveData<List<Note>>
 
     @Insert
     fun insert(taggedNote: TaggedNote)

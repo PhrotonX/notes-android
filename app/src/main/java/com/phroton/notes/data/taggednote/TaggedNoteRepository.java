@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
+import com.phroton.notes.Note;
 import com.phroton.notes.NoteRoomDatabase;
 
 import java.util.List;
@@ -26,8 +27,8 @@ public class TaggedNoteRepository {
         return mTaggedNotes;
     }
 
-    public LiveData<List<TaggedNote>> getTaggedNoteById(long id){
-        return mTaggedNoteDao.getTaggedNotesByTagId(id);
+    public LiveData<List<Note>> getNotesByTagId(long id){
+        return mTaggedNoteDao.getNotesByTagId(id);
     }
 
     public void update(TaggedNote taggedNote){
