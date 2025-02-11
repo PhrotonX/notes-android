@@ -29,6 +29,12 @@
         app:showAsAction="ifRoom"
         />
     <item
+        android:id="@+id/menu_editor_tags"
+        android:title="@string/tags"
+        android:orderInCategory="21"
+        app:showAsAction="never"
+        />
+    <item
         android:id="@+id/menu_editor_share"
         android:title="@string/menu_share"
         android:orderInCategory="30"
