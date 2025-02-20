@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.phroton.notes.Note
+import com.phroton.notes.Tag
 
 class TaggedNoteViewModel(application: Application) : AndroidViewModel(application){
 
@@ -15,6 +16,10 @@ class TaggedNoteViewModel(application: Application) : AndroidViewModel(applicati
 
     fun getNotesByTagId(id: Long) : LiveData<List<Note>>{
         return mRepository.getNotesByTagId(id)
+    }
+
+    fun getTagsByNoteId(id: Long) : LiveData<List<Tag>>{
+        return mRepository.getTagsByNoteId(id)
     }
 
     fun delete(taggedNote: TaggedNote){
