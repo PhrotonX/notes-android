@@ -201,6 +201,8 @@ public class EditorActivity extends AppCompatActivity {
                 dialog.show(getSupportFragmentManager(), "ColorDialogFragment");
                 break;
             case R.id.menu_editor_tags:
+                dialog = new TagOptionsDialogFragment();
+                dialog.show(getSupportFragmentManager(), "TagOptionsDialogFragment");
                 break;
         }
 

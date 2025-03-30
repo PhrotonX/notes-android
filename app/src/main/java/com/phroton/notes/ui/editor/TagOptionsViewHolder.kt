@@ -11,8 +11,8 @@ class TagOptionsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     lateinit var option : CheckBox;
     var tagId : Long = 0L;
 
-    fun bind(tag : Tag){
-        option.setText(tag.name)
-        tagId = tag.getId()
+    fun bind(tag : Tag?){
+        option.setText(tag?.name) ?: "null";
+        tagId = tag?.getId() ?: 0L;
     }
 }

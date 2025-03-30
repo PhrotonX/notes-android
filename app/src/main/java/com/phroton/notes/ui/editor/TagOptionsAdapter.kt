@@ -10,10 +10,10 @@ import com.phroton.notes.data.taggednote.TaggedNote
 
 class TagOptionsAdapter : RecyclerView.Adapter<TagOptionsViewHolder> {
     private lateinit var mContext : Context;
-    private var mTags : List<Tag>;
-    private var mTaggedNotes : List<TaggedNote>;
+    private var mTags : List<Tag>?;
+    private var mTaggedNotes : List<TaggedNote>?;
 
-    constructor(tags: List<Tag>, taggedNotes: List<TaggedNote>){
+    constructor(tags: List<Tag>?, taggedNotes: List<TaggedNote>?){
         mTags = tags;
         mTaggedNotes = taggedNotes;
     }
@@ -21,17 +21,17 @@ class TagOptionsAdapter : RecyclerView.Adapter<TagOptionsViewHolder> {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagOptionsViewHolder {
         mContext = parent.context;
 
-        var inflater = LayoutInflater.from(parent.context);
-        var view = inflater.inflate(R.layout.options_tag, parent, false);
+        val inflater = LayoutInflater.from(parent.context);
+        val view = inflater.inflate(R.layout.options_tag, parent, false);
 
         return TagOptionsViewHolder(view);
     }
 
     override fun getItemCount(): Int {
-        return mTags.size
+        return mTags?.size ?: 0
     }
 
     override fun onBindViewHolder(holder: TagOptionsViewHolder, position: Int) {
-        holder.bind(mTags[position]);
+        holder.bind(mTags?.get(position));
     }
 }

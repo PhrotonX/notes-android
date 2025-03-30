@@ -5,18 +5,30 @@ import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.phroton.notes.R
+import com.phroton.notes.TagViewModel
+import com.phroton.notes.data.taggednote.TaggedNoteViewModel
+import com.phroton.notes.ui.tags.TagViewHolder
 
 class TagOptionsDialogFragment : DialogFragment() {
-    private lateinit var m_adapter : TagOptionsAdapter;
+    private lateinit var mAdapter : TagOptionsAdapter;
+
+    private lateinit var mTagViewModel: TagViewModel;
+    private lateinit var mTaggedNoteViewModel: TaggedNoteViewModel;
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        var inflater = layoutInflater.inflate(R.layout.options_tag_list, null);
-        var view = inflater.findViewById<RecyclerView>(R.id.options_tag_list);
-
         // Inflate the recycler view.
-        m_adapter = TagOptionsAdapter();
+        val inflater = layoutInflater.inflate(R.layout.options_tag_list, null);
+        val view = inflater.findViewById<RecyclerView>(R.id.options_tag_list);
+
+        // Obtain the view models.
+        mTagViewModel = ViewModelProvider(this).get(TagViewModel::class.java);
+        mTaggedNoteViewModel = ViewModelProvider(this).get(TaggedNoteViewModel::class.java);
+
+        mAdapter = TagOptionsAdapter(mTagViewModel.tags.value?.toList(),
+            mTaggedNoteViewModel.getTaggedNotes().value?.toList())
 
         return AlertDialog.Builder(requireContext())
             .setTitle(R.string.tags)
