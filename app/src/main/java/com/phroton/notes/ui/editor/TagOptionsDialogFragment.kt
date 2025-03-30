@@ -4,15 +4,19 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
-import androidx.compose.material3.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.phroton.notes.R
 
-class TagDialogFragment : DialogFragment() {
+class TagOptionsDialogFragment : DialogFragment() {
+    private lateinit var m_adapter : TagOptionsAdapter;
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         var inflater = layoutInflater.inflate(R.layout.options_tag_list, null);
         var view = inflater.findViewById<RecyclerView>(R.id.options_tag_list);
+
+        // Inflate the recycler view.
+        m_adapter = TagOptionsAdapter();
 
         return AlertDialog.Builder(requireContext())
             .setTitle(R.string.tags)
