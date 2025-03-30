@@ -32,6 +32,8 @@ class TagOptionsDialogFragment : DialogFragment() {
         mAdapter = TagOptionsAdapter(mTagViewModel.tags.value?.toList(),
             mTaggedNoteViewModel.getTaggedNotes().value?.toList())
 
+        recyclerView.setAdapter(mAdapter);
+
         // Set the dialog box.
         return AlertDialog.Builder(requireContext())
             .setTitle(R.string.tags)
