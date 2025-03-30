@@ -22,6 +22,7 @@ class TagOptionsDialogFragment : DialogFragment() {
         // Inflate the recycler view.
         val inflater = layoutInflater;
         val view = inflater.inflate(R.layout.options_tag_list, null);
+        var recyclerView = view.findViewById<RecyclerView>(R.id.options_tag_list);
 
         // Obtain the view models.
         mTagViewModel = ViewModelProvider(this).get(TagViewModel::class.java);
