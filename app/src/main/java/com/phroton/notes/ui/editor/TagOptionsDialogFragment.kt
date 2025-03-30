@@ -39,7 +39,7 @@ class TagOptionsDialogFragment : DialogFragment() {
             tags = taglist
         });
 
-        mTaggedNoteViewModel.getTaggedNotes().observe(viewLifecycleOwner,
+        mTaggedNoteViewModel.getTaggedNotes().observe(this,
             Observer<List<TaggedNote>>{ taglist ->
             taggedNotes = taglist
         });
