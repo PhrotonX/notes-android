@@ -3,11 +3,13 @@ package com.phroton.notes.ui.editor
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.phroton.notes.R
 import com.phroton.notes.Tag
@@ -26,7 +28,8 @@ class TagOptionsDialogFragment : DialogFragment() {
         // Inflate the recycler view.
         val inflater = layoutInflater;
         val view = inflater.inflate(R.layout.options_tag_list, null);
-        var recyclerView = view.findViewById<RecyclerView>(R.id.options_tag_list);
+        val recyclerView = view.findViewById<RecyclerView>(R.id.options_tag_list);
+        recyclerView.layoutManager = LinearLayoutManager(context);
 
         // Obtain the view models.
         mTagViewModel = ViewModelProvider(this).get(TagViewModel::class.java);
@@ -36,20 +39,9 @@ class TagOptionsDialogFragment : DialogFragment() {
 
             // Set the adapter.
             mAdapter = TagOptionsAdapter(tags, null);
-            recyclerView.setAdapter(mAdapter);
+            recyclerView.setAdapter(mAdapter)
+
         });
-
-//        mTaggedNoteViewModel.getTaggedNotes().observe(this,
-//            Observer<List<TaggedNote>>{ taglist ->
-//            taggedNotes = taglist
-//
-//            // Set the adapter.
-//            mAdapter = TagOptionsAdapter(tags, taggedNotes);
-//
-//            recyclerView.setAdapter(mAdapter);
-//        });
-
-
 
         // Set the dialog box.
         return AlertDialog.Builder(requireContext())
