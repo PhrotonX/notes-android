@@ -11,11 +11,11 @@ import com.phroton.notes.data.taggednote.TaggedNote
 class TagOptionsAdapter : RecyclerView.Adapter<TagOptionsViewHolder> {
     private lateinit var mContext : Context;
     private var mTags : List<Tag>?;
-    private var mTaggedNotes : List<TaggedNote>?;
+    private var mTaggedNote: TaggedNote?;
 
-    constructor(tags: List<Tag>?, taggedNotes: List<TaggedNote>?){
+    constructor(tags: List<Tag>?, taggedNote: TaggedNote?){
         mTags = tags;
-        mTaggedNotes = taggedNotes;
+        mTaggedNote = taggedNote;
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagOptionsViewHolder {

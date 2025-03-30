@@ -32,27 +32,22 @@ class TagOptionsDialogFragment : DialogFragment() {
         mTagViewModel = ViewModelProvider(this).get(TagViewModel::class.java);
         mTaggedNoteViewModel = ViewModelProvider(this).get(TaggedNoteViewModel::class.java);
 
-        var tags : List<Tag>? = null;
-        var taggedNotes : List<TaggedNote>? = null;
-
-        mTagViewModel.tags.observe(this, Observer<List<Tag>>{ taglist ->
-            tags = taglist
+        mTagViewModel.tags.observe(this, Observer<List<Tag>>{ tags ->
 
             // Set the adapter.
-            mAdapter = TagOptionsAdapter(tags, taggedNotes);
-
+            mAdapter = TagOptionsAdapter(tags, null);
             recyclerView.setAdapter(mAdapter);
         });
 
-        mTaggedNoteViewModel.getTaggedNotes().observe(this,
-            Observer<List<TaggedNote>>{ taglist ->
-            taggedNotes = taglist
-
-            // Set the adapter.
-            mAdapter = TagOptionsAdapter(tags, taggedNotes);
-
-            recyclerView.setAdapter(mAdapter);
-        });
+//        mTaggedNoteViewModel.getTaggedNotes().observe(this,
+//            Observer<List<TaggedNote>>{ taglist ->
+//            taggedNotes = taglist
+//
+//            // Set the adapter.
+//            mAdapter = TagOptionsAdapter(tags, taggedNotes);
+//
+//            recyclerView.setAdapter(mAdapter);
+//        });
 
 
 
