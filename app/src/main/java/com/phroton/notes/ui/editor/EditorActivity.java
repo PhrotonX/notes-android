@@ -3,11 +3,14 @@ package com.phroton.notes.ui.editor;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -171,6 +174,7 @@ public class EditorActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
+        DialogFragment dialog = null;
         switch (item.getItemId()) {
             case R.id.menu_editor_delete:
                 setResult(RESULT_DELETE, Note.packCurrentNote(this.packCurrentNote(), true, mRvPosition));
@@ -193,8 +197,10 @@ public class EditorActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.menu_editor_color:
-                ColorDialogFragment dialog = new ColorDialogFragment();
+                dialog = new ColorDialogFragment();
                 dialog.show(getSupportFragmentManager(), "ColorDialogFragment");
+                break;
+            case R.id.menu_editor_tags:
                 break;
         }
 
