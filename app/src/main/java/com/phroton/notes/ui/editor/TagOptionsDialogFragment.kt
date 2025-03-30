@@ -5,10 +5,14 @@ import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.phroton.notes.R
+import com.phroton.notes.Tag
 import com.phroton.notes.TagViewModel
+import com.phroton.notes.data.taggednote.TaggedNote
 import com.phroton.notes.data.taggednote.TaggedNoteViewModel
 import com.phroton.notes.ui.tags.TagViewHolder
 
@@ -28,8 +32,17 @@ class TagOptionsDialogFragment : DialogFragment() {
         mTagViewModel = ViewModelProvider(this).get(TagViewModel::class.java);
         mTaggedNoteViewModel = ViewModelProvider(this).get(TaggedNoteViewModel::class.java);
 
-        var tags = mTagViewModel.tags.value?.toList();
-        var taggedNotes = mTaggedNoteViewModel.getTaggedNotes().value?.toList();
+        var tags : List<Tag>? = null;
+        var taggedNotes : List<TaggedNote>? = null;
+
+        mTagViewModel.tags.observe(viewLifecycleOwner, Observer<List<Tag>>{ taglist ->
+            tags = taglist
+        });
+
+        mTaggedNoteViewModel.getTaggedNotes().observe(viewLifecycleOwner,
+            Observer<List<TaggedNote>>{ taglist ->
+            taggedNotes = taglist
+        });
 
         // Set the adapter.
         mAdapter = TagOptionsAdapter(tags, taggedNotes);
