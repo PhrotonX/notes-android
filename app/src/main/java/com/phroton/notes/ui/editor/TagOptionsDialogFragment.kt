@@ -35,7 +35,7 @@ class TagOptionsDialogFragment : DialogFragment() {
         var tags : List<Tag>? = null;
         var taggedNotes : List<TaggedNote>? = null;
 
-        mTagViewModel.tags.observe(viewLifecycleOwner, Observer<List<Tag>>{ taglist ->
+        mTagViewModel.tags.observe(this, Observer<List<Tag>>{ taglist ->
             tags = taglist
         });
 
