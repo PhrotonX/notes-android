@@ -21,10 +21,10 @@ class TagOptionsAdapter : RecyclerView.Adapter<TagOptionsViewHolder> {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagOptionsViewHolder {
         mContext = parent.context;
 
-        val inflater = LayoutInflater.from(parent.context);
+        val inflater = LayoutInflater.from(mContext);
         val view = inflater.inflate(R.layout.options_tag, parent, false);
 
-        return TagOptionsViewHolder(view);
+        return TagOptionsViewHolder(view, mContext);
     }
 
     override fun getItemCount(): Int {
