@@ -28,9 +28,11 @@ class TagOptionsDialogFragment : DialogFragment() {
         mTagViewModel = ViewModelProvider(this).get(TagViewModel::class.java);
         mTaggedNoteViewModel = ViewModelProvider(this).get(TaggedNoteViewModel::class.java);
 
+        var tags = mTagViewModel.tags.value?.toList();
+        var taggedNotes = mTaggedNoteViewModel.getTaggedNotes().value?.toList();
+
         // Set the adapter.
-        mAdapter = TagOptionsAdapter(mTagViewModel.tags.value?.toList(),
-            mTaggedNoteViewModel.getTaggedNotes().value?.toList())
+        mAdapter = TagOptionsAdapter(tags, taggedNotes);
 
         recyclerView.setAdapter(mAdapter);
 
