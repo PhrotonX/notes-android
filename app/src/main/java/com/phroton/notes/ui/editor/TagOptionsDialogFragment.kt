@@ -27,9 +27,11 @@ class TagOptionsDialogFragment : DialogFragment() {
         mTagViewModel = ViewModelProvider(this).get(TagViewModel::class.java);
         mTaggedNoteViewModel = ViewModelProvider(this).get(TaggedNoteViewModel::class.java);
 
+        // Set the adapter.
         mAdapter = TagOptionsAdapter(mTagViewModel.tags.value?.toList(),
             mTaggedNoteViewModel.getTaggedNotes().value?.toList())
 
+        // Set the dialog box.
         return AlertDialog.Builder(requireContext())
             .setTitle(R.string.tags)
             .setView(view)
@@ -40,7 +42,7 @@ class TagOptionsDialogFragment : DialogFragment() {
             })
             .setNegativeButton(R.string.cancel, object : DialogInterface.OnClickListener{
                 override fun onClick(dialog: DialogInterface?, which: Int) {
-                    TODO("Not yet implemented")
+                    //do nothing.
                 }
             })
             .create()
