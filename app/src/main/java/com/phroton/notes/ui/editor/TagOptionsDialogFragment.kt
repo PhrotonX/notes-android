@@ -20,8 +20,8 @@ class TagOptionsDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // Inflate the recycler view.
-        val inflater = layoutInflater.inflate(R.layout.options_tag_list, null);
-        val view = inflater.findViewById<RecyclerView>(R.id.options_tag_list);
+        val inflater = layoutInflater;
+        val view = inflater.inflate(R.layout.options_tag_list, null);
 
         // Obtain the view models.
         mTagViewModel = ViewModelProvider(this).get(TagViewModel::class.java);
