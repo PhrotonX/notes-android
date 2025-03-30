@@ -37,17 +37,24 @@ class TagOptionsDialogFragment : DialogFragment() {
 
         mTagViewModel.tags.observe(this, Observer<List<Tag>>{ taglist ->
             tags = taglist
+
+            // Set the adapter.
+            mAdapter = TagOptionsAdapter(tags, taggedNotes);
+
+            recyclerView.setAdapter(mAdapter);
         });
 
         mTaggedNoteViewModel.getTaggedNotes().observe(this,
             Observer<List<TaggedNote>>{ taglist ->
             taggedNotes = taglist
+
+            // Set the adapter.
+            mAdapter = TagOptionsAdapter(tags, taggedNotes);
+
+            recyclerView.setAdapter(mAdapter);
         });
 
-        // Set the adapter.
-        mAdapter = TagOptionsAdapter(tags, taggedNotes);
 
-        recyclerView.setAdapter(mAdapter);
 
         // Set the dialog box.
         return AlertDialog.Builder(requireContext())
