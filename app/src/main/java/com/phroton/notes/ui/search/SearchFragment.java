@@ -31,7 +31,7 @@ public class SearchFragment extends NoteFragment {
     }
 
     @Override
-    protected void onInitializeNoteViewAdapter() {
+    public void onInitializeRecycleViewAdapter() {
         getNoteViewAdapter().setQuery(mQuery);
     }
 

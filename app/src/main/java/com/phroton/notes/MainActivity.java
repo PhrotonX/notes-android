@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
     private NoteViewModel mNoteViewModel;
 
-    private ActivityResultLauncher<Intent> mInsertContent;
     private NavController mNavController;
 
     @Override
@@ -59,27 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
         mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
 
-        mInsertContent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    Note note;
-                    switch(result.getResultCode()){
-                        case RESULT_OK:
-                            note = Note.unpackCurrentNote(result.getData(), false);
-                            mNoteViewModel.insert(note);
-                            break;
-                        case RESULT_CANCELED:
-                            //Toast.makeText(getApplicationContext(), "MainActivity: Canceled", Toast.LENGTH_SHORT).show();
-                            break;
-                        default:
-                            Toast.makeText(getApplicationContext(), "MainActivity: Error", Toast.LENGTH_SHORT).show();
-                            break;
-                    }
-
-                }
-        });
-
         /*if(mNote != null){
             mNoteViewModel.insert(mNote);
         }*/
@@ -87,15 +65,6 @@ public class MainActivity extends AppCompatActivity {
         //Original location of code to set layout content.
 
         setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, EditorActivity.class);
-                intent.putExtra(RequestCode.REQUEST_CODE, RequestCode.REQUEST_CODE_CREATE_NOTE);
-                //startActivityForResult(intent, CREATE_NOTE_REQUEST);
-                mInsertContent.launch(intent);
-            }
-        });
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
